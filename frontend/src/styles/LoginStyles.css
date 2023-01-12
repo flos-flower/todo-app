@@ -1,0 +1,48 @@
+.formDiv {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submitLoginForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 12rem;
+    background-color: white;
+    width:fit-content;
+    margin: auto;
+    border-radius: 0.3rem;
+}
+
+.submitLoginForm > p {
+    color:red;
+    font-size: small;
+}
+
+.submitLoginForm > input {
+    margin: 0 1rem;
+    border-radius: 0.2rem;
+    border:0;
+    border: none;
+    border-bottom: 1px solid #CCC;
+}
+
+.submitLoginForm > input:focus {
+    outline: none;
+}
+
+.submitLoginButton {
+    font-family: sans-serif;
+    background-color: rgb(54,217,182);
+    border-radius: 0.2rem;
+    border:0;
+    border-width: 0.01rem;
+    color: white;
+    font-size: small;
+    width:4rem;
+    height: 1.7rem;
+}

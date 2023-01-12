@@ -1,0 +1,25 @@
+.footerDiv {
+    width:100%;
+    background-color: white;
+    position:relative;
+    bottom:0rem;
+    padding: 2rem 6rem;
+}
+
+.linksDiv {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.linksDiv > div{
+    display: flex;
+    flex-direction: column;
+}
+
+.linksDiv > div > p {
+    flex-wrap: wrap;
+}
+
+.linksDiv > div > span{
+    cursor: pointer;
+}
