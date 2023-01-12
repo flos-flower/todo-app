@@ -164,7 +164,7 @@ class HomePage extends React.Component {
                   </div>
 
                   <div style={{flex:1}}>
-                    <button onClick={() => self.deleteItem(task)} className="btn btn-sm btn-outline-dark delete">-</button>
+                    <button onClick={() => self.deleteItem(task)} className="btn btn-sm btn-outline-danger delete">Delete</button>
                   </div>
                 </div>
               )
