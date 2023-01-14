@@ -8,7 +8,7 @@ class HomePage extends React.Component {
     this.state = {
       todoList:[],
       activeItem:{
-        user:null,
+        column:null,
         id:null,
         title:'',
         completed:false,
@@ -29,7 +29,7 @@ class HomePage extends React.Component {
   }
 
   fetchTasks(){
-    fetch('http://127.0.0.1:8000/api/task-list/', {
+    fetch('http://127.0.0.1:8000/api/column-list/', {
       method: 'GET',
       headers:{
         'Content-Type':'application/json',
@@ -37,7 +37,7 @@ class HomePage extends React.Component {
       }
     })
     .then(response => {
-      if(response.status === 200) return response.json()
+      if(response.status === 200) return response.json() 
       else if (response.statusText === "Unauthorized") this.context.logoutUser()
     })
     .then(data => 
@@ -129,58 +129,66 @@ class HomePage extends React.Component {
   }
 
   render(){
-    var tasks = this.state.todoList
-    var self = this
+    var columns = this.state.todoList
     return(
-      <div className="container">
-        <div id="task-container">
-          <div id="form-wrapper">
-            <form onSubmit={this.handleSubmit} id="form">
-              <div className="flex-wrapper">
-                <div style={{flex:6}}>
-                  <input onChange={this.handleChange} className="form-control" id="title" type="text" name="title" value={this.state.activeItem.title} placeholder="Add task" />
-                </div>
-                <div style={{flex:1}}>
-                  <input id="submit" className="btn btn-warning" type="submit" name="Add" />
-                </div>
-              </div>
-            </form>
-          </div>
-          <div id="list-wrapper">
-            {tasks.map((task, index)=>{
-              // return(
-              //   <div key={index} className="task-wrapper flex-wrapper">
-
-              //     <div onClick={() => self.strikeUnstrike(task)} style={{flex:7}}>
-              //       {task.completed === false ? (
-              //         <span>{task.title}</span>
-              //       ) : (
-              //         <strike>{task.title}</strike>
-              //       )}
-              //     </div>
-
-              //     <div style={{flex:1}}>
-              //       <button onClick={() => self.startEdit(task)} className="btn btn-sm btn-outline-info">Edit</button>
-              //     </div>
-
-              //     <div style={{flex:1}}>
-              //       <button onClick={() => self.deleteItem(task)} className="btn btn-sm btn-outline-dark delete">-</button>
-              //     </div>
-              //   </div>
-              // )
-              return (
-                <div key={index} className="task-wrapper flex-wrapper">
-                  <div>
-                    <div>
-                      
-                    </div>
-                  </div>                  
-                </div>
-              )
-            }) }
-          </div>
-        </div>
+      <div className='columnsDiv'>
+        {columns.map((column, index)=>{
+          return(
+            <div className='tasksDiv'>
+              <span>{column.name}</span>
+            </div>
+          )
+        })}
       </div>
+      // <div className="container">
+      //   <div id="task-container">
+      //     <div id="form-wrapper">
+      //       <form onSubmit={this.handleSubmit} id="form">
+      //         <div className="flex-wrapper">
+      //           <div style={{flex:6}}>
+      //             <input onChange={this.handleChange} className="form-control" id="title" type="text" name="title" value={this.state.activeItem.title} placeholder="Add task" />
+      //           </div>
+      //           <div style={{flex:1}}>
+      //             <input id="submit" className="btn btn-warning" type="submit" name="Add" />
+      //           </div>
+      //         </div>
+      //       </form>
+      //     </div>
+      //     <div id="list-wrapper">
+      //       {columns.map((column, index)=>{
+      //         return(
+      //           <div key={index} className="task-wrapper flex-wrapper">
+
+      //             <div onClick={() => self.strikeUnstrike(task)} style={{flex:7}}>
+      //               {task.completed === false ? (
+      //                 <span>{task.title}</span>
+      //               ) : (
+      //                 <strike>{task.title}</strike>
+      //               )}
+      //             </div>
+
+      //             <div style={{flex:1}}>
+      //               <button onClick={() => self.startEdit(task)} className="btn btn-sm btn-outline-info">Edit</button>
+      //             </div>
+
+      //             <div style={{flex:1}}>
+      //               <button onClick={() => self.deleteItem(task)} className="btn btn-sm btn-outline-dark delete">-</button>
+      //             </div>
+      //           </div>
+      //         )
+      //         return (
+      //           <div key={index} className="task-wrapper flex-wrapper">
+      //             <div>
+      //               <div>
+      //                 <span>{column.name}</span>
+      //               </div>
+      //             </div>                  
+      //           </div>
+      //         )
+      //       }) }
+      //     </div>
+      //   </div>
+      // </div>
     )
   }
 }

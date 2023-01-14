@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import TaskSerializer, UserSerializer
+from .serializers import TaskSerializer, UserSerializer, ColumnSerializer
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Task
@@ -43,6 +43,14 @@ def taskList(request):
     user = request.user
     tasks = user.task_set.all()
     serializer = TaskSerializer(tasks, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def columnList(request):
+    user = request.user
+    columns = user.column_set.all()
+    serializer = ColumnSerializer(columns, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])

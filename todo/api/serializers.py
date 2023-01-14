@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Task
+from .models import Task, Column
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 
@@ -8,6 +8,10 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = '__all__'
 
+class ColumnSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Column
+        fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
