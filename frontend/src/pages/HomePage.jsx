@@ -7,6 +7,7 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
       todoList:[],
+      taskList:[],
       activeItem:{
         column:null,
         id:null,
@@ -15,6 +16,7 @@ class HomePage extends React.Component {
       },
       editing: false,
     };
+    this.fetchColumns = this.fetchColumns.bind(this)
     this.fetchTasks = this.fetchTasks.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -25,10 +27,11 @@ class HomePage extends React.Component {
   };
 
   componentDidMount(){
+    this.fetchColumns()
     this.fetchTasks()
   }
 
-  fetchTasks(){
+  fetchColumns(){
     fetch('http://127.0.0.1:8000/api/column-list/', {
       method: 'GET',
       headers:{
@@ -43,6 +46,25 @@ class HomePage extends React.Component {
     .then(data => 
       this.setState({
         todoList:data
+      })
+    )
+  }
+
+  fetchTasks(){
+    fetch('http://127.0.0.1:8000/api/task-list/', {
+      method: 'GET',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + String(this.context.authTokens.access),
+      }
+    })
+    .then(response => {
+      if(response.status === 200) return response.json() 
+      else if (response.statusText === "Unauthorized") this.context.logoutUser()
+    })
+    .then(data => 
+      this.setState({
+        taskList:data
       })
     )
   }
@@ -78,7 +100,7 @@ class HomePage extends React.Component {
       },
       body:JSON.stringify(this.state.activeItem)
     }).then((response) => {
-      this.fetchTasks()
+      this.fetchColumns()
       this.setState({
         activeItem:{
           user: null,
@@ -106,7 +128,7 @@ class HomePage extends React.Component {
         'Content-type':'application/json',
       },
     }).then((response) => {
-      this.fetchTasks()
+      this.fetchColumns()
     })
   }
 
@@ -122,7 +144,7 @@ class HomePage extends React.Component {
       },
       body:JSON.stringify({'completed':task.completed, 'title':task.title})
     }).then(() => {
-      this.fetchTasks()
+      this.fetchColumns()
     })
 
     console.log('task:', task.completed)
@@ -130,12 +152,23 @@ class HomePage extends React.Component {
 
   render(){
     var columns = this.state.todoList
+    var tasks = this.state.taskList
     return(
       <div className='columnsDiv'>
         {columns.map((column, index)=>{
           return(
-            <div className='tasksDiv'>
-              <span>{column.name}</span>
+            <div className='tasksDiv' key={index}>
+              <div className='columnName'>
+                <span>{column.name}</span>
+              </div>
+                {tasks.map((task, task_index)=>{
+                  return (
+                    task.column === column.id &&
+                      <div key={task_index} className='tasks'>
+                        <span>{task.title}</span>
+                      </div>
+                  )
+                })}
             </div>
           )
         })}

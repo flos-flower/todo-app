@@ -15,10 +15,43 @@ h1, h2, h3, h4, h5, p, span, strike, a, input{
 }
 
 .columnsDiv {
-  background-color:white;
-  margin: 20px;
+  display:flex;
+  min-height: 100%;
+  padding:1rem;
+  font-size: small;
 }
 
+.columnName {
+  margin-bottom: 0.5rem;
+  margin-left:0.4rem;
+}
+
+.columnName > span {
+  font-weight: 600;
+}
+
+.tasksDiv {
+  margin-right: 1rem;
+  max-width: 14rem;
+  min-width: 14rem;
+  border-radius:0.2rem;
+  padding:0.5rem;
+  background-color:rgb(240, 240, 240);
+  height: fit-content;
+}
+
+.tasks {
+  background-color:white;
+  margin-bottom: 0.5rem;
+  border-radius: 0.2rem;
+  padding:0.2rem;
+  box-shadow: 0 3px 2px -2px gray;
+  cursor: pointer;
+}
+
+.tasks:hover {
+  background-color:rgb(243, 243, 243);
+}
 /* #task-container {
   max-width:90rem;
   margin:0 auto;
