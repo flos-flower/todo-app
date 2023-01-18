@@ -1,6 +1,6 @@
 import React from 'react';
 import AuthContext from '../context/AuthContext';
-import jwt_decode from "jwt-decode"; 
+import jwt_decode from "jwt-decode";
 
 class HomePage extends React.Component {
   constructor(props){
@@ -15,6 +15,8 @@ class HomePage extends React.Component {
         completed:false,
       },
       editing: false,
+      taskInputTag: false,
+      columnInputTag: false,
     };
     this.fetchColumns = this.fetchColumns.bind(this)
     this.fetchTasks = this.fetchTasks.bind(this)
@@ -150,9 +152,23 @@ class HomePage extends React.Component {
     console.log('task:', task.completed)
   }
 
+  changeTaskTag = () => {
+    this.setState((prevState) => ({
+      taskInputTag:!prevState.taskInputTag,
+    }))
+  }
+
+  changeColumnTag = () => {
+    this.setState((prevState) => ({
+      columnInputTag:!prevState.columnInputTag,
+    }))
+  }
+
   render(){
     var columns = this.state.todoList
     var tasks = this.state.taskList
+    var taskInputTag = this.state.taskInputTag
+    var columnInputTag = this.state.columnInputTag
     return(
       <div className='columnsDiv'>
         {columns.map((column, index)=>{
@@ -169,59 +185,26 @@ class HomePage extends React.Component {
                       </div>
                   )
                 })}
+                {columnInputTag ?(
+                  <input autoFocus type="text"/>
+                  ):(
+                    <div className='taskAdd'>
+                      <span className='plus'>+</span>
+                      <span>Добавить задачу</span>
+                    </div>
+                  )}
             </div>
           )
         })}
+          {taskInputTag ?(
+          <input autoFocus type="text"/>
+          ):(
+            <div className='columnAdd'>
+              <span className='plus'>+</span>
+              <span>Добавить столбец</span>
+            </div>
+          )}
       </div>
-      // <div className="container">
-      //   <div id="task-container">
-      //     <div id="form-wrapper">
-      //       <form onSubmit={this.handleSubmit} id="form">
-      //         <div className="flex-wrapper">
-      //           <div style={{flex:6}}>
-      //             <input onChange={this.handleChange} className="form-control" id="title" type="text" name="title" value={this.state.activeItem.title} placeholder="Add task" />
-      //           </div>
-      //           <div style={{flex:1}}>
-      //             <input id="submit" className="btn btn-warning" type="submit" name="Add" />
-      //           </div>
-      //         </div>
-      //       </form>
-      //     </div>
-      //     <div id="list-wrapper">
-      //       {columns.map((column, index)=>{
-      //         return(
-      //           <div key={index} className="task-wrapper flex-wrapper">
-
-      //             <div onClick={() => self.strikeUnstrike(task)} style={{flex:7}}>
-      //               {task.completed === false ? (
-      //                 <span>{task.title}</span>
-      //               ) : (
-      //                 <strike>{task.title}</strike>
-      //               )}
-      //             </div>
-
-      //             <div style={{flex:1}}>
-      //               <button onClick={() => self.startEdit(task)} className="btn btn-sm btn-outline-info">Edit</button>
-      //             </div>
-
-      //             <div style={{flex:1}}>
-      //               <button onClick={() => self.deleteItem(task)} className="btn btn-sm btn-outline-dark delete">-</button>
-      //             </div>
-      //           </div>
-      //         )
-      //         return (
-      //           <div key={index} className="task-wrapper flex-wrapper">
-      //             <div>
-      //               <div>
-      //                 <span>{column.name}</span>
-      //               </div>
-      //             </div>                  
-      //           </div>
-      //         )
-      //       }) }
-      //     </div>
-      //   </div>
-      // </div>
     )
   }
 }
