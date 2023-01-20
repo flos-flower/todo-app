@@ -47,6 +47,9 @@ h1, h2, h3, h4, h5, p, span, strike, a, input{
   padding:0.2rem;
   box-shadow: 0 3px 2px -2px gray;
   cursor: pointer;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
 }
 
 .tasks:hover {
@@ -82,4 +85,65 @@ h1, h2, h3, h4, h5, p, span, strike, a, input{
   font-style: normal;
   font-weight: 400;
   margin-right: 0.3rem;
+}
+
+.taskInput {
+  display:flex;
+  flex-direction: column;
+}
+
+.taskInput > textarea {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  border:none;
+  outline: none;
+  resize: none;
+}
+
+.btn-add {
+  border:none;
+  background-color:#0079bf;
+  color:white;
+  padding:0.3rem;
+  border-radius: 0.2rem;
+}
+
+.btn-cancel {
+  border:none;
+}
+
+button:focus {
+  outline: none;
+}
+
+.columnInput {
+  display:flex;
+  flex-direction: column;
+  background-color:rgb(240, 240, 240);
+  height:fit-content;
+  padding:0.5rem;
+  width:14rem;
+  border-radius: 0.2rem;
+}
+
+.columnInput > textarea {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  border:none;
+  outline: none;
+  resize: none;
+}
+
+.btn-change {
+  padding:0 0.2rem;
+  border-radius:0.1rem;
+  display:none;
+}
+
+.btn-change:hover {
+  background-color:rgb(233, 233, 233);
+}
+
+.tasks:hover .btn-change {
+  display:block;
 }

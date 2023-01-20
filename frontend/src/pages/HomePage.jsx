@@ -1,6 +1,5 @@
 import React from 'react';
 import AuthContext from '../context/AuthContext';
-import jwt_decode from "jwt-decode";
 
 class HomePage extends React.Component {
   constructor(props){
@@ -15,17 +14,16 @@ class HomePage extends React.Component {
         completed:false,
       },
       editing: false,
-      taskInputTag: false,
+      taskInputTag: [],
       columnInputTag: false,
+      style:[],
     };
     this.fetchColumns = this.fetchColumns.bind(this)
     this.fetchTasks = this.fetchTasks.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
 
-    this.startEdit = this.startEdit.bind(this)
-    this.deleteItem = this.deleteItem.bind(this)
-    this.strikeUnstrike = this.strikeUnstrike.bind(this)
+    this.changeColumnTag = this.changeColumnTag.bind(this)
+    this.changeTaskTag = this.changeTaskTag.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
   };
 
   componentDidMount(){
@@ -71,97 +69,25 @@ class HomePage extends React.Component {
     )
   }
 
-  handleChange(e){
-    var value = e.target.value
-    var userid = (jwt_decode(this.context.authTokens.access)).user_id
-
+  changeTaskTag(index){
+    let tasks = [...this.state.taskInputTag]
+    let task = tasks[index]
+    tasks[index] = !task
     this.setState({
-      activeItem:{
-        ...this.state.activeItem,
-        title: value,
-        user: userid
-      }
+      taskInputTag:tasks,
     })
   }
 
-  handleSubmit(e){
+  changeColumnTag(e){
     e.preventDefault()
-    var url= 'http://127.0.0.1:8000/api/task-create/'
-
-    if(this.state.editing === true){
-      url = `http://127.0.0.1:8000/api/task-update/${ this.state.activeItem.id }`
-      this.setState({
-        editing:false
-      })
-    }
-
-    fetch(url, {
-      method:'POST',
-      headers:{
-        'Content-type':'application/json',
-      },
-      body:JSON.stringify(this.state.activeItem)
-    }).then((response) => {
-      this.fetchColumns()
-      this.setState({
-        activeItem:{
-          user: null,
-          id:null,
-          title:'',
-          completed:false,
-        }
-      })
-    }).catch(function(error){
-      console.log('ERROR', error)
-    })
-  }
-
-  startEdit(task){
-    this.setState({
-      activeItem:task,
-      editing:true,
-    })
-  }
-
-  deleteItem(task){
-    fetch(`http://127.0.0.1:8000/api/task-delete/${ task.id }`, {
-      method:'DELETE',
-      headers:{
-        'Content-type':'application/json',
-      },
-    }).then((response) => {
-      this.fetchColumns()
-    })
-  }
-
-  strikeUnstrike(task){
-    task.completed = !task.completed
-
-    var url = `http://127.0.0.1:8000/api/task-update/${ task.id }`
-
-    fetch(url, {
-      method:'POST',
-      headers:{
-        'Content-type':'application/json',
-      },
-      body:JSON.stringify({'completed':task.completed, 'title':task.title})
-    }).then(() => {
-      this.fetchColumns()
-    })
-
-    console.log('task:', task.completed)
-  }
-
-  changeTaskTag = () => {
-    this.setState((prevState) => ({
-      taskInputTag:!prevState.taskInputTag,
-    }))
-  }
-
-  changeColumnTag = () => {
     this.setState((prevState) => ({
       columnInputTag:!prevState.columnInputTag,
     }))
+  }
+
+  handleKeyDown(e) {
+    e.target.style.height = 'inherit';
+    e.target.style.height = `${e.target.scrollHeight}px`;
   }
 
   render(){
@@ -182,26 +108,40 @@ class HomePage extends React.Component {
                     task.column === column.id &&
                       <div key={task_index} className='tasks'>
                         <span>{task.title}</span>
+                        <div className='btn-change'>&#128393;</div>
                       </div>
                   )
                 })}
-                {columnInputTag ?(
-                  <input autoFocus type="text"/>
+                {taskInputTag[index] ?(
+                  <form onSubmit={e=>{e.preventDefault(); this.changeTaskTag(index)}} className='taskInput'>
+                    <textarea onKeyDown={this.handleKeyDown} placeholder='Enter a title' autoFocus/>
+                    <div className='buttonsDiv'>
+                      <button className='btn-add'>Add task</button>
+                      <button className='btn-cancel'>&#9587;</button>
+                    </div>
+                  </form>
                   ):(
-                    <div className='taskAdd'>
+                    <div onClick={() => this.changeTaskTag(index)} className='taskAdd'>
                       <span className='plus'>+</span>
-                      <span>Добавить задачу</span>
+                      <span>Add task</span>
                     </div>
                   )}
             </div>
           )
         })}
-          {taskInputTag ?(
-          <input autoFocus type="text"/>
+          {columnInputTag ?(
+            <form onSubmit={this.changeColumnTag} className='columnInput'>
+              <textarea onKeyDown={this.handleKeyDown} placeholder='Enter a title' autoFocus/>
+                    <div className='buttonsDiv'>
+                      <button className='btn-add'>Add column</button>
+                      <button className='btn-cancel'>&#9587;</button>
+                    </div>
+            </form>
+
           ):(
-            <div className='columnAdd'>
+            <div onClick={this.changeColumnTag} className='columnAdd'>
               <span className='plus'>+</span>
-              <span>Добавить столбец</span>
+              <span>Add column</span>
             </div>
           )}
       </div>
