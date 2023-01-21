@@ -16,7 +16,6 @@ class HomePage extends React.Component {
       editing: false,
       taskInputTag: [],
       columnInputTag: false,
-      style:[],
     };
     this.fetchColumns = this.fetchColumns.bind(this)
     this.fetchTasks = this.fetchTasks.bind(this)

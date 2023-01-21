@@ -16,9 +16,10 @@ h1, h2, h3, h4, h5, p, span, strike, a, input{
 
 .columnsDiv {
   display:flex;
-  min-height: 100%;
+  min-height:calc(100% - 3rem);
   padding:1rem;
   font-size: small;
+  overflow:auto;
 }
 
 .columnName {
@@ -31,7 +32,7 @@ h1, h2, h3, h4, h5, p, span, strike, a, input{
 }
 
 .tasksDiv {
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   max-width: 14rem;
   min-width: 14rem;
   border-radius:0.2rem;
@@ -50,6 +51,7 @@ h1, h2, h3, h4, h5, p, span, strike, a, input{
   display:flex;
   justify-content: space-between;
   align-items:center;
+  position:relative;
 }
 
 .tasks:hover {
@@ -63,6 +65,7 @@ h1, h2, h3, h4, h5, p, span, strike, a, input{
   border-radius: 0.2rem;
   cursor: pointer;
   display:flex;
+  min-width:max-content;
 }
 
 .taskAdd {
@@ -124,6 +127,7 @@ button:focus {
   padding:0.5rem;
   width:14rem;
   border-radius: 0.2rem;
+  min-width: 14rem;
 }
 
 .columnInput > textarea {
@@ -134,10 +138,17 @@ button:focus {
   resize: none;
 }
 
+.taskButtons {
+  display:flex;
+}
+
 .btn-change {
-  padding:0 0.2rem;
+  padding:0 0.2rem 0.15rem 0.2rem;
   border-radius:0.1rem;
   display:none;
+  position:absolute;
+  top:0.1rem;
+  right:1.4rem;
 }
 
 .btn-change:hover {
@@ -145,5 +156,22 @@ button:focus {
 }
 
 .tasks:hover .btn-change {
+  display:block;
+}
+
+.btn-delete {
+  padding:0 0.2rem 0.15rem 0.2rem;
+  border-radius:0.1rem;
+  display:none;
+  position:absolute;
+  top:0.1rem;
+  right: 0.25rem;
+}
+
+.btn-delete:hover {
+  background-color:rgb(255, 175, 175);
+}
+
+.tasks:hover .btn-delete {
   display:block;
 }
