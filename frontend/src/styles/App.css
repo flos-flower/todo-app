@@ -25,10 +25,15 @@ h1, h2, h3, h4, h5, p, span, strike, a, input{
 .columnName {
   margin-bottom: 0.5rem;
   margin-left:0.4rem;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  position:relative;
 }
 
 .columnName > span {
   font-weight: 600;
+  cursor: pointer;
 }
 
 .tasksDiv {
@@ -147,7 +152,7 @@ button:focus {
   border-radius:0.1rem;
   display:none;
   position:absolute;
-  top:0.1rem;
+  top:0.13rem;
   right:1.4rem;
 }
 
@@ -164,7 +169,7 @@ button:focus {
   border-radius:0.1rem;
   display:none;
   position:absolute;
-  top:0.1rem;
+  top:0.13rem;
   right: 0.25rem;
 }
 
@@ -174,4 +179,34 @@ button:focus {
 
 .tasks:hover .btn-delete {
   display:block;
+}
+
+.deleteColumn {
+  cursor:pointer;
+  position:absolute;
+  right:0;
+  bottom:0.15rem;
+}
+
+.updateForm > textarea{
+  width: 100%;
+  margin-bottom: 0.3rem;
+  border:none;
+  outline: none;
+  resize: none;
+  box-shadow: 0 3px 2px -2px gray;
+}
+
+.updateForm > input {
+  display:none;
+}
+
+.updateColumnForm {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  border:none;
+  outline: none;
+  resize: none;
+  height: 1.5rem;
+  box-shadow: 0 3px 2px -2px gray;
 }

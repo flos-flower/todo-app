@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .serializers import TaskSerializer, UserSerializer, ColumnSerializer
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Task
+from .models import Task, Column
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -84,12 +84,28 @@ def taskUpdate(request, pk):
 
     return Response(serializer.data)
 
+@api_view(['POST'])
+def columnUpdate(request, pk):
+    column = Column.objects.get(id=pk)
+    serializer = ColumnSerializer(instance=column, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
 @api_view(['DELETE'])
 def taskDelete(request, pk):
     task = Task.objects.get(id=pk)
     task.delete()
 
     return Response('Item succsesfully deleted')
+
+@api_view(['DELETE'])
+def columnDelete(request, pk):
+    column = Column.objects.get(id=pk)
+    column.delete()
+
+    return Response('Column succsesfully deleted')
 
 @api_view(['POST'])
 def userCreate(request):
