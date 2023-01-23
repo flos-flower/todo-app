@@ -1,6 +1,7 @@
 import AuthContext from "../context/AuthContext";
 import React, { useContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const HomePageFunc = () => {
   let [todoList, setTodoList] = useState([]);
@@ -119,7 +120,7 @@ const HomePageFunc = () => {
       columns[i] = false;
     }
     setOpen(columns);
-  }
+  };
 
   let handleColumnChange = (e) => {
     var value = e.target.value;
@@ -265,7 +266,10 @@ const HomePageFunc = () => {
   let dropdownClick = (index) => {
     let columns = [...open];
     for (let i = 0; i < columns.length; i++) {
-      if (i !== index) columns[i] = false;
+      if (i !== index){
+        columns[i] = false;
+        console.log(i)
+      } 
     }
     let column = columns[index];
     columns[index] = !column;
@@ -391,28 +395,34 @@ const HomePageFunc = () => {
                             ☰
                           </button>
                           {open[task_index] && (
-                            <div className="dropdown">
-                              <ul>
-                                {todoList.map((option, option_index) => {
-                                  return (
-                                    <li
-                                      onClick={() => {
-                                        dropdownUpdateTask(
-                                          task.id,
-                                          task.title,
-                                          option.id
-                                        );
-                                        dropdownClick(task_index);
-                                      }}
-                                      className="dropdownChild"
-                                      key={option_index}
-                                    >
-                                      {option.name}
-                                    </li>
-                                  );
-                                })}
-                              </ul>
-                            </div>
+                            <OutsideClickHandler
+                              onOutsideClick={() => {
+                                handleClickOutside();
+                              }}
+                            >
+                              <div className="dropdown">
+                                <ul>
+                                  {todoList.map((option, option_index) => {
+                                    return (
+                                      <li
+                                        onClick={() => {
+                                          dropdownUpdateTask(
+                                            task.id,
+                                            task.title,
+                                            option.id
+                                          );
+                                          dropdownClick(task_index);
+                                        }}
+                                        className="dropdownChild"
+                                        key={option_index}
+                                      >
+                                        {option.name}
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              </div>
+                            </OutsideClickHandler>
                           )}
                         </div>
                       </div>
