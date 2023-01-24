@@ -2,10 +2,10 @@ from django.shortcuts import render
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import TaskSerializer, UserSerializer
+from .serializers import TaskSerializer, UserSerializer, ColumnSerializer
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Task
+from .models import Task, Column
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -46,6 +46,14 @@ def taskList(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def columnList(request):
+    user = request.user
+    columns = user.column_set.all()
+    serializer = ColumnSerializer(columns, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def taskDetail(request, pk):
     tasks = Task.objects.get(id=pk)
     serializer = TaskSerializer(tasks, many=False)
@@ -60,9 +68,26 @@ def taskCreate(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
+def columnCreate(request):
+    serializer = ColumnSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['POST'])
 def taskUpdate(request, pk):
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(instance=task, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def columnUpdate(request, pk):
+    column = Column.objects.get(id=pk)
+    serializer = ColumnSerializer(instance=column, data=request.data)
     if serializer.is_valid():
         serializer.save()
 
@@ -74,6 +99,13 @@ def taskDelete(request, pk):
     task.delete()
 
     return Response('Item succsesfully deleted')
+
+@api_view(['DELETE'])
+def columnDelete(request, pk):
+    column = Column.objects.get(id=pk)
+    column.delete()
+
+    return Response('Column succsesfully deleted')
 
 @api_view(['POST'])
 def userCreate(request):

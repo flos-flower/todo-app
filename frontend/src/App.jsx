@@ -4,11 +4,10 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import PrivateRoute from './utils/PrivateRoute'
 import { AuthProvider } from './context/AuthContext'
 
-import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import Header from './components/Header'
-import Footer from './components/Footer'
+import HomePageFunc from './pages/HomePageFunc'
 
 function App() {
   return ( 
@@ -17,11 +16,10 @@ function App() {
         <AuthProvider>
           <Header/>
           <Routes style={{zIndex:1}}>
-            <Route exact path='/' element={<PrivateRoute Component = {HomePage} />} />
+            <Route exact path='/' element={<PrivateRoute Component = {HomePageFunc} />} />
             <Route element={<LoginPage />} path='/login' exact />
             <Route element={<RegisterPage />} path='/register' exact />
           </Routes>
-          <Footer/>
         </AuthProvider>
       </Router>
     </div>
