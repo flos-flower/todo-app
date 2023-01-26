@@ -1,37 +1,38 @@
 .headerDiv {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;      
-    height: 3rem;
-    padding: 1rem;
-} 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  height: 3rem;
+  padding: 1rem;
+}
 
-.headerDiv > div > a, .authDiv > div > a{
-    color: inherit;
-    text-decoration: none;
+.headerDiv > div > a,
+.authDiv > div > a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .authDiv {
-    display: flex;
-    width: 8rem;
-    justify-content: space-between;
+  display: flex;
+  width: 8rem;
+  justify-content: space-between;
 }
 
 .logoutDiv > p {
-    margin: 0;
+  margin: 0;
 }
 
 .logoutBtn {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.logoutDiv{
-    display: flex;
-    justify-content: space-between;
-    width: 10rem;
+.logoutDiv {
+  display: flex;
+  justify-content: space-between;
+  width: 10rem;
 }
 
 .selected {
-    border-bottom: 1px solid black;
+  border-bottom: 1px solid black;
 }

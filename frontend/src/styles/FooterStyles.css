@@ -1,24 +1,24 @@
 .footerDiv {
-    width:100%;
-    background-color: white;
-    position:relative;
-    padding: 2rem 6rem;
+  width: 100%;
+  background-color: white;
+  position: relative;
+  padding: 2rem 6rem;
 }
 
 .linksDiv {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.linksDiv > div{
-    display: flex;
-    flex-direction: column;
+.linksDiv > div {
+  display: flex;
+  flex-direction: column;
 }
 
 .linksDiv > div > p {
-    flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
-.linksDiv > div > span{
-    cursor: pointer;
+.linksDiv > div > span {
+  cursor: pointer;
 }

@@ -2,33 +2,46 @@ body > #root > div {
   height: 100vh;
 }
 
-body{
-  background: rgb(54,217,182);
-  background: linear-gradient(90deg, rgba(54,217,182,1) 0%, rgba(32,152,126,1) 43%, rgba(0,212,255,1) 100%);
-  padding:0;
-  margin:0;
+body {
+  background: rgb(54, 217, 182);
+  background: linear-gradient(
+    90deg,
+    rgba(54, 217, 182, 1) 0%,
+    rgba(32, 152, 126, 1) 43%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  padding: 0;
+  margin: 0;
 }
 
-h1, h2, h3, h4, h5, p, span, strike, a, input{
-  font-family: 'Montserrat', sans-serif;
-
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+span,
+strike,
+a,
+input {
+  font-family: "Montserrat", sans-serif;
 }
 
 .columnsDiv {
-  display:flex;
-  min-height:calc(100% - 3rem);
-  padding:1rem;
+  display: flex;
+  min-height: calc(100% - 3rem);
+  padding: 1rem;
   font-size: small;
-  overflow:auto;
+  overflow: auto;
 }
 
 .columnName {
   margin-bottom: 0.5rem;
-  margin-left:0.4rem;
-  display:flex;
+  margin-left: 0.4rem;
+  display: flex;
   justify-content: space-between;
-  align-items:center;
-  position:relative;
+  align-items: center;
+  position: relative;
 }
 
 .columnName > span {
@@ -40,49 +53,49 @@ h1, h2, h3, h4, h5, p, span, strike, a, input{
   margin-right: 0.5rem;
   max-width: 14rem;
   min-width: 14rem;
-  border-radius:0.2rem;
-  padding:0.5rem;
-  background-color:rgb(240, 240, 240);
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  background-color: rgb(240, 240, 240);
   height: fit-content;
 }
 
 .tasks {
-  background-color:white;
+  background-color: white;
   margin-bottom: 0.5rem;
   border-radius: 0.2rem;
-  padding:0.2rem;
+  padding: 0.2rem;
   box-shadow: 0 3px 2px -2px gray;
   cursor: pointer;
-  display:flex;
+  display: flex;
   justify-content: space-between;
-  align-items:center;
-  position:relative;
+  align-items: center;
+  position: relative;
 }
 
 .tasks:hover {
-  background-color:rgb(243, 243, 243);
+  background-color: rgb(243, 243, 243);
 }
 
 .columnAdd {
   background: rgba(255, 255, 255, 0.5);
-  height:fit-content;
-  padding:0.45rem;
+  height: fit-content;
+  padding: 0.45rem;
   border-radius: 0.2rem;
   cursor: pointer;
-  display:flex;
-  min-width:max-content;
+  display: flex;
+  min-width: max-content;
 }
 
 .taskAdd {
   cursor: pointer;
-  height:fit-content;
-  padding:0.3rem 0 0.3rem 0.7rem;
+  height: fit-content;
+  padding: 0.3rem 0 0.3rem 0.7rem;
   border-radius: 0.2rem;
-  display:flex;
+  display: flex;
 }
 
 .taskAdd:hover {
-  background-color:rgb(226, 226, 226);
+  background-color: rgb(226, 226, 226);
 }
 
 .plus {
@@ -96,28 +109,28 @@ h1, h2, h3, h4, h5, p, span, strike, a, input{
 }
 
 .taskInput {
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 
 .taskInput > textarea {
   width: 100%;
   margin-bottom: 0.3rem;
-  border:none;
+  border: none;
   outline: none;
   resize: none;
 }
 
 .btn-add {
-  border:none;
-  background-color:#0079bf;
-  color:white;
-  padding:0.3rem;
+  border: none;
+  background-color: #0079bf;
+  color: white;
+  padding: 0.3rem;
   border-radius: 0.2rem;
 }
 
 .btn-cancel {
-  border:none;
+  border: none;
 }
 
 button:focus {
@@ -125,12 +138,12 @@ button:focus {
 }
 
 .columnInput {
-  display:flex;
+  display: flex;
   flex-direction: column;
-  background-color:rgb(240, 240, 240);
-  height:fit-content;
-  padding:0.5rem;
-  width:14rem;
+  background-color: rgb(240, 240, 240);
+  height: fit-content;
+  padding: 0.5rem;
+  width: 14rem;
   border-radius: 0.2rem;
   min-width: 14rem;
 }
@@ -138,73 +151,73 @@ button:focus {
 .columnInput > textarea {
   width: 100%;
   margin-bottom: 0.3rem;
-  border:none;
+  border: none;
   outline: none;
   resize: none;
 }
 
 .taskButtons {
-  display:flex;
+  display: flex;
 }
 
 .btn-change {
-  padding:0 0.2rem 0.15rem 0.2rem;
-  border-radius:0.1rem;
-  display:none;
-  position:absolute;
-  top:0.13rem;
-  right:2.2rem;
+  padding: 0 0.2rem 0.15rem 0.2rem;
+  border-radius: 0.1rem;
+  display: none;
+  position: absolute;
+  top: 0.13rem;
+  right: 2.2rem;
 }
 
 .btn-change:hover {
-  background-color:rgb(233, 233, 233);
+  background-color: rgb(233, 233, 233);
 }
 
 .tasks:hover .btn-change {
-  display:block;
+  display: block;
 }
 
 .btn-delete {
-  padding:0 0.2rem 0.15rem 0.2rem;
-  border-radius:0.1rem;
-  display:none;
-  position:absolute;
-  top:0.13rem;
+  padding: 0 0.2rem 0.15rem 0.2rem;
+  border-radius: 0.1rem;
+  display: none;
+  position: absolute;
+  top: 0.13rem;
   right: 1.1rem;
 }
 
 .btn-delete:hover {
-  background-color:rgb(255, 175, 175);
+  background-color: rgb(255, 175, 175);
 }
 
 .tasks:hover .btn-delete {
-  display:block;
+  display: block;
 }
 
 .deleteColumn {
-  cursor:pointer;
-  position:absolute;
-  right:0;
-  bottom:0.15rem;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  bottom: 0.15rem;
 }
 
-.updateForm > textarea{
+.updateForm > textarea {
   width: 100%;
   margin-bottom: 0.3rem;
-  border:none;
+  border: none;
   outline: none;
   resize: none;
   box-shadow: 0 3px 2px -2px gray;
 }
 
 .updateForm > input {
-  display:none;
+  display: none;
 }
 
 .updateColumnForm {
   width: 100%;
   margin-bottom: 0.3rem;
-  border:none;
+  border: none;
   outline: none;
   resize: none;
   height: 1.5rem;
@@ -217,7 +230,7 @@ button:focus {
 }
 
 .tasks:hover .dropdownButton {
-  display:block;
+  display: block;
 }
 
 .dropdownButton {
@@ -228,9 +241,9 @@ button:focus {
   color: #333;
   cursor: pointer;
   outline: 0;
-  display:none;
-  position:absolute;
-  top:-0.65rem;
+  display: none;
+  position: absolute;
+  top: -0.65rem;
   right: 0.05rem;
 }
 
@@ -242,9 +255,9 @@ button:focus {
   z-index: 2;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
-  background-color:white;
-  padding:0.3rem;
-  border-radius:0.1rem;
+  background-color: white;
+  padding: 0.3rem;
+  border-radius: 0.1rem;
 }
 
 .dropdown > ul {
@@ -261,7 +274,7 @@ button:focus {
 }
 
 .dropdownChild:hover {
-  cursor:pointer;
-  background-color:rgba(0, 0, 0, 0.08);
-  border-radius:0.1rem;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 0.1rem;
 }
