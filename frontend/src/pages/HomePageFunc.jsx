@@ -2,6 +2,7 @@ import AuthContext from "../context/AuthContext";
 import React, { useContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import OutsideClickHandler from "react-outside-click-handler";
+import s from "../styles/HomePage.module.css";
 
 const HomePageFunc = () => {
   let [todoList, setTodoList] = useState([]);
@@ -266,10 +267,10 @@ const HomePageFunc = () => {
   let dropdownClick = (index) => {
     let columns = [...open];
     for (let i = 0; i < columns.length; i++) {
-      if (i !== index){
+      if (i !== index) {
         columns[i] = false;
-        console.log(i)
-      } 
+        console.log(i);
+      }
     }
     let column = columns[index];
     columns[index] = !column;
@@ -299,10 +300,10 @@ const HomePageFunc = () => {
   };
 
   return (
-    <div className="columnsDiv">
+    <div className={s.columnsDiv}>
       {todoList.map((column, index) => {
         return (
-          <div className="tasksDiv" key={index}>
+          <div className={s.tasksDiv} key={index}>
             {columnUpdateTag[index] ? (
               <form key={index}>
                 <textarea
@@ -310,11 +311,11 @@ const HomePageFunc = () => {
                   autoFocus
                   value={editingColumn}
                   onChange={(e) => handleColumnEditing(e)}
-                  className="updateColumnForm"
+                  className={s.updateColumnForm}
                 />
               </form>
             ) : (
-              <div className="columnName">
+              <div className={s.columnName}>
                 <span
                   onClick={() => {
                     changeColumnUpdateTag(index);
@@ -328,7 +329,7 @@ const HomePageFunc = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
-                  className="bi bi-x deleteColumn"
+                  className={`bi bi-x ${s.deleteColumn}`}
                   viewBox="0 0 16 16"
                 >
                   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
@@ -338,7 +339,7 @@ const HomePageFunc = () => {
             {taskList.map((task, task_index) => {
               return taskUpdateTag[task_index]
                 ? task.column === column.id && (
-                    <form key={task_index} className="updateForm">
+                    <form key={task_index} className={s.updateForm}>
                       <textarea
                         onKeyDown={(e) => handleKeyDown(e, task_index, task.id)}
                         value={editing.title}
@@ -348,15 +349,15 @@ const HomePageFunc = () => {
                     </form>
                   )
                 : task.column === column.id && (
-                    <div key={task_index} className="tasks">
+                    <div key={task_index} className={s.tasks}>
                       <span>{task.title}</span>
-                      <div className="taskButtons">
+                      <div className={s.taskButtons}>
                         <div
                           onClick={() => {
                             changeUpdateTag(task_index);
                             startEdit(task.title, column.id);
                           }}
-                          className="btn-change"
+                          className={s.btnChange}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -370,7 +371,7 @@ const HomePageFunc = () => {
                         </div>
                         <div
                           onClick={() => deleteItem(task)}
-                          className="btn-delete"
+                          className={s.btnDelete}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -386,10 +387,10 @@ const HomePageFunc = () => {
                             />
                           </svg>
                         </div>
-                        <div className="dropdownContainer">
+                        <div className={s.dropdownContainer}>
                           <button
                             type="button"
-                            className="dropdownButton"
+                            className={s.dropdownButton}
                             onClick={() => dropdownClick(task_index)}
                           >
                             ☰
@@ -400,7 +401,7 @@ const HomePageFunc = () => {
                                 handleClickOutside();
                               }}
                             >
-                              <div className="dropdown">
+                              <div className={s.dropdown}>
                                 <ul>
                                   {todoList.map((option, option_index) => {
                                     return (
@@ -413,7 +414,7 @@ const HomePageFunc = () => {
                                           );
                                           dropdownClick(task_index);
                                         }}
-                                        className="dropdownChild"
+                                        className={s.dropdownChild}
                                         key={option_index}
                                       >
                                         {option.name}
@@ -436,7 +437,7 @@ const HomePageFunc = () => {
                   changeTaskTag(index);
                   addTask();
                 }}
-                className="taskInput"
+                className={s.taskInput}
               >
                 <textarea
                   onChange={(e) => handleTaskChange(e, column.id)}
@@ -444,20 +445,20 @@ const HomePageFunc = () => {
                   placeholder="Enter a title"
                   autoFocus
                 />
-                <div className="buttonsDiv">
+                <div className={s.buttonsDiv}>
                   <button className="btn-add">Add task</button>
                   <button
                     onClick={() => changeTaskTag(index)}
                     type="button"
-                    className="btn-cancel"
+                    className={s.btnCancel}
                   >
                     &#9587;
                   </button>
                 </div>
               </form>
             ) : (
-              <div onClick={() => changeTaskTag(index)} className="taskAdd">
-                <span className="plus">+</span>
+              <div onClick={() => changeTaskTag(index)} className={s.taskAdd}>
+                <span className={s.plus}>+</span>
                 <span>Add task</span>
               </div>
             )}
@@ -470,7 +471,7 @@ const HomePageFunc = () => {
             addColumn(e);
             changeColumnTag(e);
           }}
-          className="columnInput"
+          className={s.columnInput}
         >
           <textarea
             onChange={handleColumnChange}
@@ -478,20 +479,20 @@ const HomePageFunc = () => {
             placeholder="Enter a title"
             autoFocus
           />
-          <div className="buttonsDiv">
+          <div className={s.buttonsDiv}>
             <button className="btn-add">Add column</button>
             <button
               onClick={changeColumnTag}
               type="button"
-              className="btn-cancel"
+              className={s.btnCancel}
             >
               &#9587;
             </button>
           </div>
         </form>
       ) : (
-        <div onClick={changeColumnTag} className="columnAdd">
-          <span className="plus">+</span>
+        <div onClick={changeColumnTag} className={s.columnAdd}>
+          <span className={s.plus}>+</span>
           <span>Add column</span>
         </div>
       )}

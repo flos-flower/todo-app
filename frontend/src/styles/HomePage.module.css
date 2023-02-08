@@ -1,0 +1,251 @@
+.columnsDiv {
+  display: flex;
+  min-height: calc(100% - 3rem);
+  padding: 1rem;
+  font-size: small;
+  overflow: auto;
+}
+
+.columnName {
+  margin-bottom: 0.5rem;
+  margin-left: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.columnName > span {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tasksDiv {
+  margin-right: 0.5rem;
+  max-width: 14rem;
+  min-width: 14rem;
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  background-color: rgb(240, 240, 240);
+  height: fit-content;
+}
+
+.tasks {
+  background-color: white;
+  margin-bottom: 0.5rem;
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+  box-shadow: 0 3px 2px -2px gray;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.tasks:hover {
+  background-color: rgb(243, 243, 243);
+}
+
+.columnAdd {
+  background: rgba(255, 255, 255, 0.5);
+  height: fit-content;
+  padding: 0.45rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  display: flex;
+  min-width: max-content;
+}
+
+.taskAdd {
+  cursor: pointer;
+  height: fit-content;
+  padding: 0.3rem 0 0.3rem 0.7rem;
+  border-radius: 0.2rem;
+  display: flex;
+}
+
+.taskAdd:hover {
+  background-color: rgb(226, 226, 226);
+}
+
+.plus {
+  font-size: 16px;
+  height: 20px;
+  line-height: 20px;
+  font-family: trellicons;
+  font-style: normal;
+  font-weight: 400;
+  margin-right: 0.3rem;
+}
+
+.taskInput {
+  display: flex;
+  flex-direction: column;
+}
+
+.taskInput > textarea {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.btnAdd {
+  border: none;
+  background-color: #0079bf;
+  color: white;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+}
+
+.btnCancel {
+  border: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+.columnInput {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(240, 240, 240);
+  height: fit-content;
+  padding: 0.5rem;
+  width: 14rem;
+  border-radius: 0.2rem;
+  min-width: 14rem;
+}
+
+.columnInput > textarea {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.taskButtons {
+  display: flex;
+}
+
+.btnChange {
+  padding: 0 0.2rem 0.15rem 0.2rem;
+  border-radius: 0.1rem;
+  display: none;
+  position: absolute;
+  top: 0.13rem;
+  right: 2.2rem;
+}
+
+.btnChange:hover {
+  background-color: rgb(233, 233, 233);
+}
+
+.tasks:hover .btnChange {
+  display: block;
+}
+
+.btnDelete {
+  padding: 0 0.2rem 0.15rem 0.2rem;
+  border-radius: 0.1rem;
+  display: none;
+  position: absolute;
+  top: 0.13rem;
+  right: 1.1rem;
+}
+
+.btnDelete:hover {
+  background-color: rgb(255, 175, 175);
+}
+
+.tasks:hover .btnDelete {
+  display: block;
+}
+
+.deleteColumn {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  bottom: 0.15rem;
+}
+
+.updateForm > textarea {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  border: none;
+  outline: none;
+  resize: none;
+  box-shadow: 0 3px 2px -2px gray;
+}
+
+.updateForm > input {
+  display: none;
+}
+
+.updateColumnForm {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  border: none;
+  outline: none;
+  resize: none;
+  height: 1.5rem;
+  box-shadow: 0 3px 2px -2px gray;
+}
+
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.tasks:hover .dropdownButton {
+  display: block;
+}
+
+.dropdownButton {
+  padding: 0;
+  width: fit-content;
+  border: 0;
+  background-color: transparent;
+  color: #333;
+  cursor: pointer;
+  outline: 0;
+  display: none;
+  position: absolute;
+  top: -0.65rem;
+  right: 0.05rem;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: fit-content;
+  z-index: 2;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
+  background-color: white;
+  padding: 0.3rem;
+  border-radius: 0.1rem;
+}
+
+.dropdown > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.dropdown > li {
+  padding: 8px 12px;
+}
+
+.dropdownChild {
+  padding: 0 0.2rem;
+}
+
+.dropdownChild:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-radius: 0.1rem;
+}

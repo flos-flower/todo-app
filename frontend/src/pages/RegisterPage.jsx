@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import "../styles/RegisterStyles.css";
+import s from "../styles/RegisterStyles.module.css";
 import { useForm } from "react-hook-form";
 
 const RegisterPage = () => {
@@ -11,8 +11,8 @@ const RegisterPage = () => {
   } = useForm();
   let { registerUser } = useContext(AuthContext);
   return (
-    <div className="formDiv">
-      <form className="submitForm" onSubmit={handleSubmit(registerUser)}>
+    <div className={s.formDiv}>
+      <form className={s.submitForm} onSubmit={(e)=>handleSubmit(registerUser(e))}>
         <input
           type="text"
           name="email"
@@ -37,7 +37,7 @@ const RegisterPage = () => {
           {...register("password", { required: true })}
         />
         {errors.password && <p>Please enter the password</p>}
-        <input className="submitButton" type="submit" value="Sign up" />
+        <input className={s.submitButton} type="submit" value="Sign up" />
       </form>
     </div>
   );

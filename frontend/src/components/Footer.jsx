@@ -1,13 +1,13 @@
 import React from 'react';
-import '../styles/FooterStyles.css';
+import s from '../styles/FooterStyles.module.css';
 
 const Footer = () => {
     return (
-        <div className='footerDiv'>
-            <div className='linksDiv'>
+        <div className={s.footerDiv}>
+            <div className={s.linksDiv}>
                 <div>
                     <h5>About Us</h5>
-                    <p href='' className='about'>Lorem</p>
+                    <p href='' className={s.about}>Lorem</p>
                 </div>
                 <div>
                     <h5>Contact us</h5>

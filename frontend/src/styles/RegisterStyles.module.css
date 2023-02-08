@@ -1,29 +1,31 @@
 .formDiv {
-  height: 100%;
+  max-height: calc(100% - 3rem);
+  height:100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.submitLoginForm {
+.submitForm {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 12rem;
+  height: 18rem;
   background-color: white;
   width: fit-content;
   margin: auto;
   border-radius: 0.3rem;
 }
 
-.submitLoginForm > p {
+.submitForm > p {
   color: red;
   font-size: small;
+  margin: 0;
 }
 
-.submitLoginForm > input {
+.submitForm > input {
   margin: 0 1rem;
   border-radius: 0.2rem;
   border: 0;
@@ -31,11 +33,11 @@
   border-bottom: 1px solid #ccc;
 }
 
-.submitLoginForm > input:focus {
+.submitForm > input:focus {
   outline: none;
 }
 
-.submitLoginButton {
+.submitButton {
   font-family: sans-serif;
   background-color: rgb(54, 217, 182);
   border-radius: 0.2rem;
