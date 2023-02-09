@@ -98,14 +98,14 @@ def taskDelete(request, pk):
     task = Task.objects.get(id=pk)
     task.delete()
 
-    return Response('Item succsesfully deleted')
+    return Response('Item succesfully deleted')
 
 @api_view(['DELETE'])
 def columnDelete(request, pk):
     column = Column.objects.get(id=pk)
     column.delete()
 
-    return Response('Column succsesfully deleted')
+    return Response('Column succesfully deleted')
 
 @api_view(['POST'])
 def userCreate(request):

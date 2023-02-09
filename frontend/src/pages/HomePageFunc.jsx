@@ -446,7 +446,7 @@ const HomePageFunc = () => {
                   autoFocus
                 />
                 <div className={s.buttonsDiv}>
-                  <button className="btn-add">Add task</button>
+                  <button className={s.btnAdd}>Add task</button>
                   <button
                     onClick={() => changeTaskTag(index)}
                     type="button"
@@ -480,7 +480,7 @@ const HomePageFunc = () => {
             autoFocus
           />
           <div className={s.buttonsDiv}>
-            <button className="btn-add">Add column</button>
+            <button className={s.btnAdd}>Add column</button>
             <button
               onClick={changeColumnTag}
               type="button"

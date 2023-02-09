@@ -60,6 +60,11 @@ export const AuthProvider = ({ children }) => {
       }),
     });
     if (response.status === 200) {
+      console.log(JSON.stringify({
+        email: e.target.email.value,
+        username: e.target.username.value,
+        password: e.target.password.value,
+      }))
       navigate("/login");
     } else {
       alert("Something went wrong!");
