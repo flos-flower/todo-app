@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import get_user_model
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -106,6 +107,13 @@ def columnDelete(request, pk):
     column.delete()
 
     return Response('Column succesfully deleted')
+
+@api_view(['GET'])
+def userList(request):
+    User = get_user_model()
+    users = User.objects.all()  
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def userCreate(request):
