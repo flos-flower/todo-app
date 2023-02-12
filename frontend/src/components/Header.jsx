@@ -1,10 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import s from "../styles/HeaderStyles.module.css";
 
 const Header = () => {
-  let { user, logoutUser } = useContext(AuthContext);
+  let { user, logoutUser} = useContext(AuthContext);
+  let [profile, setProfile] = useState();
+
+  let fetchProfile = () => {
+    fetch("http://127.0.0.1:8000/api/profile/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+      })
+      .then((data) => setProfile(data));
+  };
+
   return (
     <div className={s.headerDiv}>
       {window.location.href === "http://localhost:3000/" ? (
@@ -17,7 +33,7 @@ const Header = () => {
         </div>
       )}
       <div className={s.logoutDiv}>
-        {user && <p>Hello, {user.username}</p>}
+        {user && <img src={`${profile.picture}`}></img>}
         {user ? (
           <p className={s.logoutBtn} onClick={logoutUser}>
             Logout

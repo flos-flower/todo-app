@@ -123,7 +123,9 @@ def userCreate(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def profileList(request):
-    profiles = Profile.objects.all()
+@permission_classes([IsAuthenticated])
+def getProfile(request):
+    user = request.user
+    profiles = user.profile_set.all()
     serializer = ProfileSerializer(profiles, many=True)
     return Response(serializer.data)
