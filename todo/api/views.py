@@ -3,10 +3,10 @@ from django.contrib.auth import get_user_model
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import TaskSerializer, UserSerializer, ColumnSerializer
+from .serializers import TaskSerializer, UserSerializer, ColumnSerializer, ProfileSerializer
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Task, Column
+from .models import Task, Column, Profile
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -120,4 +120,10 @@ def userCreate(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def profileList(request):
+    profiles = Profile.objects.all()
+    serializer = ProfileSerializer(profiles, many=True)
     return Response(serializer.data)
