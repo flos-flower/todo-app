@@ -43,8 +43,8 @@ const RegisterPage = () => {
   return (
     <div className={s.formDiv}>
       <form
+        onSubmit={handleSubmit(registerUser)}
         className={s.submitForm}
-        onSubmit={(e)=>{handleSubmit(registerUser(e))}}
       >
         <input
           type="text"

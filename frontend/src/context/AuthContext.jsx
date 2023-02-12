@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  let registerUser = async (e) => {
+  let registerUser = async (values, e) => {
     e.preventDefault();
     let response = await fetch("http://127.0.0.1:8000/api/register/", {
       method: "POST",
