@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -125,7 +126,6 @@ def userCreate(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getProfile(request):
-    user = request.user
-    profiles = user.profile_set.all()
+    profiles = Profile.objects.filter(user=request.user)
     serializer = ProfileSerializer(profiles, many=True)
     return Response(serializer.data)

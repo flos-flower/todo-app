@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import s from "../styles/HeaderStyles.module.css";
 
 const Header = () => {
-  let { user, logoutUser} = useContext(AuthContext);
+  let { user, logoutUser, authTokens} = useContext(AuthContext);
   let [profile, setProfile] = useState();
 
   let fetchProfile = () => {
@@ -18,9 +18,16 @@ const Header = () => {
       .then((response) => {
         if (response.status === 200) return response.json();
       })
-      .then((data) => setProfile(data));
+      .then((data) => {
+        console.log(data)
+        setProfile(data)})
   };
 
+  useEffect(() => {
+    if (user) fetchProfile();
+  }, [user]);
+
+  if (profile != undefined)
   return (
     <div className={s.headerDiv}>
       {window.location.href === "http://localhost:3000/" ? (
@@ -32,12 +39,9 @@ const Header = () => {
           <Link to="/">Home</Link>
         </div>
       )}
-      <div className={s.logoutDiv}>
-        {user && <img src={`${profile.picture}`}></img>}
+      <div className={s.profileDiv}>
         {user ? (
-          <p className={s.logoutBtn} onClick={logoutUser}>
-            Logout
-          </p>
+          <img className={s.profileImage} src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${profile[0].picture}`} />
         ) : (
           <div className={s.authDiv}>
             {window.location.href === "http://localhost:3000/login" ? (

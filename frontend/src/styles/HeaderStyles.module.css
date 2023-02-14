@@ -27,12 +27,17 @@
   cursor: pointer;
 }
 
-.logoutDiv {
+.profileDiv {
   display: flex;
   justify-content: space-between;
-  width: 10rem;
 }
 
 .selected {
   border-bottom: 1px solid black;
+}
+
+.profileImage {
+  height:2.5rem;
+  width:2.5rem;
+  border-radius: 50%;
 }
