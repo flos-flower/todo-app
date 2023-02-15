@@ -406,18 +406,21 @@ const HomePageFunc = () => {
                                   {todoList.map((option, option_index) => {
                                     return (
                                       <li
-                                        onClick={() => {
-                                          dropdownUpdateTask(
-                                            task.id,
-                                            task.title,
-                                            option.id
-                                          );
-                                          dropdownClick(task_index);
-                                        }}
                                         className={s.dropdownChild}
                                         key={option_index}
                                       >
-                                        {option.name}
+                                        <p
+                                          onClick={() => {
+                                            dropdownUpdateTask(
+                                              task.id,
+                                              task.title,
+                                              option.id
+                                            );
+                                            dropdownClick(task_index);
+                                          }}
+                                        >
+                                          {option.name}
+                                        </p>
                                       </li>
                                     );
                                   })}

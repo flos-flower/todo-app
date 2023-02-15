@@ -227,7 +227,7 @@ button:focus {
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
   background-color: white;
-  padding: 0.3rem;
+  padding: 0.3rem 0;
   border-radius: 0.1rem;
 }
 
@@ -236,12 +236,14 @@ button:focus {
   padding: 0;
   margin: 0;
 }
-.dropdown > li {
-  padding: 8px 12px;
-}
 
 .dropdownChild {
   padding: 0 0.2rem;
+  margin: 0.2rem 0;
+}
+
+.dropdownChild > p {
+  margin: 0;
 }
 
 .dropdownChild:hover {

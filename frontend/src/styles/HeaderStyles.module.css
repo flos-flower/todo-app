@@ -7,6 +7,15 @@
   padding: 1rem;
 }
 
+a {
+  color:#212529;
+}
+
+a:hover {
+  text-decoration:none;
+  color:#212529;
+}
+
 .headerDiv > div > a,
 .authDiv > div > a {
   color: inherit;
@@ -40,4 +49,45 @@
   height:2.5rem;
   width:2.5rem;
   border-radius: 50%;
+  cursor:pointer;
 }
+
+.dropdown {
+  position: absolute;
+  top: 3.3rem;
+  right: 0.2rem;
+  width: 10rem;
+  z-index: 2;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
+  background-color: white;
+  padding: 0.3rem 0;
+  border-radius: 0.2rem;
+}
+
+.dropdown > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown > ul > hr{
+  margin: 0.4rem 0;
+}
+
+.dropdownChild {
+  padding:0.35rem 0 0.35rem 0.4rem;
+  width:100%;
+  display:flex;
+  justify-content: flex-start;
+}
+
+.dropdownChild > p {
+  margin:0;
+}
+
+.dropdownChild:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+

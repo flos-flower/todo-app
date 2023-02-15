@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Header from "./components/Header";
 import HomePageFunc from "./pages/HomePageFunc";
+import ProfileInfo from "./components/ProfileInfo"
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             />
             <Route element={<LoginPage />} path="/login" exact />
             <Route element={<RegisterPage />} path="/register" exact />
+            <Route element={<ProfileInfo />} path="/profile" exact />
           </Routes>
         </AuthProvider>
       </Router>

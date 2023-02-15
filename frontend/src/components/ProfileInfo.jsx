@@ -8,3 +8,5 @@ const ProfileInfo = () => {
     </div>
   );
 };
+
+export default ProfileInfo

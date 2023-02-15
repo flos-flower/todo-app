@@ -106,7 +106,6 @@ export const AuthProvider = ({ children }) => {
     loginUser: loginUser,
     logoutUser: logoutUser,
     registerUser: registerUser,
-    authTokens: authTokens,
   };
 
   useEffect(() => {
