@@ -19,9 +19,31 @@ export const AuthProvider = ({ children }) => {
       : null
   );
   let [loading, setLoading] = useState(true);
+  let [profile, setProfile] = useState();
 
   const dataFetchedRef = useRef(false);
   const navigate = useNavigate();
+
+  let fetchProfile = () => {
+    fetch("http://127.0.0.1:8000/api/profile/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setProfile(data);
+      });
+  };
+
+  useEffect(() => {
+    if (user) fetchProfile();
+  }, [user]);
 
   let loginUser = async (e) => {
     e.preventDefault();
@@ -106,6 +128,7 @@ export const AuthProvider = ({ children }) => {
     loginUser: loginUser,
     logoutUser: logoutUser,
     registerUser: registerUser,
+    profile:profile,
   };
 
   useEffect(() => {

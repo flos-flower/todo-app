@@ -1,37 +1,28 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import s from "../styles/HeaderStyles.module.css";
 
 const Header = () => {
-  let { user, logoutUser, authTokens } = useContext(AuthContext);
-  let [profile, setProfile] = useState();
+  let { user, logoutUser, profile } = useContext(AuthContext);
   let [drop, setDrop] = useState(false);
-
-  let fetchProfile = () => {
-    fetch("http://127.0.0.1:8000/api/profile/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setProfile(data);
-      });
-  };
+  const ref = useRef(null);
 
   let changeVisibility = () => {
     setDrop(!drop);
   };
 
   useEffect(() => {
-    if (user) fetchProfile();
-  }, [user]);
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target) && drop===true) {
+        changeVisibility && changeVisibility();
+      }
+    };
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, [ changeVisibility ]);
 
   if (profile !== undefined)
     return (
@@ -47,7 +38,7 @@ const Header = () => {
         )}
         <div className={s.profileDiv}>
           {user ? (
-            <div className={s.dropdownContainer}>
+            <div className={s.dropdownContainer} ref={ref}>
               <img
                 className={s.profileImage}
                 src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${profile[0].picture}`}
