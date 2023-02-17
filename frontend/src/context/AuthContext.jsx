@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }) => {
       : null
   );
   let [loading, setLoading] = useState(true);
+  let [isLoading, setIsLoading] = useState(false);
   let [profile, setProfile] = useState();
 
   const dataFetchedRef = useRef(false);
@@ -124,7 +125,7 @@ export const AuthProvider = ({ children }) => {
   const handleImageChange = (e) => {
     const data = new FormData()
     data.append('picture', e.target.files[0])
-    data.append('user', '1')
+    data.append('user', user.user_id)
     var url = `http://127.0.0.1:8000/api/profile-update/${profile[0].id}`;
     fetch(url, {
       method: "POST",
@@ -146,7 +147,8 @@ export const AuthProvider = ({ children }) => {
     logoutUser: logoutUser,
     registerUser: registerUser,
     profile:profile,
-    handleImageChange:handleImageChange
+    handleImageChange:handleImageChange,
+    isLoading:isLoading,
   };
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import s from "../styles/ProfileStyles.module.css";
 import AuthContext from "../context/AuthContext";
 
 const ProfileInfo = () => {
-  let { user, profile, handleImageChange } = useContext(AuthContext);
+  let { user, profile, handleImageChange, isLoading } = useContext(AuthContext);
 
   if (profile !== undefined)
     return (
