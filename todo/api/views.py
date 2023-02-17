@@ -129,3 +129,13 @@ def getProfile(request):
     profiles = Profile.objects.filter(user=request.user)
     serializer = ProfileSerializer(profiles, many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def profileUpdate(request, pk):
+    profile = Profile.objects.get(id=pk)
+    serializer = ProfileSerializer(instance=profile, data=request.data)
+    print(request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)

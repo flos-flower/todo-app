@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
         if (response.status === 200) return response.json();
       })
       .then((data) => {
-        console.log(data);
         setProfile(data);
       });
   };
@@ -122,6 +121,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const data = new FormData()
+    data.append('picture', e.target.files[0])
+    data.append('user', '1')
+    var url = `http://127.0.0.1:8000/api/profile-update/${profile[0].id}`;
+    fetch(url, {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => {
+        console.log(data)
+        fetchProfile();
+      })
+      .catch(function(error) {
+        console.log("ERROR", error);
+      });
+  };
+
   let contextData = {
     authTokens: authTokens,
     user: user,
@@ -129,6 +146,7 @@ export const AuthProvider = ({ children }) => {
     logoutUser: logoutUser,
     registerUser: registerUser,
     profile:profile,
+    handleImageChange:handleImageChange
   };
 
   useEffect(() => {

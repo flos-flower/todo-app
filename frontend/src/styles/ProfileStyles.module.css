@@ -10,16 +10,19 @@
     display:flex;
     margin:auto;
     justify-content: flex-start;
-    width:40rem;
+    width:37rem;
     background-color:white;
     border-radius:0.15rem;
-    padding:1rem;
+    padding:1.5rem;
 }
 
 .profileImage {
-    width:8rem;
+    width: 8rem;
     height: 8rem;
     display: block;
+    border-radius:10%;
+    object-fit: cover;
+    image-rendering: smooth;
 }
 
 .basicInfo {
@@ -43,3 +46,31 @@
     bottom:0;
     cursor: pointer;
 }::-webkit-file-upload-button { cursor:pointer; }
+
+.formDiv {
+    width:100%;
+}
+
+.formDiv > label {
+    width:100%;
+}
+
+.infoInput {
+    border: 1px solid #ccc;
+    border-radius:3px;
+    display:block;
+    width:100%;
+    padding:0.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.infoInput:focus {
+    outline: none;
+}
+
+.formDiv > input[type=submit] {
+    background-color:rgb(64, 255, 64);
+    border:none;
+    border-radius: 0.2rem;
+    color:white;
+}
