@@ -90,6 +90,7 @@ def taskUpdate(request, pk):
 def columnUpdate(request, pk):
     column = Column.objects.get(id=pk)
     serializer = ColumnSerializer(instance=column, data=request.data)
+    print(request.data)
     if serializer.is_valid():
         serializer.save()
 
@@ -134,6 +135,8 @@ def getProfile(request):
 def profileUpdate(request, pk):
     profile = Profile.objects.get(id=pk)
     serializer = ProfileSerializer(instance=profile, data=request.data)
+    if request.data['picture'] == '':
+        request.data.update({"picture": profile.picture})
     print(request.data)
     if serializer.is_valid():
         serializer.save()

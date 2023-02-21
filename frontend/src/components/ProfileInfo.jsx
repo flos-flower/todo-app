@@ -1,9 +1,26 @@
 import React, { useContext} from "react";
 import s from "../styles/ProfileStyles.module.css";
 import AuthContext from "../context/AuthContext";
+import { useState } from "react";
 
 const ProfileInfo = () => {
-  let { user, profile, handleImageChange, isLoading } = useContext(AuthContext);
+  let { user, profile, handleImageChange, handleProfileChange } = useContext(AuthContext);
+  let [ name, setName ] = useState(() => 
+  {if (profile[0].name === null) return ''
+  else return `${profile[0].name}`
+  })
+  let [ surname, setSurname ] = useState(() => 
+  {if (profile[0].surname === null) return ''
+  else return `${profile[0].surname}`
+  })
+
+  let onNameChange = (e) => {
+    setName(e.target.value)
+  }
+
+  let onSurnameChange = (e) => {
+    setSurname(e.target.value)
+  }
 
   if (profile !== undefined)
     return (
@@ -20,10 +37,14 @@ const ProfileInfo = () => {
             </div>
             <span>{user.username}</span>
           </div>
-          <form className={s.formDiv}>
-              <input placeholder="Name" name="name" className={s.infoInput} />
-              <input placeholder="Last name" name="surname" className={s.infoInput} />
-              <input type='submit' className={s.submitButton} />
+          <form className={s.formDiv} onSubmit={handleProfileChange}>
+              <label>Name
+              <input onChange={onNameChange} value={name} placeholder="Name" name="name" className={s.infoInput} />
+              </label>
+              <label>Last name
+              <input onChange={onSurnameChange} value={surname} placeholder="Last name" name="surname" className={s.infoInput} />
+              </label>
+              <input type='submit' value='Save' />
           </form>
         </div>
       </div>

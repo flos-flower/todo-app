@@ -8,12 +8,12 @@
 }
 
 a {
-  color:#212529;
+  color: #212529;
 }
 
 a:hover {
-  text-decoration:none;
-  color:#212529;
+  text-decoration: none;
+  color: #212529;
 }
 
 .headerDiv > div > a,
@@ -46,10 +46,10 @@ a:hover {
 }
 
 .profileImage {
-  height:2.5rem;
-  width:2.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
   border-radius: 50%;
-  cursor:pointer;
+  cursor: pointer;
   object-fit: cover;
   image-rendering: high-quality;
 }
@@ -58,7 +58,7 @@ a:hover {
   position: absolute;
   top: 3.3rem;
   right: 0.2rem;
-  width: 10rem;
+  width: 9rem;
   z-index: 2;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
@@ -68,28 +68,64 @@ a:hover {
 }
 
 .dropdown > ul {
+  width: 100%;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.dropdown > ul > hr{
-  margin: 0.4rem 0;
-}
-
 .dropdownChild {
-  padding:0.35rem 0 0.35rem 0.4rem;
-  width:100%;
-  display:flex;
+  padding: 0.35rem 0 0.35rem 0.4rem;
+  width: 100%;
+  display: flex;
   justify-content: flex-start;
 }
 
 .dropdownChild > p {
-  margin:0;
+  margin: 0 0 0 1.3rem;
 }
 
 .dropdownChild:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.08);
 }
+
+.username {
+  padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.username > p {
+  margin: 0 auto;
+}
+
+hr {
+  margin: 0.4rem auto;
+  width: 90%;
+}
+
+.dropdown > ul > li {
+  display:flex;
+  align-items:center;
+  position: relative;
+}
+
+.dropdown > ul > li > a {
+  margin-left:1.3rem;
+}
+
+.profileIcon {
+  position: absolute;
+  left: 0.35rem;
+  bottom: 0.67rem;
+}
+
+.signoutIcon {
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0.60rem;
+}
+
 

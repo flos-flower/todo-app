@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }) => {
       : null
   );
   let [loading, setLoading] = useState(true);
-  let [isLoading, setIsLoading] = useState(false);
   let [profile, setProfile] = useState();
 
   const dataFetchedRef = useRef(false);
@@ -132,13 +131,35 @@ export const AuthProvider = ({ children }) => {
       body: data,
     })
       .then((response) => {
-        console.log(data)
         fetchProfile();
       })
       .catch(function(error) {
         console.log("ERROR", error);
       });
   };
+
+  let handleProfileChange = (e) => {
+    e.preventDefault()
+    var url = `http://127.0.0.1:8000/api/profile-update/${profile[0].id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...profile[0],
+        picture: '',
+        name: e.target.name.value,
+        surname: e.target.surname.value,
+      }),
+    })
+      .then((response) => {
+        fetchProfile();
+      })
+      .catch(function(error) {
+        console.log("ERROR", error);
+      });
+  }
 
   let contextData = {
     authTokens: authTokens,
@@ -148,7 +169,7 @@ export const AuthProvider = ({ children }) => {
     registerUser: registerUser,
     profile:profile,
     handleImageChange:handleImageChange,
-    isLoading:isLoading,
+    handleProfileChange:handleProfileChange,
   };
 
   useEffect(() => {

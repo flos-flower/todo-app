@@ -53,6 +53,7 @@
 
 .formDiv > label {
     width:100%;
+    margin:0;
 }
 
 .infoInput {
@@ -69,7 +70,7 @@
 }
 
 .formDiv > input[type=submit] {
-    background-color:rgb(64, 255, 64);
+    background-color:rgb(129, 255, 129);
     border:none;
     border-radius: 0.2rem;
     color:white;
