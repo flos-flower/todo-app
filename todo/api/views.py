@@ -4,10 +4,10 @@ from django.db.models import Q
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import TaskSerializer, UserSerializer, ColumnSerializer, ProfileSerializer
+from .serializers import TaskSerializer, UserSerializer, ColumnSerializer, ProfileSerializer, TableSerializer
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Task, Column, Profile
+from .models import Task, Column, Profile, Table
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -53,13 +53,6 @@ def columnList(request):
     user = request.user
     columns = user.column_set.all()
     serializer = ColumnSerializer(columns, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def taskDetail(request, pk):
-    tasks = Task.objects.get(id=pk)
-    serializer = TaskSerializer(tasks, many=False)
     return Response(serializer.data)
 
 @api_view(['POST'])
@@ -150,3 +143,42 @@ def profileUpdate(request, pk):
         serializer.save()
 
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def tableList(request):
+    user = request.user
+    tables = user.table_set.all()
+    serializer = TableSerializer(tables, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def tableCreate(request):
+    serializer = TableSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def tableUpdate(request, pk):
+    table = Table.objects.get(id=pk)
+    serializer = TableSerializer(instance=table, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def tableDelete(request, pk):
+    table = Table.objects.get(id=pk)
+    table.delete()
+
+    return Response('Table succesfully deleted')

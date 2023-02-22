@@ -13,10 +13,14 @@ urlpatterns = [
 
     path('', views.apiOverview, name='api-overview'),
     path('task-list/', views.taskList, name='task-list'),
-    path('task-detail/<str:pk>/', views.taskDetail, name='task-detail'),
     path('task-create/', views.taskCreate, name='task-create'),
     path('task-update/<str:pk>', views.taskUpdate, name='task-update'),
     path('task-delete/<str:pk>', views.taskDelete, name='task-delete'),
+
+    path('table-list/', views.tableList, name='table-list'),
+    path('table-create/', views.tableCreate, name='table-create'),
+    path('table-update/<str:pk>', views.tableUpdate, name='table-update'),
+    path('table-delete/<str:pk>', views.tableDelete, name='table-delete'),
 
     path('column-list/', views.columnList, name='column-list'),
     path('column-create/', views.columnCreate, name='column-create'),
