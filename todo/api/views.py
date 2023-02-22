@@ -56,12 +56,14 @@ def columnList(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def taskDetail(request, pk):
     tasks = Task.objects.get(id=pk)
     serializer = TaskSerializer(tasks, many=False)
     return Response(serializer.data)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def taskCreate(request):
     serializer = TaskSerializer(data=request.data)
     if serializer.is_valid():
@@ -70,6 +72,7 @@ def taskCreate(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def columnCreate(request):
     serializer = ColumnSerializer(data=request.data)
     if serializer.is_valid():
@@ -78,6 +81,7 @@ def columnCreate(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def taskUpdate(request, pk):
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(instance=task, data=request.data)
@@ -87,6 +91,7 @@ def taskUpdate(request, pk):
     return Response(serializer.data)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def columnUpdate(request, pk):
     column = Column.objects.get(id=pk)
     serializer = ColumnSerializer(instance=column, data=request.data)
@@ -97,6 +102,7 @@ def columnUpdate(request, pk):
     return Response(serializer.data)
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def taskDelete(request, pk):
     task = Task.objects.get(id=pk)
     task.delete()
@@ -104,6 +110,7 @@ def taskDelete(request, pk):
     return Response('Item succesfully deleted')
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def columnDelete(request, pk):
     column = Column.objects.get(id=pk)
     column.delete()
@@ -132,6 +139,7 @@ def getProfile(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def profileUpdate(request, pk):
     profile = Profile.objects.get(id=pk)
     serializer = ProfileSerializer(instance=profile, data=request.data)

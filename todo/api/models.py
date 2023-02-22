@@ -24,7 +24,7 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 class Column(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
 
     def __str__(self):
@@ -32,9 +32,9 @@ class Column(models.Model):
 
 
 class Task(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    column = models.ForeignKey(Column, on_delete=models.CASCADE, null=True)
+    column = models.ForeignKey(Column, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

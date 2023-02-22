@@ -128,6 +128,9 @@ export const AuthProvider = ({ children }) => {
     var url = `http://127.0.0.1:8000/api/profile-update/${profile[0].id}`;
     fetch(url, {
       method: "POST",
+      headers: {
+        Authorization: "Bearer " + String(authTokens.access),
+      },
       body: data,
     })
       .then((response) => {
@@ -145,6 +148,7 @@ export const AuthProvider = ({ children }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
       },
       body: JSON.stringify({
         ...profile[0],

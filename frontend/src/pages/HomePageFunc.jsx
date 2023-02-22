@@ -145,6 +145,7 @@ const HomePageFunc = () => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
       },
       body: JSON.stringify({
         user: userid,
@@ -166,6 +167,7 @@ const HomePageFunc = () => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
       },
       body: JSON.stringify(taskTitle),
     })
@@ -184,6 +186,7 @@ const HomePageFunc = () => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
       },
       body: JSON.stringify(editing),
     })
@@ -202,6 +205,7 @@ const HomePageFunc = () => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
       },
       body: JSON.stringify({
         user: jwt_decode(authTokens.access).user_id,
@@ -222,6 +226,7 @@ const HomePageFunc = () => {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
       },
     }).then((response) => {
       fetchTasks();
@@ -233,6 +238,7 @@ const HomePageFunc = () => {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
       },
     }).then((response) => {
       fetchColumns();
@@ -269,7 +275,6 @@ const HomePageFunc = () => {
     for (let i = 0; i < columns.length; i++) {
       if (i !== index) {
         columns[i] = false;
-        console.log(i);
       }
     }
     let column = columns[index];
@@ -283,6 +288,7 @@ const HomePageFunc = () => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
       },
       body: JSON.stringify({
         user: jwt_decode(authTokens.access).user_id,
