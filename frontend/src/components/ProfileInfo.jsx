@@ -1,10 +1,10 @@
 import React, { useContext} from "react";
 import s from "../styles/ProfileStyles.module.css";
-import AuthContext from "../context/AuthContext";
+import Context from "../context/Context";
 import { useState } from "react";
 
 const ProfileInfo = () => {
-  let { user, profile, handleImageChange, handleProfileChange } = useContext(AuthContext);
+  let { user, profile, handleImageChange, handleProfileChange } = useContext(Context);
   let [ name, setName ] = useState(() => 
   {if (profile[0].name === null) return ''
   else return `${profile[0].name}`

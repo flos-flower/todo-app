@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import AuthContext from "../context/AuthContext";
+import Context from "../context/Context";
 import s from "../styles/LoginStyles.module.css";
 
 const LoginPage = () => {
-  let { loginUser } = useContext(AuthContext);
+  let { loginUser } = useContext(Context);
   return (
     <div className={s.formDiv}>
       <form className={s.submitLoginForm} onSubmit={loginUser}>

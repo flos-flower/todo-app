@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import Context from "../context/Context";
 import s from "../styles/HeaderStyles.module.css";
 
 const Header = () => {
-  let { user, logoutUser, profile } = useContext(AuthContext);
+  let { user, logoutUser, profile } = useContext(Context);
   let [drop, setDrop] = useState(false);
   const ref = useRef(null);
 

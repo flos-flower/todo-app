@@ -1,4 +1,4 @@
-import AuthContext from "../context/AuthContext";
+import Context from "../context/Context";
 import React, { useContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -25,8 +25,8 @@ const HomePageFunc = () => {
   let [columnUpdateTag, setColumnUpdateTag] = useState([]);
   let [open, setOpen] = useState([]);
 
-  let { authTokens } = useContext(AuthContext);
-  let { logoutUser } = useContext(AuthContext);
+  let { authTokens } = useContext(Context);
+  let { logoutUser } = useContext(Context);
 
   let fetchColumns = () => {
     fetch("http://127.0.0.1:8000/api/column-list/", {

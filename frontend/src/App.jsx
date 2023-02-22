@@ -2,7 +2,7 @@ import React from "react";
 import "./styles/App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
-import { AuthProvider } from "./context/AuthContext";
+import { ContextProvider } from "./context/Context";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <AuthProvider>
+        <ContextProvider>
           <Header />
           <Routes style={{ zIndex: 1 }}>
             <Route
@@ -26,7 +26,7 @@ function App() {
             <Route element={<RegisterPage />} path="/register" exact />
             <Route element={<ProfileInfo />} path="/profile" exact />
           </Routes>
-        </AuthProvider>
+        </ContextProvider>
       </Router>
     </div>
   );

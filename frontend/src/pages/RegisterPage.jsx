@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import AuthContext from "../context/AuthContext";
+import Context from "../context/Context";
 import s from "../styles/RegisterStyles.module.css";
 import { useForm } from "react-hook-form";
 
@@ -39,7 +39,7 @@ const RegisterPage = () => {
       if (value === userList[i].email) return "Email already in use";
   };
 
-  let { registerUser } = useContext(AuthContext);
+  let { registerUser } = useContext(Context);
   return (
     <div className={s.formDiv}>
       <form

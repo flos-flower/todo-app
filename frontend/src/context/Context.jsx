@@ -3,11 +3,11 @@ import { createContext, useState, useEffect, useRef } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext();
+const Context = createContext();
 
-export default AuthContext;
+export default Context;
 
-export const AuthProvider = ({ children }) => {
+export const ContextProvider = ({ children }) => {
   let [authTokens, setAuthTokens] = useState(() =>
     localStorage.getItem("authTokens")
       ? JSON.parse(localStorage.getItem("authTokens"))
@@ -193,8 +193,8 @@ export const AuthProvider = ({ children }) => {
   }, [authTokens, loading]);
 
   return (
-    <AuthContext.Provider value={contextData}>
+    <Context.Provider value={contextData}>
       {loading ? null : children}
-    </AuthContext.Provider>
+    </Context.Provider>
   );
 };
