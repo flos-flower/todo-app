@@ -1,7 +1,7 @@
 import Context from "../context/Context";
 import React, { useContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import Tasks from "../components/Tasks";
+import List from "../components/List";
 
 const HomePageFunc = () => {
   let [todoList, setTodoList] = useState([]);
@@ -305,7 +305,7 @@ const HomePageFunc = () => {
   };
 
   return (
-    <Tasks
+    <List
       todoList={todoList}
       columnUpdateTag={columnUpdateTag}
       handleColumnKeyDown={handleColumnKeyDown}

@@ -24,7 +24,7 @@ export const ContextProvider = ({ children }) => {
 
   let [tableList, setTableList] = useState();
   let [selectedTable, setSelectedTable] = useState(() => {
-    if (tableList === undefined) return null;
+    if (tableList === undefined) return null
     else return tableList[0];
   });
 

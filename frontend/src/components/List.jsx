@@ -1,7 +1,7 @@
 import OutsideClickHandler from "react-outside-click-handler";
-import s from "../styles/TaskStyles.module.css";
+import s from "../styles/ListStyles.module.css";
 
-const Tasks = (props) => {
+const List = (props) => {
   return (
     <div className={s.columnsDiv}>
       {props.todoList.map((column, index) => {
@@ -217,4 +217,4 @@ const Tasks = (props) => {
   );
 };
 
-export default Tasks;
+export default List;
