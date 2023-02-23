@@ -7,7 +7,7 @@ import { ContextProvider } from "./context/Context";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Header from "./components/Header";
-import HomePageFunc from "./pages/HomePageFunc";
+import HomePage from "./pages/HomePage";
 import ProfileInfo from "./components/ProfileInfo"
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
             <Route
               exact
               path="/"
-              element={<PrivateRoute Component={HomePageFunc} />}
+              element={<PrivateRoute Component={HomePage} />}
             />
             <Route element={<LoginPage />} path="/login" exact />
             <Route element={<RegisterPage />} path="/register" exact />
