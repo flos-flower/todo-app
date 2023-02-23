@@ -128,4 +128,7 @@ hr {
   bottom: 0.60rem;
 }
 
+.dropdown > ul > li > a {
+  width:100%;
+}
 

@@ -156,7 +156,7 @@ const HomePageFunc = () => {
         fetchColumns();
         setColumnName("");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("ERROR", error);
       });
   };
@@ -175,7 +175,7 @@ const HomePageFunc = () => {
         fetchTasks();
         setTaskTitle("");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("ERROR", error);
       });
   };
@@ -194,7 +194,7 @@ const HomePageFunc = () => {
         fetchTasks();
         setTaskTitle("");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("ERROR", error);
       });
   };
@@ -216,7 +216,7 @@ const HomePageFunc = () => {
         fetchColumns();
         setTaskTitle("");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("ERROR", error);
       });
   };
@@ -300,7 +300,7 @@ const HomePageFunc = () => {
         fetchTasks();
         setTaskTitle("");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("ERROR", error);
       });
   };
