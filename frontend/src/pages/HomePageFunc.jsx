@@ -1,8 +1,6 @@
 import Context from "../context/Context";
 import React, { useContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import OutsideClickHandler from "react-outside-click-handler";
-import s from "../styles/HomePage.module.css";
 import Tasks from "../components/Tasks";
 
 const HomePageFunc = () => {

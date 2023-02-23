@@ -1,5 +1,5 @@
 import OutsideClickHandler from "react-outside-click-handler";
-import s from "../styles/HomePage.module.css";
+import s from "../styles/TaskStyles.module.css";
 
 const Tasks = (props) => {
   return (
