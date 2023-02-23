@@ -19,7 +19,14 @@ export const ContextProvider = ({ children }) => {
       : null
   );
   let [loading, setLoading] = useState(true);
+
   let [profile, setProfile] = useState();
+
+  let [tableList, setTableList] = useState();
+  let [selectedTable, setSelectedTable] = useState(() => {
+    if (tableList === undefined) return null;
+    else return tableList[0];
+  });
 
   const dataFetchedRef = useRef(false);
   const navigate = useNavigate();
@@ -40,9 +47,21 @@ export const ContextProvider = ({ children }) => {
       });
   };
 
-  useEffect(() => {
-    if (user) fetchProfile();
-  }, [user]);
+  let fetchTable = () => {
+    fetch("http://127.0.0.1:8000/api/table-list/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+      })
+      .then((data) => {
+        setTableList(data);
+      });
+  };
 
   let loginUser = async (e) => {
     e.preventDefault();
@@ -165,16 +184,13 @@ export const ContextProvider = ({ children }) => {
       });
   }
 
-  let contextData = {
-    authTokens: authTokens,
-    user: user,
-    loginUser: loginUser,
-    logoutUser: logoutUser,
-    registerUser: registerUser,
-    profile:profile,
-    handleImageChange:handleImageChange,
-    handleProfileChange:handleProfileChange,
-  };
+  useEffect(() => {
+    fetchTable();
+  }, [])
+
+  useEffect(() => {
+    if (user) fetchProfile();
+  }, [user]);
 
   useEffect(() => {
     if (dataFetchedRef.current) return;
@@ -191,6 +207,17 @@ export const ContextProvider = ({ children }) => {
     }, fourMinutes);
     return () => clearInterval(interval);
   }, [authTokens, loading]);
+
+  let contextData = {
+    authTokens: authTokens,
+    user: user,
+    loginUser: loginUser,
+    logoutUser: logoutUser,
+    registerUser: registerUser,
+    profile:profile,
+    handleImageChange:handleImageChange,
+    handleProfileChange:handleProfileChange,
+  };
 
   return (
     <Context.Provider value={contextData}>
