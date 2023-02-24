@@ -5,12 +5,20 @@ import s from "../styles/HeaderStyles.module.css";
 import ProfileDropdown from "./ProfileDropdown";
 
 const Header = () => {
-  let { user, logoutUser, profile } = useContext(Context);
+  let { user, logoutUser, profile, selectedTable, tableList } =
+    useContext(Context);
+
   let [drop, setDrop] = useState(false);
+  let [tableSelectVisible, setTableSelectVisible] = useState(false);
+
   const ref = useRef(null);
 
   let changeVisibility = () => {
     setDrop(!drop);
+  };
+
+  let changeSelectVisibility = () => {
+    setTableSelectVisible(!tableSelectVisible);
   };
 
   useEffect(() => {
@@ -25,6 +33,8 @@ const Header = () => {
     };
   }, [changeVisibility]);
 
+
+  if (tableList !== undefined)
   return (
     <div className={s.headerDiv}>
       {window.location.href === "http://localhost:3000/" ? (
@@ -36,54 +46,74 @@ const Header = () => {
           <Link to="/">Home</Link>
         </div>
       )}
-      <div className={s.profileDiv}>
-        {user ? (
+      {user ? (
+        <div className={s.profileDiv}>
+          <div
+            className={s.selectTable}
+            onClick={() => {
+              setTableSelectVisible(!tableSelectVisible);
+            }}
+          >
+            <span className={s.selectedOption}>{tableList[0].name}</span>
+            <ul className={s.tableOptions}>
+              {tableSelectVisible &&
+                tableList.map((table, index) => {
+                  return <li key={index}>{table.name}</li>;
+                })}
+            </ul>
+          </div>
           <div className={s.dropdownContainer} ref={ref}>
             {profile !== undefined ? (
               <img
                 className={s.profileImage}
                 src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${profile[0].picture}`}
                 alt="Profile"
-                onClick={changeVisibility}
+                onClick={() => {
+                  setDrop(!drop);
+                }}
               />
             ) : (
               <img
                 className={s.profileImage}
                 alt="Profile"
-                onClick={changeVisibility}
+                onClick={() => {
+                  setDrop(!drop);
+                }}
               />
             )}
             {drop && (
               <ProfileDropdown
                 user={user}
-                changeVisibility={changeVisibility}
+                changeVisibility={() => {
+                  setDrop(!drop);
+                }}
                 logoutUser={logoutUser}
               />
             )}
           </div>
-        ) : (
-          <div className={s.authDiv}>
-            {window.location.href === "http://localhost:3000/login" ? (
-              <div className={s.selected}>
-                <Link to="/login">Login</Link>
-              </div>
-            ) : (
-              <div>
-                <Link to="/login">Login</Link>
-              </div>
-            )}
-            {window.location.href === "http://localhost:3000/register" ? (
-              <div className={s.selected}>
-                <Link to="/register">Register</Link>
-              </div>
-            ) : (
-              <div>
-                <Link to="/register">Register</Link>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className={s.authDiv}>
+          {window.location.href === "http://localhost:3000/login" ? (
+            <div className={s.selected}>
+              <Link to="/login">Login</Link>
+            </div>
+          ) : (
+            <div>
+              <Link to="/login">Login</Link>
+            </div>
+          )}
+          {window.location.href === "http://localhost:3000/register" ? (
+            <div className={s.selected}>
+              <Link to="/register">Register</Link>
+            </div>
+          ) : (
+            <div>
+              <Link to="/register">Register</Link>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

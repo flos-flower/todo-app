@@ -39,6 +39,7 @@ a:hover {
 .profileDiv {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .selected {
@@ -132,3 +133,18 @@ hr {
   width:100%;
 }
 
+.selectTable {
+  border: 0.08rem solid black;
+  border-radius: 0.2rem;
+  position: relative;
+  margin-right:1rem;
+  padding:0.1rem;
+  cursor:pointer;
+}
+
+.selectTable > span:after{
+}
+
+.tableOptions {
+  position: absolute;
+}

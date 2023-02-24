@@ -24,7 +24,7 @@ export const ContextProvider = ({ children }) => {
 
   let [tableList, setTableList] = useState();
   let [selectedTable, setSelectedTable] = useState(() => {
-    if (tableList === undefined) return null
+    if (tableList === undefined) return null;
     else return tableList[0];
   });
 
@@ -100,11 +100,13 @@ export const ContextProvider = ({ children }) => {
       }),
     });
     if (response.status === 200) {
-      console.log(JSON.stringify({
-        email: e.target.email.value,
-        username: e.target.username.value,
-        password: e.target.password.value,
-      }))
+      console.log(
+        JSON.stringify({
+          email: e.target.email.value,
+          username: e.target.username.value,
+          password: e.target.password.value,
+        })
+      );
       navigate("/login");
     } else {
       alert("Something went wrong!");
@@ -141,9 +143,9 @@ export const ContextProvider = ({ children }) => {
   };
 
   const handleImageChange = (e) => {
-    const data = new FormData()
-    data.append('picture', e.target.files[0])
-    data.append('user', user.user_id)
+    const data = new FormData();
+    data.append("picture", e.target.files[0]);
+    data.append("user", user.user_id);
     var url = `http://127.0.0.1:8000/api/profile-update/${profile[0].id}`;
     fetch(url, {
       method: "POST",
@@ -155,13 +157,13 @@ export const ContextProvider = ({ children }) => {
       .then((response) => {
         fetchProfile();
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("ERROR", error);
       });
   };
 
   let handleProfileChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     var url = `http://127.0.0.1:8000/api/profile-update/${profile[0].id}`;
     fetch(url, {
       method: "POST",
@@ -171,7 +173,7 @@ export const ContextProvider = ({ children }) => {
       },
       body: JSON.stringify({
         ...profile[0],
-        picture: '',
+        picture: "",
         name: e.target.name.value,
         surname: e.target.surname.value,
       }),
@@ -179,17 +181,16 @@ export const ContextProvider = ({ children }) => {
       .then((response) => {
         fetchProfile();
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("ERROR", error);
       });
-  }
+  };
 
   useEffect(() => {
-    fetchTable();
-  }, [])
-
-  useEffect(() => {
-    if (user) fetchProfile();
+    if (user) {
+      fetchTable();
+      fetchProfile();
+    }
   }, [user]);
 
   useEffect(() => {
@@ -214,9 +215,11 @@ export const ContextProvider = ({ children }) => {
     loginUser: loginUser,
     logoutUser: logoutUser,
     registerUser: registerUser,
-    profile:profile,
-    handleImageChange:handleImageChange,
-    handleProfileChange:handleProfileChange,
+    profile: profile,
+    handleImageChange: handleImageChange,
+    handleProfileChange: handleProfileChange,
+    tableList: tableList,
+    selectedTable: selectedTable,
   };
 
   return (
