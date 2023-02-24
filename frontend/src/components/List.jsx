@@ -191,37 +191,6 @@ const List = (props) => {
         handleKeyDown={props.handleKeyDown}
         addName="Add column"
       />
-      {/* {props.columnInputTag ? (
-        <form
-          onSubmit={(e) => {
-            props.addColumn(e);
-            props.changeColumnTag(e);
-          }}
-          className={s.columnInput}
-        >
-          <textarea
-            onChange={props.handleColumnChange}
-            onKeyDown={props.handleKeyDown}
-            placeholder="Enter a title"
-            autoFocus
-          />
-          <div className={s.buttonsDiv}>
-            <button className={s.btnAdd}>Add column</button>
-            <button
-              onClick={props.changeColumnTag}
-              type="button"
-              className={s.btnCancel}
-            >
-              &#9587;
-            </button>
-          </div>
-        </form>
-      ) : (
-        <div onClick={props.changeColumnTag} className={s.columnAdd}>
-          <span className={s.plus}>+</span>
-          <span>Add column</span>
-        </div>
-      )} */}
     </div>
   );
 };
