@@ -1,0 +1,50 @@
+.plus {
+  font-size: 16px;
+  height: 20px;
+  line-height: 20px;
+  font-family: trellicons;
+  font-style: normal;
+  font-weight: 400;
+  margin-right: 0.3rem;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(240, 240, 240);
+  height: fit-content;
+  padding: 0.5rem;
+  width: 14rem;
+  border-radius: 0.2rem;
+  min-width: 14rem;
+}
+
+.input > textarea {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.add {
+  background: rgba(255, 255, 255, 0.5);
+  height: fit-content;
+  padding: 0.45rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  display: flex;
+  min-width: max-content;
+}
+
+.btnAdd {
+  border: none;
+  background-color: #0079bf;
+  color: white;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+}
+
+.btnCancel {
+  border: none;
+}

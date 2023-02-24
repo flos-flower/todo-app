@@ -1,5 +1,6 @@
 import OutsideClickHandler from "react-outside-click-handler";
 import s from "../styles/ListStyles.module.css";
+import InputBar from "./InputBar";
 
 const List = (props) => {
   return (
@@ -182,7 +183,15 @@ const List = (props) => {
           </div>
         );
       })}
-      {props.columnInputTag ? (
+      <InputBar
+        add={props.addColumn}
+        changeTag={props.changeColumnTag}
+        condition={props.columnInputTag}
+        handleChange={props.handleColumnChange}
+        handleKeyDown={props.handleKeyDown}
+        addName="Add column"
+      />
+      {/* {props.columnInputTag ? (
         <form
           onSubmit={(e) => {
             props.addColumn(e);
@@ -212,7 +221,7 @@ const List = (props) => {
           <span className={s.plus}>+</span>
           <span>Add column</span>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

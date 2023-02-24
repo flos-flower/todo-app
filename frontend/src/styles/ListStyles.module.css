@@ -47,16 +47,6 @@
   background-color: rgb(243, 243, 243);
 }
 
-.columnAdd {
-  background: rgba(255, 255, 255, 0.5);
-  height: fit-content;
-  padding: 0.45rem;
-  border-radius: 0.2rem;
-  cursor: pointer;
-  display: flex;
-  min-width: max-content;
-}
-
 .taskAdd {
   cursor: pointer;
   height: fit-content;
@@ -106,25 +96,6 @@
 
 button:focus {
   outline: none;
-}
-
-.columnInput {
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(240, 240, 240);
-  height: fit-content;
-  padding: 0.5rem;
-  width: 14rem;
-  border-radius: 0.2rem;
-  min-width: 14rem;
-}
-
-.columnInput > textarea {
-  width: 100%;
-  margin-bottom: 0.3rem;
-  border: none;
-  outline: none;
-  resize: none;
 }
 
 .taskButtons {
