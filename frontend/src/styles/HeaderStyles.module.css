@@ -102,7 +102,7 @@ a:hover {
   margin: 0 auto;
 }
 
-hr {
+.dropdown > ul > hr {
   margin: 0.4rem auto;
   width: 90%;
 }
@@ -138,13 +138,45 @@ hr {
   border-radius: 0.2rem;
   position: relative;
   margin-right:1rem;
-  padding:0.1rem;
+  padding:0.2rem 0.3rem;
   cursor:pointer;
 }
 
 .selectTable > span:after{
+  position: relative;
+  top: -3px;
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-right: 0.01rem solid black;
+  border-top: 0.01rem solid black;
+  transform: rotate(135deg);
+  margin-right: 0.3rem;
+  margin-left: 0.5rem;
 }
 
 .tableOptions {
   position: absolute;
+  list-style-type: none;
+  background-color:white;
+  border-radius:0.2rem;
+  top: 2.75rem;
+  left:0;
+  z-index: 2;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
+  background-color: white;
+  padding: 0.3rem 0.2rem;
+  border-radius: 0.2rem;
+}
+
+.tableOptions > li {
+  padding: 0 0.4rem;
+  border-radius:0.2rem;
+  margin:0.2rem 0;
+}
+
+.tableOptions > li:hover {
+  background-color:rgba(0, 0, 0, 0.07);
 }
