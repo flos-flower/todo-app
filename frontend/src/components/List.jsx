@@ -7,7 +7,7 @@ const List = (props) => {
     <div className={s.columnsDiv}>
       {props.todoList.map((column, index) => {
         return (
-          props.selectedTable.id === column.table && (
+          props.selectedTable && props.selectedTable.id === column.table && (
             <div className={s.tasksDiv} key={index}>
               {props.columnUpdateTag[index] ? (
                 <form key={index}>

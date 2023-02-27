@@ -56,20 +56,21 @@ const Header = () => {
     };
   }, [changeSelectVisibility]);
 
-    return (
-      <div className={s.headerDiv}>
-        {user &&
-          (window.location.href === "http://localhost:3000/" ? (
-            <div className={`${s.homeBtn} ${s.selected}`}>
-              <Link to="/">Home</Link>
-            </div>
-          ) : (
-            <div className={s.homeBtn}>
-              <Link to="/">Home</Link>
-            </div>
-          ))}
-        {user ? (
-          <div className={s.profileDiv}>
+  return (
+    <div className={s.headerDiv}>
+      {user &&
+        (window.location.href === "http://localhost:3000/" ? (
+          <div className={`${s.homeBtn} ${s.selected}`}>
+            <Link to="/">Home</Link>
+          </div>
+        ) : (
+          <div className={s.homeBtn}>
+            <Link to="/">Home</Link>
+          </div>
+        ))}
+      {user ? (
+        <div className={s.profileDiv}>
+          {tableList.length !== 0 ? (
             <div
               className={s.selectTable}
               onClick={() => {
@@ -90,60 +91,68 @@ const Header = () => {
                 </ul>
               )}
             </div>
-            <div className={s.dropdownContainer} ref={ref}>
-              {profile !== undefined ? (
-                <img
-                  className={s.profileImage}
-                  src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${profile[0].picture}`}
-                  alt="Profile"
-                  onClick={() => {
-                    setDrop(!drop);
-                  }}
-                />
-              ) : (
-                <img
-                  className={s.profileImage}
-                  alt="Profile"
-                  onClick={() => {
-                    setDrop(!drop);
-                  }}
-                />
-              )}
-              {drop && (
-                <ProfileDropdown
-                  user={user}
-                  changeVisibility={() => {
-                    setDrop(!drop);
-                  }}
-                  logoutUser={logoutUser}
-                />
-              )}
+          ) : (
+            <div
+              className={s.selectTable}
+            >
+              <span>Create a table</span>
             </div>
-          </div>
-        ) : (
-          <div className={s.authDiv}>
-            {window.location.href === "http://localhost:3000/login" ? (
-              <div className={s.selected}>
-                <Link to="/login">Login</Link>
-              </div>
+          )}
+
+          <div className={s.dropdownContainer} ref={ref}>
+            {profile !== undefined ? (
+              <img
+                className={s.profileImage}
+                src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${profile[0].picture}`}
+                alt="Profile"
+                onClick={() => {
+                  setDrop(!drop);
+                }}
+              />
             ) : (
-              <div>
-                <Link to="/login">Login</Link>
-              </div>
+              <img
+                className={s.profileImage}
+                alt="Profile"
+                onClick={() => {
+                  setDrop(!drop);
+                }}
+              />
             )}
-            {window.location.href === "http://localhost:3000/register" ? (
-              <div className={s.selected}>
-                <Link to="/register">Register</Link>
-              </div>
-            ) : (
-              <div>
-                <Link to="/register">Register</Link>
-              </div>
+            {drop && (
+              <ProfileDropdown
+                user={user}
+                changeVisibility={() => {
+                  setDrop(!drop);
+                }}
+                logoutUser={logoutUser}
+              />
             )}
           </div>
-        )}
-      </div>
-    );
+        </div>
+      ) : (
+        <div className={s.authDiv}>
+          {window.location.href === "http://localhost:3000/login" ? (
+            <div className={s.selected}>
+              <Link to="/login">Login</Link>
+            </div>
+          ) : (
+            <div>
+              <Link to="/login">Login</Link>
+            </div>
+          )}
+          {window.location.href === "http://localhost:3000/register" ? (
+            <div className={s.selected}>
+              <Link to="/register">Register</Link>
+            </div>
+          ) : (
+            <div>
+              <Link to="/register">Register</Link>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Header;
