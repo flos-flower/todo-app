@@ -59,7 +59,6 @@ const RegisterPage = () => {
             validate: uniqueEmail,
           })}
         />
-        {console.log(errors)}
         {errors.email && <p>{errors.email.message}</p>}
         <input
           type="text"

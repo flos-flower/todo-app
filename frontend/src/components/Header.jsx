@@ -5,8 +5,14 @@ import s from "../styles/HeaderStyles.module.css";
 import ProfileDropdown from "./ProfileDropdown";
 
 const Header = () => {
-  let { user, logoutUser, profile, selectedTable, setSelectedTable, tableList } =
-    useContext(Context);
+  let {
+    user,
+    logoutUser,
+    profile,
+    selectedTable,
+    setSelectedTable,
+    tableList,
+  } = useContext(Context);
 
   let [drop, setDrop] = useState(false);
   let [tableSelectVisible, setTableSelectVisible] = useState(false);
@@ -36,7 +42,11 @@ const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (tableRef.current && !tableRef.current.contains(event.target) && tableSelectVisible === true) {
+      if (
+        tableRef.current &&
+        !tableRef.current.contains(event.target) &&
+        tableSelectVisible === true
+      ) {
         changeSelectVisibility && changeSelectVisibility();
       }
     };
@@ -46,18 +56,18 @@ const Header = () => {
     };
   }, [changeSelectVisibility]);
 
-  if (tableList !== undefined)
     return (
       <div className={s.headerDiv}>
-        {window.location.href === "http://localhost:3000/" ? (
-          <div className={`${s.homeBtn} ${s.selected}`}>
-            <Link to="/">Home</Link>
-          </div>
-        ) : (
-          <div className={s.homeBtn}>
-            <Link to="/">Home</Link>
-          </div>
-        )}
+        {user &&
+          (window.location.href === "http://localhost:3000/" ? (
+            <div className={`${s.homeBtn} ${s.selected}`}>
+              <Link to="/">Home</Link>
+            </div>
+          ) : (
+            <div className={s.homeBtn}>
+              <Link to="/">Home</Link>
+            </div>
+          ))}
         {user ? (
           <div className={s.profileDiv}>
             <div
@@ -71,7 +81,11 @@ const Header = () => {
               {tableSelectVisible && (
                 <ul className={s.tableOptions}>
                   {tableList.map((table, index) => {
-                    return <li onClick={()=>setSelectedTable(table)} key={index}>{table.name}</li>;
+                    return (
+                      <li onClick={() => setSelectedTable(table)} key={index}>
+                        {table.name}
+                      </li>
+                    );
                   })}
                 </ul>
               )}
