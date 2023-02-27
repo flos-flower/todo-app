@@ -23,10 +23,7 @@ export const ContextProvider = ({ children }) => {
   let [profile, setProfile] = useState();
 
   let [tableList, setTableList] = useState();
-  let [selectedTable, setSelectedTable] = useState(() => {
-    if (tableList === undefined) return null;
-    else return tableList[0];
-  });
+  let [selectedTable, setSelectedTable] = useState();
 
   const dataFetchedRef = useRef(false);
   const navigate = useNavigate();
@@ -60,6 +57,7 @@ export const ContextProvider = ({ children }) => {
       })
       .then((data) => {
         setTableList(data);
+        setSelectedTable(data[0]);
       });
   };
 
@@ -220,6 +218,7 @@ export const ContextProvider = ({ children }) => {
     handleProfileChange: handleProfileChange,
     tableList: tableList,
     selectedTable: selectedTable,
+    setSelectedTable: setSelectedTable
   };
 
   return (

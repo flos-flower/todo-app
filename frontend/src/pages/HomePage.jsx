@@ -24,8 +24,7 @@ const HomePageFunc = () => {
   let [columnUpdateTag, setColumnUpdateTag] = useState([]);
   let [open, setOpen] = useState([]);
 
-  let { authTokens } = useContext(Context);
-  let { logoutUser } = useContext(Context);
+  let { authTokens, logoutUser, selectedTable } = useContext(Context);
 
   let fetchColumns = () => {
     fetch("http://127.0.0.1:8000/api/column-list/", {
@@ -105,7 +104,7 @@ const HomePageFunc = () => {
     if (e.key === "Enter") {
       e.preventDefault();
       changeColumnUpdateTag(index);
-      updateColumn(id);
+      updateColumn(id, index);
     }
   };
 
@@ -149,6 +148,7 @@ const HomePageFunc = () => {
       body: JSON.stringify({
         user: userid,
         name: columnName,
+        table: selectedTable.id,
       }),
     })
       .then(() => {
@@ -198,7 +198,7 @@ const HomePageFunc = () => {
       });
   };
 
-  let updateColumn = (id) => {
+  let updateColumn = (id, index) => {
     var url = `http://127.0.0.1:8000/api/column-update/${id}`;
     fetch(url, {
       method: "POST",
@@ -207,7 +207,7 @@ const HomePageFunc = () => {
         Authorization: "Bearer " + String(authTokens.access),
       },
       body: JSON.stringify({
-        user: jwt_decode(authTokens.access).user_id,
+        ...todoList[index],
         name: editingColumn,
       }),
     })
@@ -334,6 +334,7 @@ const HomePageFunc = () => {
       changeColumnTag={changeColumnTag}
       handleColumnChange={handleColumnChange}
       open={open}
+      selectedTable={selectedTable}
     />
   );
 };

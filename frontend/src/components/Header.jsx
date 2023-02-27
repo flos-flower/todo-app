@@ -5,7 +5,7 @@ import s from "../styles/HeaderStyles.module.css";
 import ProfileDropdown from "./ProfileDropdown";
 
 const Header = () => {
-  let { user, logoutUser, profile, selectedTable, tableList } =
+  let { user, logoutUser, profile, selectedTable, setSelectedTable, tableList } =
     useContext(Context);
 
   let [drop, setDrop] = useState(false);
@@ -67,11 +67,11 @@ const Header = () => {
               }}
               ref={tableRef}
             >
-              <span className={s.selectedOption}>{tableList[0].name}</span>
+              <span className={s.selectedOption}>{selectedTable.name}</span>
               {tableSelectVisible && (
                 <ul className={s.tableOptions}>
                   {tableList.map((table, index) => {
-                    return <li key={index}>{table.name}</li>;
+                    return <li onClick={()=>setSelectedTable(table)} key={index}>{table.name}</li>;
                   })}
                 </ul>
               )}
