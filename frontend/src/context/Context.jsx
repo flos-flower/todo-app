@@ -79,6 +79,7 @@ export const ContextProvider = ({ children }) => {
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/");
+      navigate(0);
     } else {
       alert("Something went wrong!");
     }

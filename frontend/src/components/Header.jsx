@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Context from "../context/Context";
 import s from "../styles/HeaderStyles.module.css";
 import ProfileDropdown from "./ProfileDropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   let {
@@ -58,47 +60,43 @@ const Header = () => {
 
   return (
     <div className={s.headerDiv}>
-      {user &&
-        (window.location.href === "http://localhost:3000/" ? (
-          <div className={`${s.homeBtn} ${s.selected}`}>
-            <Link to="/">Home</Link>
-          </div>
-        ) : (
-          <div className={s.homeBtn}>
-            <Link to="/">Home</Link>
-          </div>
-        ))}
+      {user && (
+        <div className={s.homeBtn}>
+          <Link to="/">
+            <FontAwesomeIcon icon={faHouse} />
+          </Link>
+        </div>
+      )}
       {user ? (
         <div className={s.profileDiv}>
           {tableList.length !== 0 ? (
-            <div
-              className={s.selectTable}
-              onClick={() => {
-                setTableSelectVisible(!tableSelectVisible);
-              }}
-              ref={tableRef}
-            >
-              <span className={s.selectedOption}>{selectedTable.name}</span>
-              {tableSelectVisible && (
-                <ul className={s.tableOptions}>
-                  {tableList.map((table, index) => {
-                    return (
-                      <li onClick={() => setSelectedTable(table)} key={index}>
-                        {table.name}
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
+            window.location.href === "http://localhost:3000/" && (
+              <div
+                className={s.selectTable}
+                onClick={() => {
+                  setTableSelectVisible(!tableSelectVisible);
+                }}
+                ref={tableRef}
+              >
+                <span>{selectedTable.name}</span>
+                {tableSelectVisible && (
+                  <ul className={s.tableOptions}>
+                    {tableList.map((table, index) => {
+                      return (
+                        <li onClick={() => setSelectedTable(table)} key={index}>
+                          {table.name}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </div>
+            )
           ) : (
-            <div
-              className={s.selectTable}
-            >
+            <div className={s.selectTable}>
               <span>Create a table</span>
             </div>
           )}
-
           <div className={s.dropdownContainer} ref={ref}>
             {profile !== undefined ? (
               <img
@@ -136,7 +134,7 @@ const Header = () => {
               <Link to="/login">Login</Link>
             </div>
           ) : (
-            <div>
+            <div className={s.resting}>
               <Link to="/login">Login</Link>
             </div>
           )}
@@ -145,7 +143,7 @@ const Header = () => {
               <Link to="/register">Register</Link>
             </div>
           ) : (
-            <div>
+            <div className={s.resting}>
               <Link to="/register">Register</Link>
             </div>
           )}

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   height: 3rem;
   padding: 1rem;
 }
@@ -28,6 +28,10 @@ a:hover {
   justify-content: space-between;
 }
 
+.authDiv > div {
+  margin:0.2rem;
+}
+
 .logoutDiv > p {
   margin: 0;
 }
@@ -42,8 +46,18 @@ a:hover {
   align-items: center;
 }
 
+.homeBtn {
+  font-size: 1.3rem;
+}
+
+.resting {
+  padding:0.25rem;
+}
+
 .selected {
-  border-bottom: 1px solid black;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding:0.25rem;
+  border-radius: 0.2rem;
 }
 
 .profileImage {
@@ -134,12 +148,18 @@ a:hover {
 }
 
 .selectTable {
-  border: 0.08rem solid black;
+  background-color: rgba(0, 0, 0, 0.05);
   border-radius: 0.2rem;
   position: relative;
   margin-right:1rem;
   padding:0.2rem 0.3rem;
   cursor:pointer;
+  padding: 0.25rem;
+  transition: 0.3s;
+}
+
+.selectTable:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .selectTable > span:after{
