@@ -235,3 +235,21 @@ button:focus {
   background-color: rgba(0, 0, 0, 0.08);
   border-radius: 0.1rem;
 }
+
+.tableCreateDiv{
+  min-height: calc(100% - 3rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tableCreateDiv > div {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+}
+
+.tableCreateDiv > div > span {
+  margin-right: 0.3rem;
+}

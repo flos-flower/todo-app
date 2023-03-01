@@ -69,7 +69,7 @@ const Header = () => {
       )}
       {user ? (
         <div className={s.profileDiv}>
-          {tableList.length !== 0 ? (
+          {tableList.length !== 0 && (
             window.location.href === "http://localhost:3000/" && (
               <div
                 className={s.selectTable}
@@ -92,10 +92,6 @@ const Header = () => {
                 )}
               </div>
             )
-          ) : (
-            <div className={s.selectTable}>
-              <span>Create a table</span>
-            </div>
           )}
           <div className={s.dropdownContainer} ref={ref}>
             {profile !== undefined ? (
