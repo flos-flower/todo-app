@@ -102,7 +102,7 @@ a:hover {
 
 .dropdownChild:hover {
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .username {
@@ -189,6 +189,21 @@ a:hover {
   background-color: white;
   padding: 0.3rem 0.2rem;
   border-radius: 0.2rem;
+  max-height: 11rem;
+  overflow: auto;
+}
+
+.tableOptions::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.tableOptions::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.tableOptions::-webkit-scrollbar-thumb {
+  background-color: rgb(179, 179, 179);
+  border-radius: 0.4rem;
 }
 
 .tableOptions > li {

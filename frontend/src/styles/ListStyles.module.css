@@ -6,6 +6,19 @@
   overflow: auto;
 }
 
+.columnsDiv::-webkit-scrollbar {
+  height: 0.7rem;
+}
+
+.columnsDiv::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.columnsDiv::-webkit-scrollbar-thumb {
+  background-color: rgb(179, 179, 179);
+  border-radius: 0.4rem;
+}
+
 .columnName {
   margin-bottom: 0.5rem;
   margin-left: 0.4rem;
