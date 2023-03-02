@@ -163,6 +163,7 @@ button:focus {
   outline: none;
   resize: none;
   box-shadow: 0 3px 2px -2px gray;
+  font-family: "Montserrat", sans-serif;
 }
 
 .updateForm > input {
@@ -177,6 +178,8 @@ button:focus {
   resize: none;
   height: 1.5rem;
   box-shadow: 0 3px 2px -2px gray;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
 }
 
 .dropdownContainer {
@@ -234,22 +237,4 @@ button:focus {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.08);
   border-radius: 0.1rem;
-}
-
-.tableCreateDiv{
-  min-height: calc(100% - 3rem);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.tableCreateDiv > div {
-  background-color: rgba(255, 255, 255, 0.2);
-  padding: 0.25rem;
-  border-radius: 0.2rem;
-  cursor: pointer;
-}
-
-.tableCreateDiv > div > span {
-  margin-right: 0.3rem;
 }

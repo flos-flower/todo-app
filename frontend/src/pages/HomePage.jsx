@@ -2,7 +2,8 @@ import Context from "../context/Context";
 import React, { useContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import List from "../components/List";
-import s from "../styles/ListStyles.module.css"
+import s from "../styles/ListStyles.module.css";
+import Table from "../components/Table";
 
 const HomePageFunc = () => {
   let [todoList, setTodoList] = useState([]);
@@ -25,7 +26,8 @@ const HomePageFunc = () => {
   let [columnUpdateTag, setColumnUpdateTag] = useState([]);
   let [open, setOpen] = useState([]);
 
-  let { authTokens, logoutUser, selectedTable, tableList } = useContext(Context);
+  let { authTokens, logoutUser, selectedTable, tableList } =
+    useContext(Context);
 
   let fetchColumns = () => {
     fetch("http://127.0.0.1:8000/api/column-list/", {
@@ -305,14 +307,7 @@ const HomePageFunc = () => {
       });
   };
 
-  if(tableList.length === 0)
-  return (
-    <div className={s.tableCreateDiv}>
-      <div>
-        <span>Create a new table</span> 
-      </div>
-    </div>
-  )
+  if (tableList.length === 0) return <Table />;
   return (
     <List
       todoList={todoList}
