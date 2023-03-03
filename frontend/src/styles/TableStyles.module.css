@@ -35,7 +35,7 @@
     width:100%;
 }
 
-.tableForm > input[type='button'] {
+.tableForm > input[type='submit'] {
     border: none;
     border-radius: 0.2rem;
     color:white;

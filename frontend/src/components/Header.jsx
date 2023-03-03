@@ -88,6 +88,7 @@ const Header = () => {
                         </li>
                       );
                     })}
+                    <li className={s.createTableDiv}>Create<span className={s.plus}>+</span></li>
                   </ul>
                 )}
               </div>

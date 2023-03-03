@@ -2,7 +2,6 @@ import Context from "../context/Context";
 import React, { useContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import List from "../components/List";
-import s from "../styles/ListStyles.module.css";
 import Table from "../components/Table";
 
 const HomePageFunc = () => {
@@ -26,7 +25,7 @@ const HomePageFunc = () => {
   let [columnUpdateTag, setColumnUpdateTag] = useState([]);
   let [open, setOpen] = useState([]);
 
-  let { authTokens, logoutUser, selectedTable, tableList } =
+  let { authTokens, logoutUser, selectedTable, tableList, fetchTable } =
     useContext(Context);
 
   let fetchColumns = () => {
@@ -125,12 +124,12 @@ const HomePageFunc = () => {
   };
 
   let handleColumnChange = (e) => {
-    var value = e.target.value;
+    let value = e.target.value;
     setColumnName(value);
   };
 
   let handleTaskChange = (e, index) => {
-    var value = e.target.value;
+    let value = e.target.value;
     setTaskTitle({
       user: jwt_decode(authTokens.access).user_id,
       title: value,
@@ -140,8 +139,8 @@ const HomePageFunc = () => {
 
   let addColumn = (e) => {
     e.preventDefault();
-    var userid = jwt_decode(authTokens.access).user_id;
-    var url = "http://127.0.0.1:8000/api/column-create/";
+    let userid = jwt_decode(authTokens.access).user_id;
+    let url = "http://127.0.0.1:8000/api/column-create/";
     fetch(url, {
       method: "POST",
       headers: {
@@ -164,7 +163,7 @@ const HomePageFunc = () => {
   };
 
   let addTask = () => {
-    var url = "http://127.0.0.1:8000/api/task-create/";
+    let url = "http://127.0.0.1:8000/api/task-create/";
     fetch(url, {
       method: "POST",
       headers: {
@@ -183,7 +182,7 @@ const HomePageFunc = () => {
   };
 
   let updateTask = (id) => {
-    var url = `http://127.0.0.1:8000/api/task-update/${id}`;
+    let url = `http://127.0.0.1:8000/api/task-update/${id}`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -202,7 +201,7 @@ const HomePageFunc = () => {
   };
 
   let updateColumn = (id, index) => {
-    var url = `http://127.0.0.1:8000/api/column-update/${id}`;
+    let url = `http://127.0.0.1:8000/api/column-update/${id}`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -260,7 +259,7 @@ const HomePageFunc = () => {
   };
 
   let handleEditingChange = (e, index) => {
-    var value = e.target.value;
+    let value = e.target.value;
     setEditing({
       user: jwt_decode(authTokens.access).user_id,
       title: value,
@@ -285,7 +284,7 @@ const HomePageFunc = () => {
   };
 
   let dropdownUpdateTask = (id, title, column) => {
-    var url = `http://127.0.0.1:8000/api/task-update/${id}`;
+    let url = `http://127.0.0.1:8000/api/task-update/${id}`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -307,7 +306,32 @@ const HomePageFunc = () => {
       });
   };
 
-  if (tableList.length === 0) return <Table />;
+  let createTable = (e) => {
+    e.preventDefault();
+    let title = e.target.title.value;
+    let userid = jwt_decode(authTokens.access).user_id;
+    let url = "http://127.0.0.1:8000/api/table-create/";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        user: userid,
+        name: title,
+      }),
+    })
+      .then((response) => {
+        console.log(title);
+        fetchTable();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
+  if (tableList.length === 0) return <Table createTable={createTable} />;
   return (
     <List
       todoList={todoList}

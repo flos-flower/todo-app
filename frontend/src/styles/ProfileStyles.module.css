@@ -2,8 +2,6 @@
     display:flex;
     justify-content: center;
     padding-top: 1rem;
-    /* max-height: calc(100% - 3rem);
-    height:100%; */
 }
 
 .infoDiv {
@@ -70,8 +68,11 @@
 }
 
 .formDiv > input[type=submit] {
-    background-color:rgb(60, 251, 178);
+    margin-top:1rem;
+    background-color:rgb(54, 217, 182);
+    font-family: 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
     border:none;
     border-radius: 0.2rem;
     color:white;
+    width:4rem;
 }

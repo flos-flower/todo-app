@@ -22,7 +22,7 @@ export const ContextProvider = ({ children }) => {
 
   let [profile, setProfile] = useState();
 
-  let [tableList, setTableList] = useState();
+  let [tableList, setTableList] = useState([]);
   let [selectedTable, setSelectedTable] = useState();
 
   const dataFetchedRef = useRef(false);
@@ -219,7 +219,8 @@ export const ContextProvider = ({ children }) => {
     handleProfileChange: handleProfileChange,
     tableList: tableList,
     selectedTable: selectedTable,
-    setSelectedTable: setSelectedTable
+    setSelectedTable: setSelectedTable,
+    fetchTable:fetchTable,
   };
 
   return (

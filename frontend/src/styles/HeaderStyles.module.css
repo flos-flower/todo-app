@@ -191,6 +191,8 @@ a:hover {
   border-radius: 0.2rem;
   max-height: 11rem;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .tableOptions::-webkit-scrollbar {
@@ -214,4 +216,24 @@ a:hover {
 
 .tableOptions > li:hover {
   background-color:rgba(0, 0, 0, 0.07);
+}
+
+.plus {
+  font-size: 16px;
+  height: 20px;
+  line-height: 20px;
+  font-family: trellicons;
+  font-style: normal;
+  font-weight: 400;
+  margin: auto;
+}
+
+.createTableDiv{
+  display: flex;
+  justify-content: center;
+  background-color:rgb(54, 217, 182);
+  color:white;
+}
+
+.createTableDiv:hover{
 }
