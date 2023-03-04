@@ -5,12 +5,12 @@ const Table = (props) => {
     <div className={s.tableDiv}>
       <span>Create table</span>
       <hr />
-      <form className={s.tableForm} onSubmit={(e)=>props.createTable(e)}>
+      <form className={s.tableForm} onSubmit={(e)=>{props.createTable(e); props.changeVisibility()}}>
         <label>
           Table title
           <input type="text" name="title" autoFocus />
         </label>
-        <input type="submit" value="Create" />
+        <input type="submit" value="Create"/>
       </form>
     </div>
   );

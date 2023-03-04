@@ -4,7 +4,8 @@ import Context from "../context/Context";
 import s from "../styles/HeaderStyles.module.css";
 import ProfileDropdown from "./ProfileDropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faX } from "@fortawesome/free-solid-svg-icons";
+import Table from "./Table";
 
 const Header = () => {
   let {
@@ -14,10 +15,12 @@ const Header = () => {
     selectedTable,
     setSelectedTable,
     tableList,
+    createTable,
   } = useContext(Context);
 
   let [drop, setDrop] = useState(false);
   let [tableSelectVisible, setTableSelectVisible] = useState(false);
+  let [tableFormVisible, setTableFormVisible] = useState(false);
 
   const ref = useRef(null);
   const tableRef = useRef(null);
@@ -69,7 +72,7 @@ const Header = () => {
       )}
       {user ? (
         <div className={s.profileDiv}>
-          {tableList.length !== 0 && (
+          {tableList.length !== 0 &&
             window.location.href === "http://localhost:3000/" && (
               <div
                 className={s.selectTable}
@@ -78,7 +81,7 @@ const Header = () => {
                 }}
                 ref={tableRef}
               >
-                <span>{selectedTable.name}</span>
+                <span className={s.selectTableName}>{selectedTable.name}</span>
                 {tableSelectVisible && (
                   <ul className={s.tableOptions}>
                     {tableList.map((table, index) => {
@@ -88,12 +91,16 @@ const Header = () => {
                         </li>
                       );
                     })}
-                    <li className={s.createTableDiv}>Create<span className={s.plus}>+</span></li>
+                    <li
+                      className={s.createTableDiv}
+                      onClick={() => setTableFormVisible(!tableFormVisible)}
+                    >
+                      Create<span className={s.plus}>+</span>
+                    </li>
                   </ul>
                 )}
               </div>
-            )
-          )}
+            )}
           <div className={s.dropdownContainer} ref={ref}>
             {profile !== undefined ? (
               <img
@@ -123,6 +130,16 @@ const Header = () => {
               />
             )}
           </div>
+          {tableFormVisible && (
+            <div className={s.visibleTableForm}>
+              <Table createTable={createTable} changeVisibility={() => setTableFormVisible(!tableFormVisible)}/>
+              <FontAwesomeIcon
+                icon={faX}
+                onClick={() => setTableFormVisible(!tableFormVisible)}
+                style={{color: "black", fontSize:'0.6rem', position:'absolute', right:'1.15rem', top:'1.4rem', cursor:'pointer'}}
+              />
+            </div>
+          )}
         </div>
       ) : (
         <div className={s.authDiv}>

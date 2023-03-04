@@ -162,7 +162,7 @@ a:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.selectTable > span:after{
+.selectTableName:after{
   position: relative;
   top: -3px;
   content: "";
@@ -224,16 +224,31 @@ a:hover {
   line-height: 20px;
   font-family: trellicons;
   font-style: normal;
-  font-weight: 400;
-  margin: auto;
+  font-weight:400;
+  margin-top: 0.25rem;
+  margin-left:0.6rem;
 }
 
 .createTableDiv{
   display: flex;
   justify-content: center;
+  align-items:center;
   background-color:rgb(54, 217, 182);
   color:white;
+  transition: 0.3s;
 }
 
 .createTableDiv:hover{
+  background-color:rgb(51, 203, 170) !important;
+}
+
+.visibleTableForm {
+  position:absolute;
+  width:20rem;
+  height:20rem;
+  top:50%;
+  left:50%;
+  margin: -10rem 0 0 -10rem;
+  border-radius:0.2rem;
+  z-index: 1;
 }

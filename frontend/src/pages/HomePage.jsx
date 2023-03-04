@@ -25,7 +25,7 @@ const HomePageFunc = () => {
   let [columnUpdateTag, setColumnUpdateTag] = useState([]);
   let [open, setOpen] = useState([]);
 
-  let { authTokens, logoutUser, selectedTable, tableList, fetchTable } =
+  let { authTokens, logoutUser, selectedTable, tableList, createTable } =
     useContext(Context);
 
   let fetchColumns = () => {
@@ -300,31 +300,6 @@ const HomePageFunc = () => {
       .then((response) => {
         fetchTasks();
         setTaskTitle("");
-      })
-      .catch(function (error) {
-        console.log("ERROR", error);
-      });
-  };
-
-  let createTable = (e) => {
-    e.preventDefault();
-    let title = e.target.title.value;
-    let userid = jwt_decode(authTokens.access).user_id;
-    let url = "http://127.0.0.1:8000/api/table-create/";
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-      body: JSON.stringify({
-        user: userid,
-        name: title,
-      }),
-    })
-      .then((response) => {
-        console.log(title);
-        fetchTable();
       })
       .catch(function (error) {
         console.log("ERROR", error);
