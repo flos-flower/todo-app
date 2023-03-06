@@ -117,7 +117,7 @@ button:focus {
 
 .btnChange {
   padding: 0 0.2rem 0.15rem 0.2rem;
-  border-radius: 0.1rem;
+  border-radius: 0.2rem;
   display: none;
   position: absolute;
   top: 0.13rem;
@@ -134,7 +134,7 @@ button:focus {
 
 .btnDelete {
   padding: 0 0.2rem 0.15rem 0.2rem;
-  border-radius: 0.1rem;
+  border-radius: 0.2rem;
   display: none;
   position: absolute;
   top: 0.13rem;

@@ -210,6 +210,18 @@ export const ContextProvider = ({ children }) => {
       });
   };
 
+  let deleteTable = (id) => {
+    fetch(`http://127.0.0.1:8000/api/table-delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    }).then((response) => {
+      fetchTable();
+    });
+  };
+
   useEffect(() => {
     if (user) {
       fetchTable();
@@ -247,6 +259,7 @@ export const ContextProvider = ({ children }) => {
     setSelectedTable: setSelectedTable,
     fetchTable:fetchTable,
     createTable:createTable,
+    deleteTable:deleteTable,
   };
 
   return (

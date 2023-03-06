@@ -193,6 +193,7 @@ a:hover {
   overflow: auto;
   display: flex;
   flex-direction: column;
+  width:fit-content;
 }
 
 .tableOptions::-webkit-scrollbar {
@@ -212,6 +213,9 @@ a:hover {
   padding: 0 0.4rem;
   border-radius:0.2rem;
   margin:0.2rem 0;
+  position: relative;
+  padding-right: 1.2rem;
+  min-width: 5rem;
 }
 
 .tableOptions > li:hover {
@@ -236,6 +240,7 @@ a:hover {
   background-color:rgb(54, 217, 182);
   color:white;
   transition: 0.3s;
+  padding:0 !important;
 }
 
 .createTableDiv:hover{
@@ -251,4 +256,21 @@ a:hover {
   margin: -10rem 0 0 -10rem;
   border-radius:0.2rem;
   z-index: 1;
+}
+
+.tableOptions > li:hover .deleteTable {
+  display: block;
+}
+
+.deleteTable {
+  position:absolute;
+  top:0rem;
+  right:0rem;
+  border-radius:0.2rem;
+  padding: 0 0.3rem;
+  display:none;
+}
+
+.deleteTable:hover {
+  background-color: rgb(255, 175, 175);
 }
