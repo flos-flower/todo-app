@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import List from "../components/List";
 import Table from "../components/Table";
+import TableSettings from "../components/TableSettings";
 
 const HomePageFunc = () => {
   let [todoList, setTodoList] = useState([]);
@@ -308,38 +309,41 @@ const HomePageFunc = () => {
 
   if (tableList.length === 0) return <Table createTable={createTable} />;
   return (
-    <List
-      todoList={todoList}
-      columnUpdateTag={columnUpdateTag}
-      handleColumnKeyDown={handleColumnKeyDown}
-      editingColumn={editingColumn}
-      editing={editing}
-      handleColumnEditing={handleColumnEditing}
-      changeColumnUpdateTag={changeColumnUpdateTag}
-      startColumnEdit={startColumnEdit}
-      deleteColumn={deleteColumn}
-      taskList={taskList}
-      taskUpdateTag={taskUpdateTag}
-      handleKeyDown={handleKeyDown}
-      handleEditingChange={handleEditingChange}
-      changeUpdateTag={changeUpdateTag}
-      startEdit={startEdit}
-      deleteItem={deleteItem}
-      dropdownClick={dropdownClick}
-      handleClickOutside={handleClickOutside}
-      dropdownUpdateTask={dropdownUpdateTask}
-      taskInputTag={taskInputTag}
-      changeTaskTag={changeTaskTag}
-      addTask={addTask}
-      handleTaskChange={handleTaskChange}
-      columnInputTag={columnInputTag}
-      addColumn={addColumn}
-      changeColumnTag={changeColumnTag}
-      handleColumnChange={handleColumnChange}
-      open={open}
-      selectedTable={selectedTable}
-      tableList={tableList}
-    />
+    <div>
+      <TableSettings />
+      <List
+        todoList={todoList}
+        columnUpdateTag={columnUpdateTag}
+        handleColumnKeyDown={handleColumnKeyDown}
+        editingColumn={editingColumn}
+        editing={editing}
+        handleColumnEditing={handleColumnEditing}
+        changeColumnUpdateTag={changeColumnUpdateTag}
+        startColumnEdit={startColumnEdit}
+        deleteColumn={deleteColumn}
+        taskList={taskList}
+        taskUpdateTag={taskUpdateTag}
+        handleKeyDown={handleKeyDown}
+        handleEditingChange={handleEditingChange}
+        changeUpdateTag={changeUpdateTag}
+        startEdit={startEdit}
+        deleteItem={deleteItem}
+        dropdownClick={dropdownClick}
+        handleClickOutside={handleClickOutside}
+        dropdownUpdateTask={dropdownUpdateTask}
+        taskInputTag={taskInputTag}
+        changeTaskTag={changeTaskTag}
+        addTask={addTask}
+        handleTaskChange={handleTaskChange}
+        columnInputTag={columnInputTag}
+        addColumn={addColumn}
+        changeColumnTag={changeColumnTag}
+        handleColumnChange={handleColumnChange}
+        open={open}
+        selectedTable={selectedTable}
+        tableList={tableList}
+      />
+    </div>
   );
 };
 

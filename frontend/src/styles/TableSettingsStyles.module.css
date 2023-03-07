@@ -1,0 +1,22 @@
+.mainDiv {
+  padding: 0.5rem 1.1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mainDiv > span {
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif !important;
+  cursor:pointer;
+}
+
+.settingGear {
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.settingGear:hover {
+    transform: rotate(60deg);
+}
