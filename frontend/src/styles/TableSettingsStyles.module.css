@@ -11,12 +11,52 @@
   cursor:pointer;
 }
 
+.settings {
+  width:3.5rem;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
 .settingGear {
     font-size: 1.2rem;
     cursor: pointer;
     transition: 0.3s;
 }
 
+.settingAddUser {
+  font-size: 1.1rem;
+  cursor:pointer;
+  transition: 0.5s;
+}
+
 .settingGear:hover {
     transform: rotate(60deg);
+}
+
+.userInvitation {
+  background-color:white;
+  border-radius:0.2rem;
+  display:flex;
+  align-items:flex-start;
+  flex-direction: column;
+  padding:0.2rem;
+  position:absolute;
+  top:12%;
+  right:3.5%;
+}
+
+.userInvitation > input[type="text"] {
+  border:1px solid rgb(221, 221, 221);
+  border-radius:0.2rem;
+  width:7rem;
+}
+
+.userInvitation > input[type="text"]:focus {
+  outline:none;
+}
+
+ul {
+  list-style-type: none;
+  padding:0 0 0 0.3rem;
 }

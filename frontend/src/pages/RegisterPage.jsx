@@ -1,33 +1,14 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Context from "../context/Context";
 import s from "../styles/RegisterStyles.module.css";
 import { useForm } from "react-hook-form";
 
 const RegisterPage = () => {
-  let [userList, setUserList] = useState([]);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  let fetchUsers = () => {
-    fetch("http://127.0.0.1:8000/api/users/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) return response.json();
-      })
-      .then((data) => setUserList(data));
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   const uniqueUsername = (value) => {
     for (let i = 0; i < userList.length; i++)
@@ -39,13 +20,10 @@ const RegisterPage = () => {
       if (value === userList[i].email) return "Email already in use";
   };
 
-  let { registerUser } = useContext(Context);
+  let { registerUser, userList } = useContext(Context);
   return (
     <div className={s.formDiv}>
-      <form
-        onSubmit={handleSubmit(registerUser)}
-        className={s.submitForm}
-      >
+      <form onSubmit={handleSubmit(registerUser)} className={s.submitForm}>
         <input
           type="text"
           name="email"
@@ -53,7 +31,8 @@ const RegisterPage = () => {
           {...register("email", {
             required: "Please enter email",
             pattern: {
-              value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              value:
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
               message: "Wrong email format",
             },
             validate: uniqueEmail,

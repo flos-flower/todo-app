@@ -73,7 +73,7 @@ const Header = () => {
       )}
       {user ? (
         <div className={s.profileDiv}>
-          {tableList.length !== undefined &&
+          {tableList.length !== 0 &&
             window.location.href === "http://localhost:3000/" && (
               <div
                 className={s.selectTable}
@@ -162,8 +162,8 @@ const Header = () => {
                   color: "black",
                   fontSize: "0.6rem",
                   position: "absolute",
-                  right: "1.15rem",
-                  top: "1.4rem",
+                  right: "40.5%",
+                  top: "31%",
                   cursor: "pointer",
                 }}
               />

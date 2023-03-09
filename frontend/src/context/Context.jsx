@@ -13,6 +13,7 @@ export const ContextProvider = ({ children }) => {
       ? JSON.parse(localStorage.getItem("authTokens"))
       : null
   );
+  let [userList, setUserList] = useState([]);
   let [user, setUser] = useState(() =>
     localStorage.getItem("authTokens")
       ? jwt_decode(localStorage.getItem("authTokens"))
@@ -210,6 +211,19 @@ export const ContextProvider = ({ children }) => {
       });
   };
 
+  let fetchUsers = () => {
+    fetch("http://127.0.0.1:8000/api/users/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) return response.json();
+      })
+      .then((data) => setUserList(data));
+  };
+
   let deleteTable = (id) => {
     fetch(`http://127.0.0.1:8000/api/table-delete/${id}`, {
       method: "DELETE",
@@ -226,6 +240,7 @@ export const ContextProvider = ({ children }) => {
     if (user) {
       fetchTable();
       fetchProfile();
+      fetchUsers();
     }
   }, [user]);
 
@@ -247,6 +262,7 @@ export const ContextProvider = ({ children }) => {
 
   let contextData = {
     authTokens: authTokens,
+    userList: userList,
     user: user,
     loginUser: loginUser,
     logoutUser: logoutUser,
@@ -257,9 +273,9 @@ export const ContextProvider = ({ children }) => {
     tableList: tableList,
     selectedTable: selectedTable,
     setSelectedTable: setSelectedTable,
-    fetchTable:fetchTable,
-    createTable:createTable,
-    deleteTable:deleteTable,
+    fetchTable: fetchTable,
+    createTable: createTable,
+    deleteTable: deleteTable,
   };
 
   return (
