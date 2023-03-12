@@ -236,6 +236,27 @@ export const ContextProvider = ({ children }) => {
     });
   };
 
+  let addMember = (id) => {
+    let url = `http://127.0.0.1:8000/api/table-update/${selectedTable.id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        ...selectedTable,
+        members:[...selectedTable.members, id],
+      }),
+    })
+      .then((response) => {
+        fetchTable();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  }
+
   useEffect(() => {
     if (user) {
       fetchTable();
@@ -276,6 +297,7 @@ export const ContextProvider = ({ children }) => {
     fetchTable: fetchTable,
     createTable: createTable,
     deleteTable: deleteTable,
+    addMember:addMember,
   };
 
   return (

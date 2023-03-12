@@ -26,6 +26,7 @@ def save_user_profile(sender, instance, **kwargs):
 class Table(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=15)
+    members = models.ManyToManyField(User, null=True, blank=True, related_name='users_added')
 
     def __str__(self):
         return self.name

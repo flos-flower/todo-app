@@ -4,7 +4,7 @@ import Context from "../context/Context";
 import s from "../styles/HeaderStyles.module.css";
 import ProfileDropdown from "./ProfileDropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faX } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faX, faCrown } from "@fortawesome/free-solid-svg-icons";
 import Table from "./Table";
 
 const Header = () => {
@@ -88,6 +88,13 @@ const Header = () => {
                     {tableList.map((table, index) => {
                       return (
                         <li onClick={() => setSelectedTable(table)} key={index}>
+                          {table.user === user.user_id && (
+                            <FontAwesomeIcon
+                              icon={faCrown}
+                              className={s.crownIcon}
+                              title='You are an admin of this table'
+                            />
+                          )}
                           {table.name}
                           <div
                             onClick={() => deleteTable(table.id)}

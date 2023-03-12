@@ -193,7 +193,7 @@ a:hover {
   overflow: auto;
   display: flex;
   flex-direction: column;
-  width:fit-content;
+  width:max-content;
 }
 
 .tableOptions::-webkit-scrollbar {
@@ -272,4 +272,10 @@ a:hover {
 
 .deleteTable:hover {
   background-color: rgb(255, 175, 175);
+}
+
+.crownIcon {
+  color:gold;
+  margin-right: 0.3rem;
+  font-size: 0.8rem;
 }
