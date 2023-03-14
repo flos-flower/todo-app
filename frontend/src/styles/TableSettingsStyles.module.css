@@ -2,73 +2,77 @@
   padding: 0.5rem 1.1rem;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .mainDiv > span {
   font-weight: 600;
   font-family: "Montserrat", sans-serif !important;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .settings {
-  width:3.5rem;
-  display:flex;
+  width: max-content;
+  display: flex;
   justify-content: space-between;
-  align-items:center;
+  align-items: center;
+}
+
+.settings > * {
+  margin: 0 0.4rem;
 }
 
 .settingGear {
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: 0.3s;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .settingAddUser {
   font-size: 1.1rem;
-  cursor:pointer;
+  cursor: pointer;
   transition: 0.5s;
 }
 
 .settingGear:hover {
-    transform: rotate(60deg);
+  transform: rotate(60deg);
 }
 
 .userInvitation {
-  background-color:white;
-  border-radius:0.2rem;
-  display:flex;
-  align-items:flex-start;
+  background-color: white;
+  border-radius: 0.2rem;
+  display: flex;
+  align-items: flex-start;
   flex-direction: column;
-  padding:0.3rem;
-  position:absolute;
-  top:12%;
-  right:3.5%;
+  padding: 0.3rem;
+  position: absolute;
+  top: 12%;
+  right: 5%;
 }
 
 .userInvitation > input[type="text"] {
-  border:1px solid rgb(221, 221, 221);
-  border-radius:0.2rem;
-  width:7rem;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 0.2rem;
+  width: 7rem;
 }
 
 .userInvitation > input[type="text"]:focus {
-  outline:none;
+  outline: none;
 }
 
 ul {
   list-style-type: none;
-  padding:0 0 0 0.3rem;
+  padding: 0 0 0 0.3rem;
 }
 
 .addMember {
-  font-size:0.7rem;
+  font-size: 0.7rem;
 }
 
 .userInvitation > ul {
-  width:100%;
-  padding:0;
-  margin:0;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .userInvitation > ul > li {
@@ -76,22 +80,91 @@ ul {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width:min-content;
+  width: min-content;
   padding: 0.2rem 0.1rem;
 }
 
 .userInvitation > ul > li > div {
   display: flex;
   justify-content: center;
-  align-items:center;
-  padding:0.2rem;
-  border-radius:0.2rem;
-  background-color:rgb(54, 217, 182);
-  color:white;
-  cursor:pointer;
+  align-items: center;
+  padding: 0.2rem;
+  border-radius: 0.2rem;
+  background-color: rgb(54, 217, 182);
+  color: white;
+  cursor: pointer;
   margin-left: 0.3rem;
 }
 
 .userInvitation > ul > li > div:hover {
-  background-color:rgb(51, 203, 170);
+  background-color: rgb(51, 203, 170);
+}
+
+.membersSettings {
+  cursor: pointer;
+  border-radius: 0.2rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.25rem;
+  transition: 0.3s;
+}
+
+.membersSettings:hover {
+  background-color: rgba(1, 1, 1, 0.1);
+}
+
+.membersIcon:after {
+  position: relative;
+  top: -3px;
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-right: 0.01rem solid black;
+  border-top: 0.01rem solid black;
+  transform: rotate(135deg);
+  margin-right: 0.3rem;
+  margin-left: 0.5rem;
+}
+
+.membersIcon {
+  font-size: 1rem;
+}
+
+.membersList {
+  width:6.5rem;
+  background-color:white;
+  border-radius:0.2rem;
+  padding:0.3rem;
+  position: absolute;
+  top:13%;
+  right:8.2%;
+}
+
+.membersList > li {
+  cursor: pointer;
+  border-radius:0.2rem;
+  margin:0.1rem 0;
+  padding:0.1rem;
+  position:relative;
+}
+
+.membersList > li:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.membersList > li:hover .deleteUser{
+  display:block;
+}
+
+.deleteUser {
+  position:absolute;
+  top:0.13rem;
+  right:0rem;
+  border-radius:0.2rem;
+  padding: 0 0.3rem;
+  display:none;
+}
+
+.deleteUser:hover {
+  background-color: rgb(255, 175, 175);
 }
