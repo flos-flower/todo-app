@@ -43,6 +43,7 @@ const List = (props) => {
                   </svg>
                 </div>
               )}
+              <div className={s.taskListContainer}>
               {props.taskList.map((task, task_index) => {
                 return props.taskUpdateTag[task_index]
                   ? task.column === column.id && (
@@ -146,6 +147,7 @@ const List = (props) => {
                       </div>
                     );
               })}
+              </div>
               {props.taskInputTag[index] ? (
                 <form
                   onSubmit={(e) => {

@@ -309,7 +309,7 @@ const HomePageFunc = () => {
 
   if (tableList.length === 0) return <Table createTable={createTable} />;
   return (
-    <div>
+    <div style={{height:'calc(100% - 3.1rem)'}}>
       <TableSettings />
       <List
         todoList={todoList}

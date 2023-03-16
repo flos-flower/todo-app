@@ -201,7 +201,7 @@ a:hover {
 }
 
 .tableOptions::-webkit-scrollbar-track {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: transparent;
 }
 
 .tableOptions::-webkit-scrollbar-thumb {

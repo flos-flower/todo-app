@@ -7,7 +7,7 @@
 }
 
 .columnsDiv::-webkit-scrollbar {
-  height: 0.7rem;
+  height: 0.6rem;
 }
 
 .columnsDiv::-webkit-scrollbar-track {
@@ -40,7 +40,25 @@
   border-radius: 0.2rem;
   padding: 0.5rem;
   background-color: rgb(240, 240, 240);
-  height: fit-content;
+  height:fit-content;
+}
+
+.taskListContainer {
+  max-height:35rem;
+  overflow: auto;
+}
+
+.taskListContainer::-webkit-scrollbar {
+  width:0.4rem;
+}
+
+.taskListContainer::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.taskListContainer::-webkit-scrollbar-thumb {
+  background-color: rgb(179, 179, 179);
+  border-radius: 0.4rem;
 }
 
 .tasks {
