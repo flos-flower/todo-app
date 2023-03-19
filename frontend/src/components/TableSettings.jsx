@@ -5,14 +5,15 @@ import {
   faGear,
   faUserPlus,
   faPlus,
-  faUser,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import Context from "../context/Context";
 
 let TableSettings = (props) => {
   let [visibleUserInvitation, setVisibleUserInvitation] = useState(false);
   let [visibleMemberList, setVisibleMemberList] = useState(false);
-  let { userList, addMember, selectedTable } = useContext(Context);
+  let { userList, addMember, selectedTable, updateTableMembers } =
+    useContext(Context);
   let [inputUsername, setInputUsername] = useState("");
 
   const ref = useRef(null);
@@ -67,7 +68,10 @@ let TableSettings = (props) => {
         <div className={s.membersSettings} ref={memberRef}>
           <span
             className={s.membersIcon}
-            onClick={() => {changeMemberListVisibility(); visibleUserInvitation === true && changeVisibility()}}
+            onClick={() => {
+              changeMemberListVisibility();
+              visibleUserInvitation === true && changeVisibility();
+            }}
           >
             Members
           </span>
@@ -80,7 +84,9 @@ let TableSettings = (props) => {
                   <li key={index}>
                     <span>{user.username}</span>
                     <div
-                      onClick=''
+                      onClick={() =>
+                        updateTableMembers(selectedTable.id, user.id)
+                      }
                       className={s.deleteUser}
                     >
                       <svg
@@ -109,32 +115,50 @@ let TableSettings = (props) => {
           onClick={changeVisibility}
         />
         {visibleUserInvitation && (
-          <div className={s.userInvitation}>
-            <input
-              value={inputUsername}
-              onChange={(e) => onUsernameChange(e)}
-              type="text"
-              placeholder="Username"
-            />
-            <ul>
-              {userList.map((user, index) => {
-                return (
-                  user.username.includes(inputUsername) &&
-                  inputUsername !== "" && (
-                    <li key={index}>
-                      <span>{user.username}</span>
-                      <div>
-                        <FontAwesomeIcon
-                          icon={faPlus}
-                          onClick={() => addMember(user.id)}
-                          className={s.addMember}
-                        />
-                      </div>
-                    </li>
-                  )
-                );
-              })}
-            </ul>
+          <div className={s.userInvitationBackground}>
+            <div className={s.userInvitation}>
+              <input
+                value={inputUsername}
+                onChange={(e) => onUsernameChange(e)}
+                type="text"
+                placeholder="Username"
+              />
+              <FontAwesomeIcon
+                icon={faX}
+                onClick={changeVisibility}
+                style={{
+                  color: "black",
+                  fontSize: "0.6rem",
+                  position: "absolute",
+                  right: "3%",
+                  top: "4.5%",
+                  cursor: "pointer",
+                }}
+              />
+              <ul>
+                {userList.map((user, index) => {
+                  return (
+                    user.username.includes(inputUsername) &&
+                    inputUsername !== "" && (
+                      <li key={index}>
+
+                        <span>{user.username}</span>
+                        <div>
+                          <FontAwesomeIcon
+                            icon={faPlus}
+                            onClick={() => {
+                              addMember(user.id);
+                              changeVisibility();
+                            }}
+                            className={s.addMember}
+                          />
+                        </div>
+                      </li>
+                    )
+                  );
+                })}
+              </ul>
+            </div>
           </div>
         )}
         <FontAwesomeIcon

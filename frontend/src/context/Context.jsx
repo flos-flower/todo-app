@@ -236,6 +236,28 @@ export const ContextProvider = ({ children }) => {
     });
   };
 
+  let updateTableMembers = (id, userid) => {  
+    let table = tableList.filter(table=>table.id !== id);
+    let url = `http://127.0.0.1:8000/api/table-update/${id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        ...table,
+        members: table.members.filter((user) => user === userid),
+      }),
+    })
+      .then((response) => {
+        fetchTable();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
   let addMember = (id) => {
     let url = `http://127.0.0.1:8000/api/table-update/${selectedTable.id}`;
     fetch(url, {
@@ -246,7 +268,7 @@ export const ContextProvider = ({ children }) => {
       },
       body: JSON.stringify({
         ...selectedTable,
-        members:[...selectedTable.members, id],
+        members: [...selectedTable.members, id],
       }),
     })
       .then((response) => {
@@ -255,7 +277,7 @@ export const ContextProvider = ({ children }) => {
       .catch(function (error) {
         console.log("ERROR", error);
       });
-  }
+  };
 
   useEffect(() => {
     if (user) {
@@ -297,7 +319,8 @@ export const ContextProvider = ({ children }) => {
     fetchTable: fetchTable,
     createTable: createTable,
     deleteTable: deleteTable,
-    addMember:addMember,
+    addMember: addMember,
+    updateTableMembers:updateTableMembers,
   };
 
   return (
