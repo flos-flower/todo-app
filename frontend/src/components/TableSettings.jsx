@@ -24,6 +24,7 @@ let TableSettings = (props) => {
   };
 
   let changeMemberListVisibility = () => {
+    console.log("12");
     setVisibleMemberList(!visibleMemberList);
   };
 
@@ -65,50 +66,52 @@ let TableSettings = (props) => {
   return (
     <div className={s.mainDiv}>
       <div className={s.settings} ref={ref}>
-        <div className={s.membersSettings} ref={memberRef}>
-          <span
-            className={s.membersIcon}
-            onClick={() => {
-              changeMemberListVisibility();
-              visibleUserInvitation === true && changeVisibility();
-            }}
-          >
-            Members
-          </span>
-        </div>
-        {visibleMemberList && (
-          <ul className={s.membersList}>
-            {userList.map((user, index) => {
-              return (
-                selectedTable.members.includes(user.id) && (
-                  <li key={index}>
-                    <span>{user.username}</span>
-                    <div
-                      onClick={() =>
-                        updateTableMembers(selectedTable.id, user.id)
-                      }
-                      className={s.deleteUser}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        className="bi bi-trash"
-                        viewBox="0 0 16 16"
+        <div className={s.membersWrapper} ref={memberRef}>
+          <div className={s.membersSettings}>
+            <span
+              className={s.membersIcon}
+              onClick={() => {
+                changeMemberListVisibility();
+                visibleUserInvitation === true && changeVisibility();
+              }}
+            >
+              Members
+            </span>
+          </div>
+          {visibleMemberList && (
+            <ul className={s.membersList}>
+              {userList.map((user, index) => {
+                return (
+                  selectedTable.members.includes(user.id) && (
+                    <li key={index}>
+                      <span>{user.username}</span>
+                      <div
+                        className={s.deleteUser}
+                        onClick={(e) =>
+                          updateTableMembers(e, selectedTable.id, user.id)
+                        }
                       >
-                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                        />
-                      </svg>
-                    </div>
-                  </li>
-                )
-              );
-            })}
-          </ul>
-        )}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="12"
+                          height="12"
+                          className="bi bi-trash"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                          <path
+                            fillRule="evenodd"
+                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                          />
+                        </svg>
+                      </div>
+                    </li>
+                  )
+                );
+              })}
+            </ul>
+          )}
+        </div>
         <FontAwesomeIcon
           icon={faUserPlus}
           className={s.settingAddUser}
@@ -141,15 +144,16 @@ let TableSettings = (props) => {
                     user.username.includes(inputUsername) &&
                     inputUsername !== "" && (
                       <li key={index}>
-
                         <span>{user.username}</span>
-                        <div>
+                        <div
+                          onClick={() => {
+                            addMember(user.id);
+                            changeVisibility();
+                            setInputUsername("");
+                          }}
+                        >
                           <FontAwesomeIcon
                             icon={faPlus}
-                            onClick={() => {
-                              addMember(user.id);
-                              changeVisibility();
-                            }}
                             className={s.addMember}
                           />
                         </div>

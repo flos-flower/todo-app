@@ -236,8 +236,8 @@ export const ContextProvider = ({ children }) => {
     });
   };
 
-  let updateTableMembers = (id, userid) => {  
-    let table = tableList.filter(table=>table.id !== id);
+  let updateTableMembers = (e, id, userid) => {  
+    e.preventDefault()
     let url = `http://127.0.0.1:8000/api/table-update/${id}`;
     fetch(url, {
       method: "POST",
@@ -246,8 +246,8 @@ export const ContextProvider = ({ children }) => {
         Authorization: "Bearer " + String(authTokens.access),
       },
       body: JSON.stringify({
-        ...table,
-        members: table.members.filter((user) => user === userid),
+        ...selectedTable,
+        members: selectedTable.members.filter((user) => user !== userid),
       }),
     })
       .then((response) => {
