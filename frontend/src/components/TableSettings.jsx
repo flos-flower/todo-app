@@ -24,7 +24,6 @@ let TableSettings = (props) => {
   };
 
   let changeMemberListVisibility = () => {
-    console.log("12");
     setVisibleMemberList(!visibleMemberList);
   };
 
@@ -142,7 +141,7 @@ let TableSettings = (props) => {
                 {userList.map((user, index) => {
                   return (
                     user.username.includes(inputUsername) &&
-                    inputUsername !== "" && (
+                    inputUsername !== "" && !selectedTable.members.includes(user.id) && (
                       <li key={index}>
                         <span>{user.username}</span>
                         <div
