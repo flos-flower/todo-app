@@ -38,17 +38,17 @@
   transform: rotate(60deg);
 }
 
-.userInvitationBackground{
+.userInvitationBackground {
   position: absolute;
-  top:0;
-  right:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  background-color:rgba(0, 0, 0, 0.45);
-  z-index:1;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 1;
 }
 
 .userInvitation {
@@ -58,16 +58,16 @@
   align-items: flex-start;
   flex-direction: column;
   padding: 1.5rem 1rem 0 1rem;
-  width:20rem;
-  height:10rem;
-  position:relative;
+  width: 20rem;
+  height: 10rem;
+  position: relative;
 }
 
 .userInvitation > input[type="text"] {
   border: 1px solid rgb(221, 221, 221);
   border-radius: 0.2rem;
   width: 100%;
-  margin-bottom:0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .userInvitation > input[type="text"]:focus {
@@ -81,7 +81,7 @@ ul {
 }
 
 ul::-webkit-scrollbar {
-  width:0.4rem;
+  width: 0.4rem;
 }
 
 ul::-webkit-scrollbar-track {
@@ -160,41 +160,52 @@ ul::-webkit-scrollbar-thumb {
 }
 
 .membersList {
-  max-height:9rem;
-  width:6.5rem;
-  background-color:white;
-  border-radius:0.2rem;
-  padding:0.3rem;
+  max-height: 9rem;
+  width: 6.5rem;
+  background-color: white;
+  border-radius: 0.2rem;
+  padding: 0.3rem;
   position: absolute;
-  top:13%;
-  right:5.9%;
+  top: 13%;
+  right: 5.9%;
 }
 
 .membersList > li {
   cursor: pointer;
-  border-radius:0.2rem;
-  margin:0.1rem 0;
-  padding:0.1rem;
-  position:relative;
+  border-radius: 0.2rem;
+  margin: 0.1rem 0;
+  padding: 0.1rem;
+  position: relative;
 }
 
 .membersList > li:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.membersList > li:hover .deleteUser{
-  display:block;
+.membersList > li:hover .deleteUser {
+  display: block;
 }
 
 .deleteUser {
-  position:absolute;
-  top:0.13rem;
-  right:0rem;
-  border-radius:0.2rem;
+  position: absolute;
+  top: 0.13rem;
+  right: 0rem;
+  border-radius: 0.2rem;
   padding: 0 0.3rem;
-  display:none;
+  display: none;
 }
 
 .deleteUser:hover {
   background-color: rgb(255, 175, 175);
+}
+
+.crownIcon {
+  color: gold;
+  margin-left: 0.3rem;
+  font-size: 0.8rem;
+}
+
+.memberIcon {
+  margin-left: 0.3rem;
+  font-size: 0.8rem;
 }

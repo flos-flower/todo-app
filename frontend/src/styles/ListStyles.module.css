@@ -40,16 +40,16 @@
   border-radius: 0.2rem;
   padding: 0.5rem;
   background-color: rgb(240, 240, 240);
-  height:fit-content;
+  height: fit-content;
 }
 
 .taskListContainer {
-  max-height:35rem;
+  max-height: 35rem;
   overflow: auto;
 }
 
 .taskListContainer::-webkit-scrollbar {
-  width:0.4rem;
+  width: 0.4rem;
 }
 
 .taskListContainer::-webkit-scrollbar-track {
@@ -228,7 +228,7 @@ button:focus {
   top: 100%;
   left: 0;
   width: fit-content;
-  z-index: 2;
+  z-index: 1;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
   background-color: white;

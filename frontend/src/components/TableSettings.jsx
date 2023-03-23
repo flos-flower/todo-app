@@ -6,6 +6,7 @@ import {
   faUserPlus,
   faPlus,
   faX,
+  faCrown,
 } from "@fortawesome/free-solid-svg-icons";
 import Context from "../context/Context";
 
@@ -80,7 +81,16 @@ let TableSettings = (props) => {
           {visibleMemberList && (
             <ul className={s.membersList}>
               {userList.map((user, index) => {
-                return (
+                return user.id === selectedTable.user ? (
+                  <li key={index}>
+                    <span>{user.username}</span>
+                    <FontAwesomeIcon
+                      icon={faCrown}
+                      className={s.crownIcon}
+                      title="Admin"
+                    />
+                  </li>
+                ) : (
                   selectedTable.members.includes(user.id) && (
                     <li key={index}>
                       <span>{user.username}</span>
@@ -141,7 +151,9 @@ let TableSettings = (props) => {
                 {userList.map((user, index) => {
                   return (
                     user.username.includes(inputUsername) &&
-                    inputUsername !== "" && !selectedTable.members.includes(user.id) && (
+                    inputUsername !== "" &&
+                    !selectedTable.members.includes(user.id) &&
+                    selectedTable.user !== user.id && (
                       <li key={index}>
                         <span>{user.username}</span>
                         <div

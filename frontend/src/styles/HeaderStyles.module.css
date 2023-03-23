@@ -29,7 +29,7 @@ a:hover {
 }
 
 .authDiv > div {
-  margin:0.2rem;
+  margin: 0.2rem;
 }
 
 .logoutDiv > p {
@@ -51,12 +51,12 @@ a:hover {
 }
 
 .resting {
-  padding:0.25rem;
+  padding: 0.25rem;
 }
 
 .selected {
   background-color: rgba(0, 0, 0, 0.05);
-  padding:0.25rem;
+  padding: 0.25rem;
   border-radius: 0.2rem;
 }
 
@@ -122,13 +122,13 @@ a:hover {
 }
 
 .dropdown > ul > li {
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   position: relative;
 }
 
 .dropdown > ul > li > a {
-  margin-left:1.3rem;
+  margin-left: 1.3rem;
 }
 
 .profileIcon {
@@ -140,20 +140,20 @@ a:hover {
 .signoutIcon {
   position: absolute;
   left: 0.5rem;
-  bottom: 0.60rem;
+  bottom: 0.6rem;
 }
 
 .dropdown > ul > li > a {
-  width:100%;
+  width: 100%;
 }
 
 .selectTable {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 0.2rem;
   position: relative;
-  margin-right:1rem;
-  padding:0.2rem 0.3rem;
-  cursor:pointer;
+  margin-right: 1rem;
+  padding: 0.2rem 0.3rem;
+  cursor: pointer;
   padding: 0.25rem;
   transition: 0.3s;
 }
@@ -162,7 +162,7 @@ a:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.selectTableName:after{
+.selectTableName:after {
   position: relative;
   top: -3px;
   content: "";
@@ -179,10 +179,10 @@ a:hover {
 .tableOptions {
   position: absolute;
   list-style-type: none;
-  background-color:white;
-  border-radius:0.2rem;
+  background-color: white;
+  border-radius: 0.2rem;
   top: 2.75rem;
-  right:0;
+  right: 0;
   z-index: 2;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
@@ -193,7 +193,7 @@ a:hover {
   overflow: auto;
   display: flex;
   flex-direction: column;
-  width:max-content;
+  width: max-content;
 }
 
 .tableOptions::-webkit-scrollbar {
@@ -211,15 +211,15 @@ a:hover {
 
 .tableOptions > li {
   padding: 0 0.4rem;
-  border-radius:0.2rem;
-  margin:0.2rem 0;
+  border-radius: 0.2rem;
+  margin: 0.2rem 0;
   position: relative;
   padding-right: 1.2rem;
   min-width: 5rem;
 }
 
 .tableOptions > li:hover {
-  background-color:rgba(0, 0, 0, 0.07);
+  background-color: rgba(0, 0, 0, 0.07);
 }
 
 .plus {
@@ -228,32 +228,32 @@ a:hover {
   line-height: 20px;
   font-family: trellicons;
   font-style: normal;
-  font-weight:400;
+  font-weight: 400;
   margin-top: 0.2rem;
-  margin-left:0.3rem;
+  margin-left: 0.3rem;
 }
 
-.createTableDiv{
+.createTableDiv {
   display: flex;
   justify-content: center;
-  align-items:center;
-  background-color:rgb(54, 217, 182);
-  color:white;
+  align-items: center;
+  background-color: rgb(54, 217, 182);
+  color: white;
   transition: 0.3s;
-  padding:0 !important;
+  padding: 0 !important;
 }
 
-.createTableDiv:hover{
-  background-color:rgb(51, 203, 170) !important;
+.createTableDiv:hover {
+  background-color: rgb(51, 203, 170) !important;
 }
 
 .visibleTableForm {
-  position:absolute;
-  width:100%;
-  height:100%;
-  background-color:rgba(0, 0, 0, 0.45);
-  top:0;
-  left:0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  top: 0;
+  left: 0;
   z-index: 1;
 }
 
@@ -262,12 +262,12 @@ a:hover {
 }
 
 .deleteTable {
-  position:absolute;
-  top:0rem;
-  right:0rem;
-  border-radius:0.2rem;
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  border-radius: 0.2rem;
   padding: 0 0.3rem;
-  display:none;
+  display: none;
 }
 
 .deleteTable:hover {
@@ -275,7 +275,7 @@ a:hover {
 }
 
 .crownIcon {
-  color:gold;
+  color: gold;
   margin-right: 0.3rem;
   font-size: 0.8rem;
 }
