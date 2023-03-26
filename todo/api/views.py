@@ -42,16 +42,22 @@ def apiOverview(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def taskList(request):
-    user = request.user
-    tasks = user.task_set.all()
+    column_id = [int(x.strip()) for x in  request.GET.get('columns', '').split(',') if x]
+    columns = Column.objects.filter(id__in=column_id)
+    tasks = Column.objects.none()
+    for column in columns:
+        tasks |= column.task_set.all()
     serializer = TaskSerializer(tasks, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def columnList(request):
-    user = request.user
-    columns = user.column_set.all()
+    table_id = [int(x.strip()) for x in  request.GET.get('tables', '').split(',') if x]
+    tables = Table.objects.filter(id__in=table_id)
+    columns = Table.objects.none()
+    for table in tables:
+        columns |= table.column_set.all()
     serializer = ColumnSerializer(columns, many=True)
     return Response(serializer.data)
 
@@ -88,7 +94,6 @@ def taskUpdate(request, pk):
 def columnUpdate(request, pk):
     column = Column.objects.get(id=pk)
     serializer = ColumnSerializer(instance=column, data=request.data)
-    print(request.data)
     if serializer.is_valid():
         serializer.save()
 
@@ -138,7 +143,6 @@ def profileUpdate(request, pk):
     serializer = ProfileSerializer(instance=profile, data=request.data)
     if request.data['picture'] == '':
         request.data.update({"picture": profile.picture})
-    print(request.data)
     if serializer.is_valid():
         serializer.save()
 
@@ -150,7 +154,6 @@ def profileUpdate(request, pk):
 def tableList(request):
     user = request.user
     tables = user.table_set.all() | user.users_added.all()
-    print(tables)
     serializer = TableSerializer(tables, many=True)
     return Response(serializer.data)
 

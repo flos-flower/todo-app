@@ -224,6 +224,8 @@ const List = (props) => {
         handleChange={props.handleColumnChange}
         handleKeyDown={props.handleKeyDown}
         addName="Add column"
+        user = {props.user}
+        selectedTable = {props.selectedTable}
       />
     </div>
   );

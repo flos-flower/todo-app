@@ -13,7 +13,7 @@ import Context from "../context/Context";
 let TableSettings = (props) => {
   let [visibleUserInvitation, setVisibleUserInvitation] = useState(false);
   let [visibleMemberList, setVisibleMemberList] = useState(false);
-  let { userList, addMember, selectedTable, updateTableMembers } =
+  let { userList, addMember, selectedTable, updateTableMembers, user } =
     useContext(Context);
   let [inputUsername, setInputUsername] = useState("");
 
@@ -124,7 +124,11 @@ let TableSettings = (props) => {
         <FontAwesomeIcon
           icon={faUserPlus}
           className={s.settingAddUser}
-          onClick={changeVisibility}
+          onClick={
+            user.user_id === selectedTable.user
+              ? () => props.changeVisibility
+              : undefined
+          }
         />
         {visibleUserInvitation && (
           <div className={s.userInvitationBackground}>

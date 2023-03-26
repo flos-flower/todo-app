@@ -30,13 +30,22 @@ const HomePageFunc = () => {
     useContext(Context);
 
   let fetchColumns = () => {
-    fetch("http://127.0.0.1:8000/api/column-list/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-    })
+    let tables = [];
+    for (let i of tableList) {
+      tables = [...tables, i.id];
+    }
+    fetch(
+      `http://127.0.0.1:8000/api/column-list/?tables=${encodeURIComponent(
+        tables
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 200) return response.json();
         else if (response.statusText === "Unauthorized") logoutUser();
@@ -45,13 +54,22 @@ const HomePageFunc = () => {
   };
 
   let fetchTasks = () => {
-    fetch("http://127.0.0.1:8000/api/task-list/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-    })
+    let columns = [];
+    for (let i of todoList) {
+      columns = [...columns, i.id];
+    }
+    fetch(
+      `http://127.0.0.1:8000/api/task-list/?columns=${encodeURIComponent(
+        columns
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    )
       .then((response) => {
         if (response.status === 200) return response.json();
         else if (response.statusText === "Unauthorized") logoutUser();
@@ -114,7 +132,7 @@ const HomePageFunc = () => {
   useEffect(() => {
     fetchColumns();
     fetchTasks();
-  }, []);
+  }, [todoList.length]);
 
   let handleClickOutside = () => {
     let columns = [...open];
@@ -309,7 +327,7 @@ const HomePageFunc = () => {
 
   if (tableList.length === 0) return <Table createTable={createTable} />;
   return (
-    <div style={{height:'calc(100% - 3.1rem)'}}>
+    <div style={{ height: "calc(100% - 3.1rem)" }}>
       <TableSettings />
       <List
         todoList={todoList}
