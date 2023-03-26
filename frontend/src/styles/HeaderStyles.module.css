@@ -279,3 +279,10 @@ a:hover {
   margin-right: 0.3rem;
   font-size: 0.8rem;
 }
+
+.memberIcon {
+  color: rgb(70, 70, 70);
+  margin-right: 0.4rem;
+  margin-left: 0.15rem;
+  font-size: 0.8rem;
+}

@@ -149,7 +149,8 @@ def profileUpdate(request, pk):
 @permission_classes([IsAuthenticated])
 def tableList(request):
     user = request.user
-    tables = user.table_set.all()
+    tables = user.table_set.all() | user.users_added.all()
+    print(tables)
     serializer = TableSerializer(tables, many=True)
     return Response(serializer.data)
 

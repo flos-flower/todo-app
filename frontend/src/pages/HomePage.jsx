@@ -26,7 +26,7 @@ const HomePageFunc = () => {
   let [columnUpdateTag, setColumnUpdateTag] = useState([]);
   let [open, setOpen] = useState([]);
 
-  let { authTokens, logoutUser, selectedTable, tableList, createTable } =
+  let { authTokens, logoutUser, selectedTable, tableList, createTable, user } =
     useContext(Context);
 
   let fetchColumns = () => {
@@ -342,6 +342,7 @@ const HomePageFunc = () => {
         open={open}
         selectedTable={selectedTable}
         tableList={tableList}
+        user={user}
       />
     </div>
   );
