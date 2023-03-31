@@ -126,7 +126,7 @@ let TableSettings = (props) => {
           className={s.settingAddUser}
           onClick={
             user.user_id === selectedTable.user
-              ? () => props.changeVisibility
+              ? () => changeVisibility()
               : undefined
           }
         />
