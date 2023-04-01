@@ -1,10 +1,18 @@
 import OutsideClickHandler from "react-outside-click-handler";
 import s from "../styles/ListStyles.module.css";
 import InputBar from "./InputBar";
+import TaskInfo from "./TaskInfo";
 
 const List = (props) => {
   return (
     <div className={s.columnsDiv}>
+      {props.taskList.map((task, index) => {
+        return(
+          props.visibleTaskInfo[index] && (
+            <TaskInfo changeVisibility={()=>props.taskClick(index)} key={index} />
+          )
+        )
+      })}
       {props.todoList.map((column, index) => {
         return (
           props.selectedTable &&
@@ -73,7 +81,7 @@ const List = (props) => {
                       )
                     : task.column === column.id && (
                         <div key={task_index} className={s.tasks}>
-                          <span>{task.title}</span>
+                          <span onClick={()=>props.taskClick(task_index)}>{task.title}</span>
                           <div className={s.taskButtons}>
                             <div
                               onClick={

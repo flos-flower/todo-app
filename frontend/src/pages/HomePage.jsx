@@ -15,6 +15,7 @@ const HomePageFunc = () => {
   });
   let [editingColumn, setEditingColumn] = useState("");
   let [taskInputTag, setTaskInputTag] = useState([]);
+  let [visibleTaskInfo, setVisibleTaskInfo] = useState([]);
   let [columnInputTag, setColumnInputTag] = useState(false);
   let [columnName, setColumnName] = useState("");
   let [taskTitle, setTaskTitle] = useState({
@@ -325,6 +326,19 @@ const HomePageFunc = () => {
       });
   };
 
+  let taskClick = (index) => {
+    let tasks = [...visibleTaskInfo];
+    for (let i = 0; i < tasks.length; i++) {
+      if (i !== index) {
+        tasks[i] = false;
+      }
+    }
+    let task = tasks[index];
+    tasks[index] = !task;
+    setVisibleTaskInfo(tasks);
+    console.log(visibleTaskInfo)
+  };
+
   if (tableList.length === 0) return <Table createTable={createTable} />;
   return (
     <div style={{ height: "calc(100% - 3.1rem)" }}>
@@ -361,6 +375,8 @@ const HomePageFunc = () => {
         selectedTable={selectedTable}
         tableList={tableList}
         user={user}
+        visibleTaskInfo = {visibleTaskInfo}
+        taskClick = {taskClick}
       />
     </div>
   );
