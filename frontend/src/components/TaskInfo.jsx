@@ -6,6 +6,7 @@ const TaskInfo = (props) => {
   return (
     <div className={s.TaskInfoContainer}>
       <div className={s.TaskInfoDiv}>
+        {console.log(props.column)}
         <FontAwesomeIcon
           icon={faX}
           onClick={props.changeVisibility}
@@ -18,6 +19,11 @@ const TaskInfo = (props) => {
             cursor: "pointer",
           }}
         />
+        <div className={s.mainDiv}>
+          <p>{props.taskName}</p>
+          <p>Description</p>
+          <textarea placeholder="Add a description" className={s.descriptionText} type="text" />
+        </div>
       </div>
     </div>
   );

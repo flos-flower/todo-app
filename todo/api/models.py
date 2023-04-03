@@ -45,6 +45,7 @@ class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     column = models.ForeignKey(Column, on_delete=models.CASCADE)
+    description = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.title

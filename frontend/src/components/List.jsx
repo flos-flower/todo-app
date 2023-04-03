@@ -7,11 +7,16 @@ const List = (props) => {
   return (
     <div className={s.columnsDiv}>
       {props.taskList.map((task, index) => {
-        return(
+        return (
           props.visibleTaskInfo[index] && (
-            <TaskInfo changeVisibility={()=>props.taskClick(index)} key={index} />
+            <TaskInfo
+              changeVisibility={() => props.taskClick(index)}
+              taskName={task.title}
+              column={props.taskList}
+              key={index}
+            />
           )
-        )
+        );
       })}
       {props.todoList.map((column, index) => {
         return (
@@ -81,7 +86,9 @@ const List = (props) => {
                       )
                     : task.column === column.id && (
                         <div key={task_index} className={s.tasks}>
-                          <span onClick={()=>props.taskClick(task_index)}>{task.title}</span>
+                          <span onClick={() => props.taskClick(task_index)}>
+                            {task.title}
+                          </span>
                           <div className={s.taskButtons}>
                             <div
                               onClick={
@@ -232,8 +239,8 @@ const List = (props) => {
         handleChange={props.handleColumnChange}
         handleKeyDown={props.handleKeyDown}
         addName="Add column"
-        user = {props.user}
-        selectedTable = {props.selectedTable}
+        user={props.user}
+        selectedTable={props.selectedTable}
       />
     </div>
   );

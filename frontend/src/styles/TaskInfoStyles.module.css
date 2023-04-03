@@ -18,3 +18,24 @@
     margin: -15rem 0 0 -25rem;
     border-radius:0.2rem;
 }
+
+.mainDiv {
+    padding: 1.7rem 3rem;
+}
+
+.mainDiv > p {
+    font-weight: 600;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9rem;
+}
+
+.descriptionText {
+    width:100%;
+    height:5rem;
+    background-color:rgb(247, 247, 247);
+    border:none;
+    border-radius: 0.2rem;
+    resize: none;
+    padding:1rem;
+    outline: none;
+}

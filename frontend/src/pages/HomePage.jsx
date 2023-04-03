@@ -336,7 +336,6 @@ const HomePageFunc = () => {
     let task = tasks[index];
     tasks[index] = !task;
     setVisibleTaskInfo(tasks);
-    console.log(visibleTaskInfo)
   };
 
   if (tableList.length === 0) return <Table createTable={createTable} />;
