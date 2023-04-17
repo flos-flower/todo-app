@@ -14,8 +14,13 @@ const TaskInfo = (props) => {
 
   const handleFileChange = (e) => {
     const data = new FormData();
-    data.append("file", e.target.files[0]);
+    console.log(e.target.files);
+    for (let i in e.target.files) {
+      data.append("attachments", e.target.files[i]);
+    }
     data.append("user", user.user_id);
+    data.append("title", props.task.title);
+    data.append("column", props.task.column);
     var url = `http://127.0.0.1:8000/api/task-update/${props.task.id}`;
     fetch(url, {
       method: "POST",
@@ -34,7 +39,6 @@ const TaskInfo = (props) => {
 
   return (
     <div className={s.TaskInfoContainer}>
-      {console.log(props.tasks)}
       <div className={s.TaskInfoDiv}>
         <FontAwesomeIcon
           icon={faX}

@@ -82,8 +82,12 @@ def columnCreate(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def taskUpdate(request, pk):
+    print(request.data)
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(instance=task, data=request.data)
+    if request.data['attachments'] == '':
+        request.data.update({"attachments": task.attachments})
+
     if serializer.is_valid():
         serializer.save()
 
