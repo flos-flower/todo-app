@@ -1,41 +1,93 @@
 .TaskInfoContainer {
-    position:absolute;
-    top:0%;
-    right:0;
-    width:100%;
-    height:100%;
-    background-color:rgba(0, 0, 0, 0.45);
-    z-index: 1;
+  position: absolute;
+  top: 0%;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 1;
 }
 
 .TaskInfoDiv {
-    position:absolute;
-    top:50%;
-    left:50%;
-    background-color:white;
-    width:50rem;
-    height:30rem;
-    margin: -15rem 0 0 -25rem;
-    border-radius:0.2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  width: 40rem;
+  height: 30rem;
+  margin: -15rem 0 0 -20rem;
+  border-radius: 0.2rem;
+  padding: 1.7rem 1.7rem;
 }
 
 .mainDiv {
-    padding: 1.7rem 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.mainDiv > p {
-    font-weight: 600;
-    font-family: "Montserrat", sans-serif;
-    font-size: 0.9rem;
+.options {
+  flex-grow: 1;
+  margin-left: 0.5rem;
+  max-width: fit-content;
+}
+
+.options > form > input[type="file"] {
+  display: none;
+}
+
+.attachFile {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.35rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+}
+
+.attachFile:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.TaskInfoDiv > p {
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+}
+
+.uploadFileDiv > p {
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+}
+
+.mainContent {
+  flex-grow: 3;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .descriptionText {
-    width:100%;
-    height:5rem;
-    background-color:rgb(247, 247, 247);
-    border:none;
-    border-radius: 0.2rem;
-    resize: none;
-    padding:1rem;
-    outline: none;
+  width: 100%;
+  height: 3.5rem;
+  background-color: rgb(247, 247, 247);
+  border: none;
+  border-radius: 0.2rem;
+  resize: none;
+  padding: 1rem;
+  outline: none;
+  margin-bottom: 1.1rem;
+}
+
+.uploadFileDiv > input[type="file"] {
+  display: none;
+}
+
+.uploadFileDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.uploadButton {
+  font-size: 3rem;
 }

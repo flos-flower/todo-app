@@ -14,6 +14,8 @@ const List = (props) => {
               taskName={task.title}
               column={props.taskList}
               key={index}
+              task={task}
+              fetchTasks={props.fetchTasks}
             />
           )
         );

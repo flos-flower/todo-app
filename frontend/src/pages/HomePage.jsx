@@ -376,6 +376,7 @@ const HomePageFunc = () => {
         user={user}
         visibleTaskInfo = {visibleTaskInfo}
         taskClick = {taskClick}
+        fetchTasks={fetchTasks}
       />
     </div>
   );
