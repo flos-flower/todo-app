@@ -8,6 +8,7 @@ import TableSettings from "../components/TableSettings";
 const HomePageFunc = () => {
   let [todoList, setTodoList] = useState([]);
   let [taskList, setTaskList] = useState([]);
+  let [attachmentsList, setAttachmentsList] = useState([]);
   let [editing, setEditing] = useState({
     user: "",
     title: "",
@@ -130,10 +131,35 @@ const HomePageFunc = () => {
     }
   };
 
+  let fetchAttachments = () => {
+    let tasks = [];
+    for (let i of taskList) {
+      tasks = [...tasks, i.id];
+    }
+    fetch(
+      `http://127.0.0.1:8000/api/attachments-list/?tasks=${encodeURIComponent(
+        tasks
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    )
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else if (response.statusText === "Unauthorized") logoutUser();
+      })
+      .then((data) => setAttachmentsList(data));
+  };
+
   useEffect(() => {
     fetchColumns();
     fetchTasks();
-  }, [todoList.length]);
+    fetchAttachments();
+  }, [todoList.length, taskList.length]);
 
   let handleClickOutside = () => {
     let columns = [...open];
@@ -374,9 +400,10 @@ const HomePageFunc = () => {
         selectedTable={selectedTable}
         tableList={tableList}
         user={user}
-        visibleTaskInfo = {visibleTaskInfo}
-        taskClick = {taskClick}
+        visibleTaskInfo={visibleTaskInfo}
+        taskClick={taskClick}
         fetchTasks={fetchTasks}
+        attachmentsList={attachmentsList}
       />
     </div>
   );

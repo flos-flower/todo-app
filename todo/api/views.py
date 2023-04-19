@@ -4,10 +4,10 @@ from django.db.models import Q
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import TaskSerializer, UserSerializer, ColumnSerializer, ProfileSerializer, TableSerializer
+from .serializers import TaskSerializer, UserSerializer, ColumnSerializer, ProfileSerializer, TableSerializer, AttachmentSerializer
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Task, Column, Profile, Table
+from .models import Task, Column, Profile, Table, Attachment
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -52,6 +52,18 @@ def taskList(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+def attachmentsList(request):
+    task_id = [int(x.strip()) for x in  request.GET.get('tasks', '').split(',') if x]
+    tasks = Task.objects.filter(id__in=task_id)
+    files = Task.objects.none()
+    for task in tasks:
+        files |= task.attachment_set.all()
+    serializer = AttachmentSerializer(files, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def columnList(request):
     table_id = [int(x.strip()) for x in  request.GET.get('tables', '').split(',') if x]
     tables = Table.objects.filter(id__in=table_id)
@@ -82,14 +94,20 @@ def columnCreate(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def taskUpdate(request, pk):
-    print(request.data)
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(instance=task, data=request.data)
-    if request.data['attachments'] == '':
-        request.data.update({"attachments": task.attachments})
-
     if serializer.is_valid():
         serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def attachmentUpload(request):
+    for file in request.data.getlist('attachments'):
+        serializer = AttachmentSerializer(data={'task':request.data['task'], 'file':file})
+        if serializer.is_valid():
+            serializer.save()
 
     return Response(serializer.data)
 

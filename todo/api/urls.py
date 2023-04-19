@@ -17,6 +17,9 @@ urlpatterns = [
     path('task-update/<str:pk>', views.taskUpdate, name='task-update'),
     path('task-delete/<str:pk>', views.taskDelete, name='task-delete'),
 
+    path('attachment-upload', views.attachmentUpload, name='attachment-upload'),
+    path('attachments-list/', views.attachmentsList, name='attachments-list'),
+
     path('table-list/', views.tableList, name='table-list'),
     path('table-create/', views.tableCreate, name='table-create'),
     path('table-update/<str:pk>', views.tableUpdate, name='table-update'),
