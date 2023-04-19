@@ -157,9 +157,15 @@ const HomePageFunc = () => {
 
   useEffect(() => {
     fetchColumns();
+  }, [tableList.length]);
+
+  useEffect(() => {
     fetchTasks();
+  }, [todoList.length]);
+
+  useEffect(() => {
     fetchAttachments();
-  }, [todoList.length, taskList.length]);
+  }, [taskList.length]);
 
   let handleClickOutside = () => {
     let columns = [...open];

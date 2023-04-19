@@ -23,7 +23,6 @@ const List = (props) => {
       })}
       {props.todoList.map((column, index) => {
         return (
-          props.selectedTable &&
           props.selectedTable.id === column.table && (
             <div className={s.tasksDiv} key={index}>
               {props.columnUpdateTag[index] ? (

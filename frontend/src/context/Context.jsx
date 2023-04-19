@@ -236,8 +236,8 @@ export const ContextProvider = ({ children }) => {
     });
   };
 
-  let updateTableMembers = (e, id, userid) => {  
-    e.preventDefault()
+  let updateTableMembers = (e, id, userid) => {
+    e.preventDefault();
     let url = `http://127.0.0.1:8000/api/table-update/${id}`;
     fetch(url, {
       method: "POST",
@@ -282,8 +282,18 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       fetchTable();
-      fetchProfile();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
       fetchUsers();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchProfile();
     }
   }, [user]);
 
@@ -320,7 +330,7 @@ export const ContextProvider = ({ children }) => {
     createTable: createTable,
     deleteTable: deleteTable,
     addMember: addMember,
-    updateTableMembers:updateTableMembers,
+    updateTableMembers: updateTableMembers,
   };
 
   return (
