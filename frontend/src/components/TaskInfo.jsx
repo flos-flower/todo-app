@@ -15,7 +15,7 @@ const TaskInfo = (props) => {
   const handleFileChange = (e) => {
     const data = new FormData();
     console.log(e.target.files);
-    for (let i in e.target.files) { 
+    for (let i in e.target.files) {
       data.append("attachments", e.target.files[i]);
     }
     data.append("task", props.task.id);
@@ -28,11 +28,23 @@ const TaskInfo = (props) => {
       body: data,
     })
       .then((response) => {
-        props.fetchTasks();
+        props.fetchAttachments();
       })
       .catch(function (error) {
         console.log("ERROR", error);
       });
+  };
+
+  let deleteAttachment = (id) => {
+    fetch(`http://127.0.0.1:8000/api/attachment-delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    }).then((response) => {
+      props.fetchAttachments();
+    });
   };
 
   return (
@@ -62,9 +74,31 @@ const TaskInfo = (props) => {
                 type="text"
               />
             </div>
-            {props.attachmentsList !== null && (
+            {props.attachmentsList.length !== 0 && (
               <div className={s.attachmentsDiv}>
                 <p>Attachments</p>
+                <div className={s.attachmentsContainer}>
+                  {props.attachmentsList.map((attachment, index) => {
+                    return (
+                      attachment.task === props.task.id && (
+                        <div key={index} className={s.attachmentItem}>
+                          <a
+                            href={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${attachment.file}`}
+                            target="_blank"
+                          >
+                            <div className={s.attachmentImage}></div>
+                          </a>
+                          <div>
+                          <span>
+                            {attachment.file.replace(/^.*[\\\/]/, "")}
+                          </span>
+                          <div className={s.deleteAttachment} onClick={()=>deleteAttachment(attachment.id)}><span>Delete</span></div>
+                          </div>
+                        </div>
+                      )
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

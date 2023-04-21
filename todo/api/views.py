@@ -208,3 +208,11 @@ def tableDelete(request, pk):
     table.delete()
 
     return Response('Table succesfully deleted')
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def attachmentDelete(request, pk):
+    attachment = Attachment.objects.get(id=pk)
+    attachment.delete()
+
+    return Response('File succesfully deleted')

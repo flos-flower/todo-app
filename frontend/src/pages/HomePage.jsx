@@ -410,6 +410,7 @@ const HomePageFunc = () => {
         taskClick={taskClick}
         fetchTasks={fetchTasks}
         attachmentsList={attachmentsList}
+        fetchAttachments={fetchAttachments}
       />
     </div>
   );

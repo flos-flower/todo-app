@@ -17,6 +17,7 @@ const List = (props) => {
               task={task}
               fetchTasks={props.fetchTasks}
               attachmentsList={props.attachmentsList}
+              fetchAttachments={props.fetchAttachments}
             />
           )
         );

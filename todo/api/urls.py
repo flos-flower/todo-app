@@ -19,6 +19,7 @@ urlpatterns = [
 
     path('attachment-upload', views.attachmentUpload, name='attachment-upload'),
     path('attachments-list/', views.attachmentsList, name='attachments-list'),
+    path('attachment-delete/<str:pk>', views.attachmentDelete, name='attachment-delete'),
 
     path('table-list/', views.tableList, name='table-list'),
     path('table-create/', views.tableCreate, name='table-create'),
