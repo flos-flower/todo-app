@@ -1,8 +1,8 @@
 import Context from "../context/Context";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import s from "../styles/TaskInfoStyles.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faX, faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import { faX, faPaperclip, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const TaskInfo = (props) => {
   const refFile = useRef(null);
@@ -10,7 +10,38 @@ const TaskInfo = (props) => {
     refFile.current.click();
   };
 
+  let [descEdit, setDescEdit] = useState(false);
+  let [descValue, setDescValue] = useState(props.task.description);
+
   let { user, authTokens } = useContext(Context);
+
+  let handleKeyDown = (e) => {
+    e.target.style.height = "inherit";
+    e.target.style.height = `${e.target.scrollHeight}px`;
+  };
+
+  let updateTask = (e) => {
+    e.preventDefault();
+    let url = `http://127.0.0.1:8000/api/task-update/${props.task.id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        ...props.task,
+        description: descValue,
+      }),
+    })
+      .then((response) => {
+        props.fetchTasks();
+        setDescEdit(false);
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
 
   const handleFileChange = (e) => {
     const data = new FormData();
@@ -49,7 +80,6 @@ const TaskInfo = (props) => {
 
   return (
     <div className={s.TaskInfoContainer}>
-      {console.log(props.attachmentsList)}
       <div className={s.TaskInfoDiv}>
         <FontAwesomeIcon
           icon={faX}
@@ -67,12 +97,66 @@ const TaskInfo = (props) => {
         <div className={s.mainDiv}>
           <div className={s.mainContent}>
             <div className={s.descriptionDiv}>
-              <p>Description</p>
-              <textarea
-                placeholder="Add a description"
-                className={s.descriptionText}
-                type="text"
-              />
+              <div className={s.descDiv}>
+                <span>Description</span>
+                {props.task.description && descEdit === false && (
+                  <div
+                    className={s.startDescEdit}
+                    onClick={() => setDescEdit(!descEdit)}
+                  >
+                    <span>Edit</span>
+                  </div>
+                )}
+              </div>
+              {descEdit ? (
+                <form className={s.addDescDiv} onSubmit={updateTask}>
+                  <textarea
+                    onKeyDown={(e) => handleKeyDown(e)}
+                    name="description"
+                    value={descValue}
+                    placeholder="Add a description"
+                    className={s.descriptionText}
+                    type="text"
+                    autoFocus
+                    onChange={(e) => setDescValue(e.target.value)}
+                  />
+                  <input value="Save" type="submit" className={s.saveDesc} />
+                  <div
+                    onClick={() => {
+                      setDescEdit(false);
+                      props.task.description
+                        ? setDescValue(props.task.description)
+                        : setDescValue("");
+                    }}
+                    className={s.closeDesc}
+                  >
+                    <FontAwesomeIcon
+                      icon={faX}
+                      style={{
+                        color: "black",
+                        fontSize: "0.75rem",
+                        margin: "0",
+                      }}
+                    />
+                  </div>
+                </form>
+              ) : props.task.description ? (
+                <div
+                  className={s.descExist}
+                  onClick={() => setDescEdit(!descEdit)}
+                >
+                  <div className={s.descText}>
+                    <p>{props.task.description}</p>
+                  </div>
+                </div>
+              ) : (
+                <textarea
+                  placeholder="Add a description"
+                  className={s.descriptionAdd}
+                  type="text"
+                  onClick={() => setDescEdit(!descEdit)}
+                />
+              )}
             </div>
             {props.attachmentsList.length !== 0 && (
               <div className={s.attachmentsDiv}>
@@ -89,10 +173,15 @@ const TaskInfo = (props) => {
                             <div className={s.attachmentImage}></div>
                           </a>
                           <div>
-                          <span>
-                            {attachment.file.replace(/^.*[\\\/]/, "")}
-                          </span>
-                          <div className={s.deleteAttachment} onClick={()=>deleteAttachment(attachment.id)}><span>Delete</span></div>
+                            <span>
+                              {attachment.file.replace(/^.*[\\\/]/, "")}
+                            </span>
+                            <div
+                              className={s.deleteAttachment}
+                              onClick={() => deleteAttachment(attachment.id)}
+                            >
+                              <span>Delete</span>
+                            </div>
                           </div>
                         </div>
                       )
@@ -105,7 +194,7 @@ const TaskInfo = (props) => {
           <div className={s.options}>
             <p>Add-ons</p>
             <form>
-              <div className={s.attachFile} onClick={chooseFile}>
+              <div className={s.addOptions} onClick={chooseFile}>
                 <FontAwesomeIcon
                   icon={faPaperclip}
                   style={{
@@ -123,6 +212,17 @@ const TaskInfo = (props) => {
                 onChange={handleFileChange}
               />
             </form>
+            <div className={s.addOptions}>
+              <FontAwesomeIcon
+                icon={faUser}
+                style={{
+                  color: "black",
+                  fontSize: ".75rem",
+                  marginRight: ".3rem",
+                }}
+              />
+              <span>Members</span>
+            </div>
           </div>
         </div>
       </div>
