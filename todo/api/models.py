@@ -46,6 +46,7 @@ class Task(models.Model):
     title = models.CharField(max_length=200)
     column = models.ForeignKey(Column, on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
+    members = models.ManyToManyField(User, null=True, blank=True, related_name='task_members')
 
     def __str__(self):
         return self.title

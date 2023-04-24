@@ -45,6 +45,7 @@
   cursor: pointer;
   margin-top: 0.4rem;
   transition: 0.2s;
+  position: relative;
 }
 
 .addOptions:hover {
@@ -244,4 +245,28 @@
   border-radius: 0.2rem;
   background-color: rgb(255, 138, 138);
   width: fit-content;
+}
+
+.membersList {
+  max-height: 9rem;
+  width: 6.5rem;
+  background-color: white;
+  border-radius: 0.2rem;
+  padding: 0.3rem;
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  box-shadow: 0px 0px 8px -3px gray;
+}
+
+.membersList > li {
+  cursor: pointer;
+  border-radius: 0.2rem;
+  margin: 0.1rem 0;
+  padding: 0.1rem;
+  position: relative;
+}
+
+.membersList > li:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }

@@ -12,8 +12,9 @@ const TaskInfo = (props) => {
 
   let [descEdit, setDescEdit] = useState(false);
   let [descValue, setDescValue] = useState(props.task.description);
+  let [visibleMemberList, setVisibleMemberList] = useState(false);
 
-  let { user, authTokens } = useContext(Context);
+  let { userList, selectedTable, authTokens } = useContext(Context);
 
   let handleKeyDown = (e) => {
     e.target.style.height = "inherit";
@@ -37,6 +38,27 @@ const TaskInfo = (props) => {
       .then((response) => {
         props.fetchTasks();
         setDescEdit(false);
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
+  let addMember = (id) => {
+    let url = `http://127.0.0.1:8000/api/task-update/${props.task.id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        ...props.task,
+        members: [...props.task.members, id],
+      }),
+    })
+      .then((response) => {
+        props.fetchTasks();
       })
       .catch(function (error) {
         console.log("ERROR", error);
@@ -88,8 +110,8 @@ const TaskInfo = (props) => {
             color: "black",
             fontSize: "0.6rem",
             position: "absolute",
-            right: "2%",
-            top: "3%",
+            right: "1rem",
+            top: "1rem",
             cursor: "pointer",
           }}
         />
@@ -158,7 +180,7 @@ const TaskInfo = (props) => {
                 />
               )}
             </div>
-            {props.attachmentsList.length !== 0 && (
+            {props.attachmentsList.some((e) => e.task === props.task.id) && (
               <div className={s.attachmentsDiv}>
                 <p>Attachments</p>
                 <div className={s.attachmentsContainer}>
@@ -212,7 +234,10 @@ const TaskInfo = (props) => {
                 onChange={handleFileChange}
               />
             </form>
-            <div className={s.addOptions}>
+            <div
+              className={s.addOptions}
+              onClick={() => setVisibleMemberList(!visibleMemberList)}
+            >
               <FontAwesomeIcon
                 icon={faUser}
                 style={{
@@ -222,6 +247,35 @@ const TaskInfo = (props) => {
                 }}
               />
               <span>Members</span>
+              {visibleMemberList && (
+                <ul className={s.membersList}>
+                  {userList.map((user, index) => {
+                    return user.id === selectedTable.user ? (
+                      <li
+                        key={index}
+                        onClick={() => {
+                          setVisibleMemberList(!visibleMemberList);
+                          addMember(user.id);
+                        }}
+                      >
+                        <span>{user.username}</span>
+                      </li>
+                    ) : (
+                      selectedTable.members.includes(user.id) && (
+                        <li
+                          key={index}
+                          onClick={() => {
+                            setVisibleMemberList(!visibleMemberList);
+                            addMember(user.id);
+                          }}
+                        >
+                          <span>{user.username}</span>
+                        </li>
+                      )
+                    );
+                  })}
+                </ul>
+              )}
             </div>
           </div>
         </div>
