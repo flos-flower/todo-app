@@ -52,6 +52,10 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.optionName {
+  padding: 0.35rem;
+}
+
 .TaskInfoDiv > p {
   font-weight: 600;
   font-family: "Montserrat", sans-serif;
@@ -269,4 +273,8 @@
 
 .membersList > li:hover {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+.memberLi {
+  position:relative;
 }

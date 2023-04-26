@@ -1,20 +1,49 @@
 import Context from "../context/Context";
-import { useRef, useContext, useState } from "react";
+import { useRef, useContext, useState, useEffect } from "react";
 import s from "../styles/TaskInfoStyles.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faX, faPaperclip, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faX,
+  faPaperclip,
+  faUser,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 
 const TaskInfo = (props) => {
   const refFile = useRef(null);
+  const memberRef = useRef(null);
+
+  let [descEdit, setDescEdit] = useState(false);
+  let [descValue, setDescValue] = useState(
+    props.task.description ? props.task.description : ""
+  );
+  let [visibleMemberList, setVisibleMemberList] = useState(false);
+
+  let { userList, selectedTable, authTokens } = useContext(Context);
+
   const chooseFile = () => {
     refFile.current.click();
   };
 
-  let [descEdit, setDescEdit] = useState(false);
-  let [descValue, setDescValue] = useState(props.task.description);
-  let [visibleMemberList, setVisibleMemberList] = useState(false);
+  let changeMemberListVisibility = () => {
+    setVisibleMemberList(!visibleMemberList);
+  };
 
-  let { userList, selectedTable, authTokens } = useContext(Context);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        memberRef.current &&
+        !memberRef.current.contains(event.target) &&
+        visibleMemberList === true
+      ) {
+        changeMemberListVisibility && changeMemberListVisibility();
+      }
+    };
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, [visibleMemberList]);
 
   let handleKeyDown = (e) => {
     e.target.style.height = "inherit";
@@ -88,6 +117,27 @@ const TaskInfo = (props) => {
       });
   };
 
+  let updateTaskMembers = (userid) => {
+    let url = `http://127.0.0.1:8000/api/task-update/${props.task.id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        ...props.task,
+        members: props.task.members.filter((user) => user !== userid),
+      }),
+    })
+      .then((response) => {
+        props.fetchTasks();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
   let deleteAttachment = (id) => {
     fetch(`http://127.0.0.1:8000/api/attachment-delete/${id}`, {
       method: "DELETE",
@@ -124,7 +174,13 @@ const TaskInfo = (props) => {
                 {props.task.description && descEdit === false && (
                   <div
                     className={s.startDescEdit}
-                    onClick={() => setDescEdit(!descEdit)}
+                    onClick={
+                      props.user.user_id === selectedTable.user
+                        ? () => {
+                            setDescEdit(!descEdit);
+                          }
+                        : undefined
+                    }
                   >
                     <span>Edit</span>
                   </div>
@@ -165,7 +221,13 @@ const TaskInfo = (props) => {
               ) : props.task.description ? (
                 <div
                   className={s.descExist}
-                  onClick={() => setDescEdit(!descEdit)}
+                  onClick={
+                    props.user.user_id === selectedTable.user
+                      ? () => {
+                          setDescEdit(!descEdit);
+                        }
+                      : undefined
+                  }
                 >
                   <div className={s.descText}>
                     <p>{props.task.description}</p>
@@ -175,8 +237,15 @@ const TaskInfo = (props) => {
                 <textarea
                   placeholder="Add a description"
                   className={s.descriptionAdd}
+                  disabled
                   type="text"
-                  onClick={() => setDescEdit(!descEdit)}
+                  onClick={
+                    props.user.user_id === selectedTable.user
+                      ? () => {
+                          setDescEdit(!descEdit);
+                        }
+                      : undefined
+                  }
                 />
               )}
             </div>
@@ -191,6 +260,7 @@ const TaskInfo = (props) => {
                           <a
                             href={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${attachment.file}`}
                             target="_blank"
+                            rel="noreferrer"
                           >
                             <div className={s.attachmentImage}></div>
                           </a>
@@ -200,7 +270,13 @@ const TaskInfo = (props) => {
                             </span>
                             <div
                               className={s.deleteAttachment}
-                              onClick={() => deleteAttachment(attachment.id)}
+                              onClick={
+                                props.user.user_id === selectedTable.user
+                                  ? () => {
+                                      deleteAttachment(attachment.id);
+                                    }
+                                  : undefined
+                              }
                             >
                               <span>Delete</span>
                             </div>
@@ -227,26 +303,46 @@ const TaskInfo = (props) => {
                 />
                 <span>Attachment</span>
               </div>
-              <input
-                type="file"
-                multiple
-                ref={refFile}
-                onChange={handleFileChange}
-              />
+              {props.user.user_id === selectedTable.user ? (
+                <input
+                  type="file"
+                  multiple
+                  ref={refFile}
+                  onChange={handleFileChange}
+                />
+              ) : (
+                <input
+                  type="file"
+                  multiple
+                  ref={refFile}
+                  onChange={handleFileChange}
+                  disabled
+                />
+              )}
             </form>
             <div
               className={s.addOptions}
-              onClick={() => setVisibleMemberList(!visibleMemberList)}
+              style={{ padding: "0" }}
+              ref={memberRef}
             >
-              <FontAwesomeIcon
-                icon={faUser}
-                style={{
-                  color: "black",
-                  fontSize: ".75rem",
-                  marginRight: ".3rem",
-                }}
-              />
-              <span>Members</span>
+              <div
+                className={s.optionName}
+                onClick={
+                  props.user.user_id === selectedTable.user
+                    ? changeMemberListVisibility
+                    : undefined
+                }
+              >
+                <FontAwesomeIcon
+                  icon={faUser}
+                  style={{
+                    color: "black",
+                    fontSize: ".75rem",
+                    marginRight: ".3rem",
+                  }}
+                />
+                <span>Members</span>
+              </div>
               {visibleMemberList && (
                 <ul className={s.membersList}>
                   {userList.map((user, index) => {
@@ -254,22 +350,52 @@ const TaskInfo = (props) => {
                       <li
                         key={index}
                         onClick={() => {
-                          setVisibleMemberList(!visibleMemberList);
-                          addMember(user.id);
+                          props.task.members.includes(user.id)
+                            ? updateTaskMembers(user.id)
+                            : addMember(user.id);
                         }}
+                        className={s.memberLi}
                       >
                         <span>{user.username}</span>
+                        {props.task.members.includes(user.id) && (
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            style={{
+                              color: "black",
+                              fontSize: "0.6rem",
+                              position: "absolute",
+                              right: "0.25rem",
+                              top: "0.45rem",
+                              cursor: "pointer",
+                            }}
+                          />
+                        )}
                       </li>
                     ) : (
                       selectedTable.members.includes(user.id) && (
                         <li
                           key={index}
                           onClick={() => {
-                            setVisibleMemberList(!visibleMemberList);
-                            addMember(user.id);
+                            props.task.members.includes(user.id)
+                              ? updateTaskMembers(user.id)
+                              : addMember(user.id);
                           }}
+                          className={s.memberLi}
                         >
                           <span>{user.username}</span>
+                          {props.task.members.includes(user.id) && (
+                            <FontAwesomeIcon
+                              icon={faCheck}
+                              style={{
+                                color: "black",
+                                fontSize: "0.6rem",
+                                position: "absolute",
+                                right: "0.25rem",
+                                top: "0.45rem",
+                                cursor: "pointer",
+                              }}
+                            />
+                          )}
                         </li>
                       )
                     );
