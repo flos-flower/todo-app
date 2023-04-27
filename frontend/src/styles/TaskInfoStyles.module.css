@@ -192,6 +192,7 @@
 .attachmentsContainer {
   max-height: 14rem;
   overflow: auto;
+  margin-top: 1rem;
 }
 
 .attachmentsContainer::-webkit-scrollbar {

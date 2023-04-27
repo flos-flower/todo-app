@@ -8,6 +8,7 @@ import {
   faUser,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
+import { faCommentAlt } from "@fortawesome/free-regular-svg-icons";
 
 const TaskInfo = (props) => {
   const refFile = useRef(null);
@@ -170,6 +171,13 @@ const TaskInfo = (props) => {
           <div className={s.mainContent}>
             <div className={s.descriptionDiv}>
               <div className={s.descDiv}>
+                <FontAwesomeIcon
+                  icon={faCommentAlt}
+                  style={{
+                    fontSize: "0.9rem",
+                    marginRight: "0.25rem",
+                  }}
+                />
                 <span>Description</span>
                 {props.task.description && descEdit === false && (
                   <div
@@ -251,7 +259,15 @@ const TaskInfo = (props) => {
             </div>
             {props.attachmentsList.some((e) => e.task === props.task.id) && (
               <div className={s.attachmentsDiv}>
-                <p>Attachments</p>
+                <FontAwesomeIcon
+                  icon={faPaperclip}
+                  style={{
+                    color: "black",
+                    fontSize: "0.9rem",
+                    marginRight: ".3rem",
+                  }}
+                />
+                <span>Attachments</span>
                 <div className={s.attachmentsContainer}>
                   {props.attachmentsList.map((attachment, index) => {
                     return (
