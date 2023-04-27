@@ -68,9 +68,6 @@
   padding: 0.2rem;
   box-shadow: 0 3px 2px -2px gray;
   cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: relative;
 }
 
@@ -131,15 +128,15 @@ button:focus {
 
 .taskButtons {
   display: flex;
+  position: absolute;
+  top: 0.13rem;
+  right: 0.2rem;
 }
 
 .btnChange {
   padding: 0 0.2rem 0.15rem 0.2rem;
   border-radius: 0.2rem;
   display: none;
-  position: absolute;
-  top: 0.13rem;
-  right: 2.2rem;
 }
 
 .btnChange:hover {
@@ -154,9 +151,6 @@ button:focus {
   padding: 0 0.2rem 0.15rem 0.2rem;
   border-radius: 0.2rem;
   display: none;
-  position: absolute;
-  top: 0.13rem;
-  right: 1.1rem;
 }
 
 .btnDelete:hover {
@@ -201,8 +195,10 @@ button:focus {
 }
 
 .dropdownContainer {
-  position: relative;
+  position:absolute;
   display: inline-block;
+  top:0.85rem;
+  right: 0.15rem;
 }
 
 .tasks:hover .dropdownButton {
@@ -228,7 +224,7 @@ button:focus {
   top: 100%;
   left: 0;
   width: fit-content;
-  z-index: 1;
+  z-index: 3!important;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
   background-color: white;
@@ -255,4 +251,17 @@ button:focus {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.08);
   border-radius: 0.1rem;
+}
+
+.membersCount {
+  display:flex;
+  justify-content: flex-end;
+  width:100%;
+  font-family: "Montserrat", sans-serif;
+  font-size: .8rem;
+}
+
+.memberIcon {
+  color: rgb(69, 69, 69);
+  margin-right: .3rem;
 }

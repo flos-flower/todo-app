@@ -2,6 +2,8 @@ import OutsideClickHandler from "react-outside-click-handler";
 import s from "../styles/ListStyles.module.css";
 import InputBar from "./InputBar";
 import TaskInfo from "./TaskInfo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const List = (props) => {
   return (
@@ -89,7 +91,11 @@ const List = (props) => {
                         </form>
                       )
                     : task.column === column.id && (
-                        <div key={task_index} className={s.tasks}>
+                        <div
+                          draggable={true}
+                          key={task_index}
+                          className={s.tasks}
+                        >
                           <span onClick={() => props.taskClick(task_index)}>
                             {task.title}
                           </span>
@@ -137,7 +143,7 @@ const List = (props) => {
                                 />
                               </svg>
                             </div>
-                            <div className={s.dropdownContainer}>
+                            {/* <div className={s.dropdownContainer}>
                               <button
                                 type="button"
                                 className={s.dropdownButton}
@@ -187,8 +193,19 @@ const List = (props) => {
                                   </div>
                                 </OutsideClickHandler>
                               )}
-                            </div>
+                            </div> */}
                           </div>
+                          {task.members.length !== 0 && (
+                            <div className={s.membersCount}>
+                              <div style={{marginRight:'0.3rem'}}>
+                                <FontAwesomeIcon
+                                  icon={faUser}
+                                  className={s.memberIcon}
+                                />
+                                {task.members.length}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       );
                 })}
