@@ -1,29 +1,34 @@
-import OutsideClickHandler from "react-outside-click-handler";
 import s from "../styles/ListStyles.module.css";
 import InputBar from "./InputBar";
 import TaskInfo from "./TaskInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faEdit, faUser } from "@fortawesome/free-regular-svg-icons";
+import {
+  faTrashAlt,
+  faEdit,
+  faUser,
+} from "@fortawesome/free-regular-svg-icons";
 
 const List = (props) => {
   return (
     <div className={s.columnsDiv}>
-      {props.taskList.map((task, index) => {
-        return (
-          props.visibleTaskInfo[index] && (
-            <TaskInfo
-              changeVisibility={() => props.taskClick(index)}
-              taskName={task.title}
-              column={props.taskList}
-              key={index}
-              task={task}
-              fetchTasks={props.fetchTasks}
-              attachmentsList={props.attachmentsList}
-              fetchAttachments={props.fetchAttachments}
-              user={props.user}
-            />
-          )
-        );
+      {props.taskList.map((taskArr, index_arr) => {
+        return taskArr.map((task, index) => {
+          return (
+            props.visibleTaskInfo[task.id] && (
+              <TaskInfo
+                changeVisibility={() => props.taskClick(task.id)}
+                taskName={task.title}
+                column={props.taskList}
+                key={index}
+                task={task}
+                fetchTasks={props.fetchTasks}
+                attachmentsList={props.attachmentsList}
+                fetchAttachments={props.fetchAttachments}
+                user={props.user}
+              />
+            )
+          );
+        });
       })}
       {props.todoList.map((column, index) => {
         return (
@@ -74,66 +79,72 @@ const List = (props) => {
                 </div>
               )}
               <div className={s.taskListContainer}>
-                {props.taskList.map((task, task_index) => {
-                  return props.taskUpdateTag[task_index]
-                    ? task.column === column.id && (
-                        <form key={task_index} className={s.updateForm}>
-                          <textarea
-                            onKeyDown={(e) =>
-                              props.handleKeyDown(e, task_index, task.id)
-                            }
-                            value={props.editing.title}
-                            onChange={(e) =>
-                              props.handleEditingChange(e, column.id)
-                            }
-                            autoFocus
-                          />
-                        </form>
-                      )
-                    : task.column === column.id && (
-                        <div
-                          draggable={true}
-                          key={task_index}
-                          className={s.tasks}
-                        >
-                          <span onClick={() => props.taskClick(task_index)}>
-                            {task.title}
-                          </span>
-                          <div className={s.taskButtons}>
-                            <div
-                              onClick={
-                                props.user.user_id === props.selectedTable.user
-                                  ? () => {
-                                      props.changeUpdateTag(task_index);
-                                      props.startEdit(task.title, column.id);
-                                    }
-                                  : undefined
+                {props.taskList.map((taskArr, taskArr_index) => {
+                  return taskArr.map((task, task_index) => {
+                    return props.taskUpdateTag[task.id]
+                      ? task.column === column.id && (
+                          <form
+                            key={task.id}
+                            className={s.updateForm}
+                          >
+                            <textarea
+                              onKeyDown={(e) =>
+                                props.handleKeyDown(e, task.id)
                               }
-                              className={s.btnChange}
-                            >
-                              <FontAwesomeIcon
-                                icon={faEdit}
-                                style={{
-                                  fontSize: ".7rem",
-                                }}
-                              />
-                            </div>
-                            <div
-                              onClick={
-                                props.user.user_id === props.selectedTable.user
-                                  ? () => props.deleteItem(task)
-                                  : undefined
+                              value={props.editing.title}
+                              onChange={(e) =>
+                                props.handleEditingChange(e, column.id)
                               }
-                              className={s.btnDelete}
-                            >
-                              <FontAwesomeIcon
-                                icon={faTrashAlt}
-                                style={{
-                                  fontSize: ".7rem",
-                                }}
-                              />
-                            </div>
-                            {/* <div className={s.dropdownContainer}>
+                              autoFocus
+                            />
+                          </form>
+                        )
+                      : task.column === column.id && (
+                          <div
+                            draggable={true}
+                            key={task.id}
+                            className={s.tasks}
+                          >
+                            <span onClick={() => props.taskClick(task.id)}>
+                              {task.title}
+                            </span>
+                            <div className={s.taskButtons}>
+                              <div
+                                onClick={
+                                  props.user.user_id ===
+                                  props.selectedTable.user
+                                    ? () => {
+                                        props.changeUpdateTag(task.id);
+                                        props.startEdit(task.title, column.id);
+                                      }
+                                    : undefined
+                                }
+                                className={s.btnChange}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faEdit}
+                                  style={{
+                                    fontSize: ".7rem",
+                                  }}
+                                />
+                              </div>
+                              <div
+                                onClick={
+                                  props.user.user_id ===
+                                  props.selectedTable.user
+                                    ? () => props.deleteItem(task)
+                                    : undefined
+                                }
+                                className={s.btnDelete}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faTrashAlt}
+                                  style={{
+                                    fontSize: ".7rem",
+                                  }}
+                                />
+                              </div>
+                              {/* <div className={s.dropdownContainer}>
                               <button
                                 type="button"
                                 className={s.dropdownButton}
@@ -184,20 +195,21 @@ const List = (props) => {
                                 </OutsideClickHandler>
                               )}
                             </div> */}
-                          </div>
-                          {task.members.length !== 0 && (
-                            <div className={s.membersCount}>
-                              <div style={{ marginRight: "0.3rem" }}>
-                                <FontAwesomeIcon
-                                  icon={faUser}
-                                  className={s.memberIcon}
-                                />
-                                {task.members.length}
-                              </div>
                             </div>
-                          )}
-                        </div>
-                      );
+                            {task.members.length !== 0 && (
+                              <div className={s.membersCount}>
+                                <div style={{ marginRight: "0.3rem" }}>
+                                  <FontAwesomeIcon
+                                    icon={faUser}
+                                    className={s.memberIcon}
+                                  />
+                                  {task.members.length}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        );
+                  });
                 })}
               </div>
               {props.taskInputTag[index] ? (

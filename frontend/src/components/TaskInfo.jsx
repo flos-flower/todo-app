@@ -97,7 +97,6 @@ const TaskInfo = (props) => {
 
   const handleFileChange = (e) => {
     const data = new FormData();
-    console.log(e.target.files);
     for (let i in e.target.files) {
       data.append("attachments", e.target.files[i]);
     }
@@ -245,7 +244,7 @@ const TaskInfo = (props) => {
                 <textarea
                   placeholder="Add a description"
                   className={s.descriptionAdd}
-                  disabled
+                  disabled={props.user.user_id !== selectedTable.user && true}
                   type="text"
                   onClick={
                     props.user.user_id === selectedTable.user

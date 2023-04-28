@@ -76,7 +76,24 @@ const HomePageFunc = () => {
         if (response.status === 200) return response.json();
         else if (response.statusText === "Unauthorized") logoutUser();
       })
-      .then((data) => setTaskList(data));
+      .then((data) => {
+        const getTasks = () => {
+          let tasks = [];
+          for (let i of todoList) {
+            tasks = [
+              ...tasks,
+              data.filter((task) => {
+                return task.column === i.id;
+              }),
+            ];
+          }
+          return tasks;
+        };
+        const setTasks = async () => {
+          setTaskList(await getTasks());
+        };
+        setTasks();
+      });
   };
 
   let changeTaskTag = (index) => {
@@ -111,12 +128,12 @@ const HomePageFunc = () => {
     setColumnUpdateTag(columns);
   };
 
-  let handleKeyDown = (e, index, id) => {
+  let handleKeyDown = (e, id) => {
     e.target.style.height = "inherit";
     e.target.style.height = `${e.target.scrollHeight}px`;
     if (e.key === "Enter") {
       e.preventDefault();
-      changeUpdateTag(index);
+      changeUpdateTag(id);
       updateTask(id);
     }
   };
@@ -134,7 +151,9 @@ const HomePageFunc = () => {
   let fetchAttachments = () => {
     let tasks = [];
     for (let i of taskList) {
-      tasks = [...tasks, i.id];
+      for (let j of i){
+        tasks = [...tasks, j.id];
+      }
     }
     fetch(
       `http://127.0.0.1:8000/api/attachments-list/?tasks=${encodeURIComponent(
@@ -245,7 +264,6 @@ const HomePageFunc = () => {
     })
       .then((response) => {
         fetchTasks();
-        setTaskTitle("");
       })
       .catch(function (error) {
         console.log("ERROR", error);
@@ -267,7 +285,6 @@ const HomePageFunc = () => {
     })
       .then((response) => {
         fetchColumns();
-        setTaskTitle("");
       })
       .catch(function (error) {
         console.log("ERROR", error);
@@ -358,6 +375,7 @@ const HomePageFunc = () => {
       });
   };
 
+  //
   let taskClick = (index) => {
     let tasks = [...visibleTaskInfo];
     for (let i = 0; i < tasks.length; i++) {
