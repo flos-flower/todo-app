@@ -44,7 +44,7 @@
 }
 
 .taskListContainer {
-  max-height: 35rem;
+  max-height: 33rem;
   overflow: auto;
 }
 
@@ -67,7 +67,17 @@
   border-radius: 0.2rem;
   padding: 0.2rem;
   box-shadow: 0 3px 2px -2px gray;
-  cursor: pointer;
+  cursor: pointer!important;
+  position: relative;
+}
+
+.taskDrag {
+  background-color: white;
+  margin-bottom: 0.5rem;
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+  box-shadow: 0 3px 2px -2px gray;
+  cursor: pointer!important;
   position: relative;
 }
 

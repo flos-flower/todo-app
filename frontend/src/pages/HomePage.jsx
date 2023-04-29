@@ -429,6 +429,7 @@ const HomePageFunc = () => {
         fetchTasks={fetchTasks}
         attachmentsList={attachmentsList}
         fetchAttachments={fetchAttachments}
+        setTaskList={setTaskList}
       />
     </div>
   );
