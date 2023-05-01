@@ -11,7 +11,6 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const List = (props) => {
   const handleOnDragEnd = (result) => {
-    console.log(result);
     if (!result.destination) return;
     const { source, destination } = result;
 
@@ -24,14 +23,11 @@ const List = (props) => {
       props.taskList.map((task, index) => {
         if (index === parseInt(source.droppableId)) {
           newItems[index] = sourceItems;
-          console.log(newItems);
         }
         if (index === parseInt(destination.droppableId)) {
           newItems[index] = destItems;
-          console.log(newItems);
         }
       });
-      console.log(newItems);
       props.setTaskList(newItems);
     } else {
       const copiedItems = [...props.taskList[parseInt(source.droppableId)]];

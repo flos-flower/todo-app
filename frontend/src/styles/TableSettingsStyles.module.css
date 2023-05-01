@@ -186,6 +186,23 @@ ul::-webkit-scrollbar-thumb {
   display: block;
 }
 
+.membersList > li:hover .giveUser {
+  display: block;
+}
+
+.giveUser {
+  position: absolute;
+  top: 0.13rem;
+  right: 1.2rem;
+  border-radius: 0.2rem;
+  padding: 0 0.2rem;
+  display: none;
+}
+
+.giveUser:hover {
+  background-color: rgb(202, 202, 202);
+}
+
 .deleteUser {
   position: absolute;
   top: 0.13rem;

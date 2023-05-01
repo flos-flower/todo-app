@@ -7,6 +7,7 @@ import {
   faPlus,
   faX,
   faCrown,
+  faUserTag,
 } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import Context from "../context/Context";
@@ -14,8 +15,14 @@ import Context from "../context/Context";
 let TableSettings = (props) => {
   let [visibleUserInvitation, setVisibleUserInvitation] = useState(false);
   let [visibleMemberList, setVisibleMemberList] = useState(false);
-  let { userList, addMember, selectedTable, updateTableMembers, user } =
-    useContext(Context);
+  let {
+    userList,
+    addMember,
+    selectedTable,
+    updateTableMembers,
+    user,
+    changeTableAdmin,
+  } = useContext(Context);
   let [inputUsername, setInputUsername] = useState("");
 
   const ref = useRef(null);
@@ -80,10 +87,10 @@ let TableSettings = (props) => {
             </span>
             {visibleMemberList && (
               <ul className={s.membersList}>
-                {userList.map((user, index) => {
-                  return user.id === selectedTable.user ? (
+                {userList.map((member, index) => {
+                  return member.id === selectedTable.user ? (
                     <li key={index}>
-                      <span>{user.username}</span>
+                      <span>{member.username}</span>
                       <FontAwesomeIcon
                         icon={faCrown}
                         className={s.crownIcon}
@@ -91,22 +98,41 @@ let TableSettings = (props) => {
                       />
                     </li>
                   ) : (
-                    selectedTable.members.includes(user.id) && (
+                    selectedTable.members.includes(member.id) && (
                       <li key={index}>
-                        <span>{user.username}</span>
-                        <div
-                          className={s.deleteUser}
-                          onClick={(e) =>
-                            updateTableMembers(e, selectedTable.id, user.id)
-                          }
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrashAlt}
-                            style={{
-                              fontSize: ".7rem",
-                            }}
-                          />
-                        </div>
+                        <span>{member.username}</span>
+                        {selectedTable.user === user.user_id && (
+                          <div>
+                            <div
+                              className={s.giveUser}
+                              onClick={(e) =>
+                                changeTableAdmin(e, selectedTable.id, member.id)
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon={faUserTag}
+                                style={{
+                                  fontSize: ".7rem",
+                                }}
+                                title="Pass admin rights"
+                              />
+                            </div>
+                            <div
+                              className={s.deleteUser}
+                              onClick={(e) =>
+                                updateTableMembers(e, selectedTable.id, member.id)
+                              }
+                            >
+                              <FontAwesomeIcon
+                                icon={faTrashAlt}
+                                style={{
+                                  fontSize: ".7rem",
+                                }}
+                                title="Expel user from the table"
+                              />
+                            </div>
+                          </div>
+                        )}
                       </li>
                     )
                   );

@@ -200,10 +200,10 @@ export const ContextProvider = ({ children }) => {
       body: JSON.stringify({
         user: userid,
         name: title,
+        members:[userid]
       }),
     })
       .then((response) => {
-        console.log(title);
         fetchTable();
       })
       .catch(function (error) {
@@ -248,6 +248,29 @@ export const ContextProvider = ({ children }) => {
       body: JSON.stringify({
         ...selectedTable,
         members: selectedTable.members.filter((user) => user !== userid),
+      }),
+    })
+      .then((response) => {
+        fetchTable();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
+  let changeTableAdmin = (e, id, userid) => {
+    e.preventDefault();
+    let url = `http://127.0.0.1:8000/api/table-update/${id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        ...selectedTable,
+        user:userid,
+        members:[...selectedTable.members, selectedTable.user]
       }),
     })
       .then((response) => {
@@ -331,6 +354,7 @@ export const ContextProvider = ({ children }) => {
     deleteTable: deleteTable,
     addMember: addMember,
     updateTableMembers: updateTableMembers,
+    changeTableAdmin:changeTableAdmin
   };
 
   return (
