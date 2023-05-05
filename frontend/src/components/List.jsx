@@ -1,4 +1,6 @@
 import s from "../styles/ListStyles.module.css";
+import Context from "../context/Context";
+import React, { useContext } from "react";
 import InputBar from "./InputBar";
 import TaskInfo from "./TaskInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,38 +12,97 @@ import {
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const List = (props) => {
+  let { authTokens } = useContext(Context);
+
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
     const { source, destination } = result;
 
-    if (source.droppableId !== destination.droppableId) {
-      const sourceItems = [...props.taskList[parseInt(source.droppableId)]];
-      const destItems = [...props.taskList[parseInt(destination.droppableId)]];
-      const [removed] = sourceItems.splice(source.index, 1);
-      destItems.splice(destination.index, 0, removed);
-      let newItems = [...props.taskList];
-      props.taskList.map((task, index) => {
-        if (index === parseInt(source.droppableId)) {
-          newItems[index] = sourceItems;
-        }
-        if (index === parseInt(destination.droppableId)) {
-          newItems[index] = destItems;
+    const changeOrder = async () => {
+      return new Promise((resolve, reject) => {
+        if (source.droppableId !== destination.droppableId) {
+          const sourceItems = [...props.taskList[parseInt(source.droppableId)]];
+          const destItems = [
+            ...props.taskList[parseInt(destination.droppableId)],
+          ];
+          const [removed] = sourceItems.splice(source.index, 1);
+          destItems.splice(destination.index, 0, removed);
+          let newItems = [...props.taskList];
+          props.taskList.forEach((task, index) => {
+            if (index === parseInt(source.droppableId)) {
+              newItems[index] = sourceItems;
+            }
+            if (index === parseInt(destination.droppableId)) {
+              newItems[index] = destItems;
+            }
+          });
+          props.setTaskList(newItems);
+          resolve(newItems);
+        } else {
+          const copiedItems = [...props.taskList[parseInt(source.droppableId)]];
+          const [removed] = copiedItems.splice(source.index, 1);
+          copiedItems.splice(destination.index, 0, removed);
+          let newItems = [...props.taskList];
+          props.taskList.forEach((task, index) => {
+            if (index === parseInt(source.droppableId)) {
+              newItems[index] = copiedItems;
+            }
+          });
+          props.setTaskList(newItems);
+          resolve(newItems);
         }
       });
-      props.setTaskList(newItems);
-    } else {
-      const copiedItems = [...props.taskList[parseInt(source.droppableId)]];
-      const [removed] = copiedItems.splice(source.index, 1);
-      copiedItems.splice(destination.index, 0, removed);
-      let newItems = [...props.taskList];
-      props.taskList.map((task, index) => {
-        if (index === parseInt(source.droppableId)) {
-          newItems[index] = copiedItems;
-        }
+    };
+
+    let updateTask = (value, id, task_index, index) => {
+      let url = `http://127.0.0.1:8000/api/task-update/${id}`;
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          ...value[task_index][index],
+          order: index + 1,
+        }),
+      }).catch(function (error) {
+        console.log("ERROR", error);
       });
-      props.setTaskList(newItems);
-    }
+    };
+
+    let updateTaskColumn = (value, id, task_index, index) => {
+      let url = `http://127.0.0.1:8000/api/task-update/${id}`;
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          ...value[task_index][index],
+          column: props.todoList[destination.droppableId].id,
+          order: index + 1,
+        }),
+      }).catch(function (error) {
+        console.log("ERROR", error);
+      });
+    };
+    let updateOrder = async () => {
+      changeOrder().then((value) => {
+        value.forEach((task_arr, task_index) => {
+          task_arr.forEach((task, index) => {
+            task_index === parseInt(destination.droppableId) &&
+            index === destination.index
+              ? updateTaskColumn(value, task.id, task_index, index)
+              : updateTask(value, task.id, task_index, index);
+          });
+        });
+      });
+    };
+    updateOrder();
   };
+
   return (
     <div className={s.columnsDiv}>
       {props.taskList.map((taskArr, index_arr) => {
@@ -126,7 +187,7 @@ const List = (props) => {
                             <form key={task.id} className={s.updateForm}>
                               <textarea
                                 onKeyDown={(e) =>
-                                  props.handleKeyDown(e, task.id)
+                                  props.handleKeyDown(e, task.id, index)
                                 }
                                 value={props.editing.title}
                                 onChange={(e) =>
@@ -164,7 +225,8 @@ const List = (props) => {
                                               props.changeUpdateTag(task.id);
                                               props.startEdit(
                                                 task.title,
-                                                column.id
+                                                column.id,
+                                                task - index
                                               );
                                             }
                                           : undefined
@@ -225,7 +287,9 @@ const List = (props) => {
                     className={s.taskInput}
                   >
                     <textarea
-                      onChange={(e) => props.handleTaskChange(e, column.id)}
+                      onChange={(e) =>
+                        props.handleTaskChange(e, column.id, index)
+                      }
                       onKeyDown={props.handleKeyDown}
                       placeholder="Enter a title"
                       autoFocus

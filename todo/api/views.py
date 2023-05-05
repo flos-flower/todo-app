@@ -46,7 +46,7 @@ def taskList(request):
     columns = Column.objects.filter(id__in=column_id)
     tasks = Column.objects.none()
     for column in columns:
-        tasks |= column.task_set.all()
+        tasks |= column.task_set.all().order_by('order')
     serializer = TaskSerializer(tasks, many=True)
     return Response(serializer.data)
 

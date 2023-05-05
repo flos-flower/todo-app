@@ -77,7 +77,7 @@ const HomePageFunc = () => {
         else if (response.statusText === "Unauthorized") logoutUser();
       })
       .then((data) => {
-        const getTasks = () => {
+        const getTasks = async () => {
           let tasks = [];
           for (let i of todoList) {
             tasks = [
@@ -128,7 +128,7 @@ const HomePageFunc = () => {
     setColumnUpdateTag(columns);
   };
 
-  let handleKeyDown = (e, id) => {
+  let handleKeyDown = (e, id, index) => {
     e.target.style.height = "inherit";
     e.target.style.height = `${e.target.scrollHeight}px`;
     if (e.key === "Enter") {
@@ -151,7 +151,7 @@ const HomePageFunc = () => {
   let fetchAttachments = () => {
     let tasks = [];
     for (let i of taskList) {
-      for (let j of i){
+      for (let j of i) {
         tasks = [...tasks, j.id];
       }
     }
@@ -162,7 +162,7 @@ const HomePageFunc = () => {
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json; charset=utf-8",
           Authorization: "Bearer " + String(authTokens.access),
         },
       }
@@ -199,12 +199,13 @@ const HomePageFunc = () => {
     setColumnName(value);
   };
 
-  let handleTaskChange = (e, index) => {
+  let handleTaskChange = (e, id, index) => {
     let value = e.target.value;
     setTaskTitle({
       user: jwt_decode(authTokens.access).user_id,
       title: value,
-      column: index,
+      column: id,
+      order: taskList[index].length,
     });
   };
 
@@ -315,11 +316,12 @@ const HomePageFunc = () => {
     });
   };
 
-  let startEdit = (value, index) => {
+  let startEdit = (value, index, task_index) => {
     setEditing({
       user: jwt_decode(authTokens.access).user_id,
       title: value,
       column: index,
+      order: task_index,
     });
   };
 
@@ -364,6 +366,7 @@ const HomePageFunc = () => {
         user: jwt_decode(authTokens.access).user_id,
         title: title,
         column: column,
+        order: taskList[column].length,
       }),
     })
       .then((response) => {

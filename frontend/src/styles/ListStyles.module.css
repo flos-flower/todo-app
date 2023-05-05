@@ -46,6 +46,7 @@
 .taskListContainer {
   max-height: 33rem;
   overflow: auto;
+  min-height: 0.1rem;
 }
 
 .taskListContainer::-webkit-scrollbar {
