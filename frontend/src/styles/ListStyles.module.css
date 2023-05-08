@@ -276,3 +276,31 @@ button:focus {
   color: rgb(69, 69, 69);
   margin-right: .3rem;
 }
+
+.membersList {
+  display:flex;
+  flex-direction: row;
+  max-width: 5.3rem;
+  overflow:auto;
+  margin-right: 0.2rem;
+}
+
+.membersList::-webkit-scrollbar {
+  height: 0.3rem;
+}
+
+.membersList::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.membersList::-webkit-scrollbar-thumb {
+  background-color: rgb(179, 179, 179);
+  border-radius: 0.4rem;
+}
+
+.memberProfile {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius:3rem;
+  margin-left: 0.2rem;
+}

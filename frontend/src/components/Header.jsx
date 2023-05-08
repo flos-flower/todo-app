@@ -135,18 +135,10 @@ const Header = () => {
               </div>
             )}
           <div className={s.dropdownContainer} ref={ref}>
-            {profile !== undefined ? (
+            {profile !== undefined && (
               <img
                 className={s.profileImage}
                 src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${profile[0].picture}`}
-                alt="Profile"
-                onClick={() => {
-                  setDrop(!drop);
-                }}
-              />
-            ) : (
-              <img
-                className={s.profileImage}
                 alt="Profile"
                 onClick={() => {
                   setDrop(!drop);

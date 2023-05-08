@@ -163,7 +163,6 @@ export const ContextProvider = ({ children }) => {
   };
 
   let handleProfileChange = (e) => {
-    e.preventDefault();
     var url = `http://127.0.0.1:8000/api/profile-update/${profile[0].id}`;
     fetch(url, {
       method: "POST",
@@ -176,6 +175,9 @@ export const ContextProvider = ({ children }) => {
         picture: "",
         name: e.target.name.value,
         surname: e.target.surname.value,
+        phone_number: e.target.phone_number.value,
+        email: e.target.email.value,
+        username:e.target.username.value,
       }),
     })
       .then((response) => {

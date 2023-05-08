@@ -14,6 +14,12 @@ const ProfileInfo = () => {
     if (profile[0].surname === null) return "";
     else return `${profile[0].surname}`;
   });
+  let [phoneNumber, setPhoneNumber] = useState(() => {
+    if (profile[0].phone_number === null) return "";
+    else return `${profile[0].phone_number}`;
+  });
+  let [email] = useState(`${profile[0].email}`);
+  let [username] = useState(`${profile[0].username}`);
 
   let onNameChange = (e) => {
     setName(e.target.value);
@@ -21,6 +27,14 @@ const ProfileInfo = () => {
 
   let onSurnameChange = (e) => {
     setSurname(e.target.value);
+  };
+
+  let onPhoneChange = (e) => {
+    setPhoneNumber(e.target.value);
+  };
+
+  let phoneFieldFocus = () => {
+    phoneNumber === "" && setPhoneNumber("+7");
   };
 
   return (
@@ -41,9 +55,27 @@ const ProfileInfo = () => {
               onChange={handleImageChange}
             ></input>
           </div>
-          <span>{user.username}</span>
+          <span>{profile[0].username}</span>
         </div>
         <form className={s.formDiv} onSubmit={handleProfileChange}>
+          <label>
+            Username
+            <input
+              disabled
+              value={username}
+              name="username"
+              className={s.infoInput}
+            />
+          </label>
+          <label>
+            Email
+            <input
+              disabled
+              value={email}
+              name="email"
+              className={s.infoInput}
+            />
+          </label>
           <label>
             Name
             <input
@@ -62,6 +94,17 @@ const ProfileInfo = () => {
               placeholder="Last name"
               name="surname"
               className={s.infoInput}
+            />
+          </label>
+          <label>
+            Phone number
+            <input
+              onChange={onPhoneChange}
+              value={phoneNumber}
+              placeholder="Phone number"
+              name="phone_number"
+              className={s.infoInput}
+              onFocus={phoneFieldFocus}
             />
           </label>
           <input type="submit" value="Save" />

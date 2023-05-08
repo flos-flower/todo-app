@@ -1,6 +1,6 @@
 import s from "../styles/ListStyles.module.css";
 import Context from "../context/Context";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import InputBar from "./InputBar";
 import TaskInfo from "./TaskInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +12,9 @@ import {
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const List = (props) => {
-  let { authTokens } = useContext(Context);
+  let [isHovering, setIsHovering] = useState([]);
+
+  let { profile, authTokens } = useContext(Context);
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
@@ -64,6 +66,7 @@ const List = (props) => {
         },
         body: JSON.stringify({
           ...value[task_index][index],
+          column: props.todoList[task_index].id,
           order: index + 1,
         }),
       }).catch(function (error) {
@@ -81,7 +84,7 @@ const List = (props) => {
         },
         body: JSON.stringify({
           ...value[task_index][index],
-          column: props.todoList[destination.droppableId].id,
+          column: props.todoList[task_index].id,
           order: index + 1,
         }),
       }).catch(function (error) {
@@ -101,6 +104,20 @@ const List = (props) => {
       });
     };
     updateOrder();
+  };
+
+  let handleMouseOver = (index) => {
+    let tasks = [...isHovering];
+    let task = tasks[index];
+    tasks[index] = true;
+    setIsHovering(tasks);
+  };
+
+  let handleMouseOut = (index) => {
+    let tasks = [...isHovering];
+    let task = tasks[index];
+    tasks[index] = false;
+    setIsHovering(tasks);
   };
 
   return (
@@ -258,14 +275,44 @@ const List = (props) => {
                                     </div>
                                   </div>
                                   {task.members.length !== 0 && (
-                                    <div className={s.membersCount}>
-                                      <div style={{ marginRight: "0.3rem" }}>
-                                        <FontAwesomeIcon
-                                          icon={faUser}
-                                          className={s.memberIcon}
-                                        />
-                                        {task.members.length}
-                                      </div>
+                                    <div
+                                      className={s.membersCount}
+                                      onMouseOver={() =>
+                                        handleMouseOver(task.id)
+                                      }
+                                      onMouseOut={() => handleMouseOut(task.id)}
+                                    >
+                                      {!isHovering[task.id] && (
+                                        <div style={{ marginRight: "0.3rem" }}>
+                                          <FontAwesomeIcon
+                                            icon={faUser}
+                                            className={s.memberIcon}
+                                          />
+                                          {task.members.length}
+                                        </div>
+                                      )}
+                                      {isHovering[task.id] && (
+                                        <div className={s.membersList}>
+                                          {profile.map(
+                                            (user_profile, profile_index) => {
+                                              return (
+                                                task.members.includes(
+                                                  user_profile.user
+                                                ) && (
+                                                  <img
+                                                    className={s.memberProfile}
+                                                    key={profile_index}
+                                                    src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${user_profile.picture}`}
+                                                    title={
+                                                      user_profile.username
+                                                    }
+                                                  />
+                                                )
+                                              );
+                                            }
+                                          )}
+                                        </div>
+                                      )}
                                     </div>
                                   )}
                                 </div>

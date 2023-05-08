@@ -10,6 +10,9 @@ class Profile(models.Model):
     picture = models.ImageField(upload_to='images/', default='images/default.jpg')
     name = models.CharField(max_length=200, null=True, blank=True)
     surname = models.CharField(max_length=200, null=True, blank=True)
+    phone_number = models.CharField(blank=True, null=True, max_length=12)
+    email = models.CharField(max_length=200)
+    username = models.CharField(max_length=200)
 
     def __str__(self):
         return str(self.user) + '_profile'
@@ -17,7 +20,7 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user=instance, email=instance.email, username=instance.username)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

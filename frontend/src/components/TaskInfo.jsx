@@ -152,7 +152,6 @@ const TaskInfo = (props) => {
 
   return (
     <div className={s.TaskInfoContainer}>
-      {console.log(props.attachmentsList)}
       <div className={s.TaskInfoDiv}>
         <FontAwesomeIcon
           icon={faX}
