@@ -8,6 +8,11 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = '__all__'
 
+class TaskImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['image']
+
 class AttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attachment

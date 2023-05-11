@@ -66,10 +66,14 @@
   background-color: white;
   margin-bottom: 0.5rem;
   border-radius: 0.2rem;
-  padding: 0.2rem;
   box-shadow: 0 3px 2px -2px gray;
   cursor: pointer!important;
   position: relative;
+}
+
+.taskNameContainer {
+  padding:0.2rem;
+  margin-left:0.1rem;
 }
 
 .taskDrag {
@@ -142,12 +146,15 @@ button:focus {
   position: absolute;
   top: 0.13rem;
   right: 0.2rem;
+  justify-content: space-between;
+  width:2.2rem;
 }
 
 .btnChange {
   padding: 0 0.2rem 0.15rem 0.2rem;
   border-radius: 0.2rem;
   display: none;
+  background-color:rgba(243, 243, 243, 0.7);
 }
 
 .btnChange:hover {
@@ -162,6 +169,7 @@ button:focus {
   padding: 0 0.2rem 0.15rem 0.2rem;
   border-radius: 0.2rem;
   display: none;
+  background-color:rgba(243, 243, 243, 0.7);
 }
 
 .btnDelete:hover {
@@ -179,14 +187,20 @@ button:focus {
   bottom: 0.15rem;
 }
 
+.updateForm {
+  padding:0.2rem;
+}
+
 .updateForm > textarea {
   width: 100%;
   margin-bottom: 0.3rem;
   border: none;
+  border-radius:0.2rem;
   outline: none;
   resize: none;
   box-shadow: 0 3px 2px -2px gray;
   font-family: "Montserrat", sans-serif;
+  background-color:rgb(243, 243, 243);
 }
 
 .updateForm > input {
@@ -303,4 +317,13 @@ button:focus {
   height: 1.5rem;
   border-radius:3rem;
   margin-left: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.taskImage {
+  max-width: 100%;
+  margin-bottom: 0.2rem;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0.2rem 0.2rem 0px 0px;
+  border-radius: 0.2rem 0.2rem 0rem 0rem; 
 }

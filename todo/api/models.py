@@ -51,6 +51,7 @@ class Task(models.Model):
     description = models.TextField(blank=True, null=True)
     members = models.ManyToManyField(User, null=True, blank=True, related_name='task_members')
     order = models.PositiveIntegerField(default=1)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
 
     def __str__(self):
         return self.title

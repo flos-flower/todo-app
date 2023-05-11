@@ -146,6 +146,8 @@ export const ContextProvider = ({ children }) => {
     const data = new FormData();
     data.append("picture", e.target.files[0]);
     data.append("user", user.user_id);
+    data.append("email", profile[0].email);
+    data.append("username", profile[0].username);
     var url = `http://127.0.0.1:8000/api/profile-update/${profile[0].id}`;
     fetch(url, {
       method: "POST",

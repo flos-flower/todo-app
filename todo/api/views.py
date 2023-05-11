@@ -4,7 +4,7 @@ from django.db.models import Case, When
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import TaskSerializer, UserSerializer, ColumnSerializer, ProfileSerializer, TableSerializer, AttachmentSerializer
+from .serializers import TaskSerializer, UserSerializer, ColumnSerializer, ProfileSerializer, TableSerializer, AttachmentSerializer, TaskImageSerializer
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Task, Column, Profile, Table, Attachment
@@ -95,7 +95,35 @@ def columnCreate(request):
 @permission_classes([IsAuthenticated])
 def taskUpdate(request, pk):
     task = Task.objects.get(id=pk)
+    if request.data['image'] == '':
+      if task.image:
+        request.data.update({"image": task.image})
+      else:
+        request.data.update({"image": None})
+    print(request.data)
     serializer = TaskSerializer(instance=task, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def taskImageUpdate(request, pk):
+    task = Task.objects.get(id=pk)
+    print(request.data)
+    serializer = TaskImageSerializer(instance=task, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def taskImageDelete(request, pk):
+    task = Task.objects.get(id=pk)
+    task.image.delete(save=True)
+    serializer = TaskImageSerializer(instance=task, data=request.data)
     if serializer.is_valid():
         serializer.save()
 
@@ -105,6 +133,7 @@ def taskUpdate(request, pk):
 @permission_classes([IsAuthenticated])
 def attachmentUpload(request):
     for file in request.data.getlist('attachments'):
+        print(file)
         serializer = AttachmentSerializer(data={'task':request.data['task'], 'file':file})
         if serializer.is_valid():
             serializer.save()
@@ -165,6 +194,7 @@ def profileUpdate(request, pk):
     serializer = ProfileSerializer(instance=profile, data=request.data)
     if request.data['picture'] == '':
         request.data.update({"picture": profile.picture})
+    print(request.data)
     if serializer.is_valid():
         serializer.save()
 

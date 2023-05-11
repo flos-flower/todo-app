@@ -66,6 +66,7 @@ const List = (props) => {
         },
         body: JSON.stringify({
           ...value[task_index][index],
+          image: "",
           column: props.todoList[task_index].id,
           order: index + 1,
         }),
@@ -85,6 +86,7 @@ const List = (props) => {
         body: JSON.stringify({
           ...value[task_index][index],
           column: props.todoList[task_index].id,
+          image: "",
           order: index + 1,
         }),
       }).catch(function (error) {
@@ -202,6 +204,12 @@ const List = (props) => {
                         props.taskList[index].map((task, task_index) => {
                           return props.taskUpdateTag[task.id] ? (
                             <form key={task.id} className={s.updateForm}>
+                              {task.image && (
+                                <img
+                                  className={s.taskImage}
+                                  src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${task.image}`}
+                                />
+                              )}
                               <textarea
                                 onKeyDown={(e) =>
                                   props.handleKeyDown(e, task.id, index)
@@ -219,32 +227,32 @@ const List = (props) => {
                               draggableId={task.id + ""}
                               index={task_index}
                             >
-                              {(provided, snapshot) => (
+                              {(provided) => (
                                 <div
-                                  className={
-                                    snapshot.isDragging ? s.taskDrag : s.tasks
-                                  }
+                                  className={s.tasks}
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
+                                  onClick={() => props.taskClick(task.id)}
                                 >
-                                  <span
-                                    onClick={() => props.taskClick(task.id)}
-                                  >
-                                    {task.title}
-                                  </span>
+                                  {task.image && (
+                                    <img
+                                      className={s.taskImage}
+                                      src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${task.image}`}
+                                    />
+                                  )}
+                                  <div className={s.taskNameContainer}>
+                                  <span>{task.title}</span>
+                                  </div>
                                   <div className={s.taskButtons}>
                                     <div
                                       onClick={
                                         props.user.user_id ===
                                         props.selectedTable.user
-                                          ? () => {
+                                          ? (e) => {
                                               props.changeUpdateTag(task.id);
-                                              props.startEdit(
-                                                task.title,
-                                                column.id,
-                                                task - index
-                                              );
+                                              props.startEdit(task.title);
+                                              e.stopPropagation();
                                             }
                                           : undefined
                                       }
@@ -261,7 +269,10 @@ const List = (props) => {
                                       onClick={
                                         props.user.user_id ===
                                         props.selectedTable.user
-                                          ? () => props.deleteItem(task)
+                                          ? (e) => {
+                                              props.deleteItem(task);
+                                              e.stopPropagation();
+                                            }
                                           : undefined
                                       }
                                       className={s.btnDelete}

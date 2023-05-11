@@ -8,15 +8,20 @@ import {
   faUser,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { faCommentAlt } from "@fortawesome/free-regular-svg-icons";
+import {
+  faCommentAlt,
+  faImage,
+  faTrashAlt,
+} from "@fortawesome/free-regular-svg-icons";
 
 const TaskInfo = (props) => {
   const refFile = useRef(null);
+  const refImage = useRef(null);
   const memberRef = useRef(null);
 
   let [descEdit, setDescEdit] = useState(false);
   let [descValue, setDescValue] = useState(
-    props.task.description ? props.task.description : ""
+    props.task.description ? props.task.description : undefined
   );
   let [visibleMemberList, setVisibleMemberList] = useState(false);
 
@@ -24,6 +29,10 @@ const TaskInfo = (props) => {
 
   const chooseFile = () => {
     refFile.current.click();
+  };
+
+  const chooseCover = () => {
+    refImage.current.click();
   };
 
   let changeMemberListVisibility = () => {
@@ -62,6 +71,7 @@ const TaskInfo = (props) => {
       },
       body: JSON.stringify({
         ...props.task,
+        image: "",
         description: descValue,
       }),
     })
@@ -84,6 +94,7 @@ const TaskInfo = (props) => {
       },
       body: JSON.stringify({
         ...props.task,
+        image: "",
         members: [...props.task.members, id],
       }),
     })
@@ -117,6 +128,41 @@ const TaskInfo = (props) => {
       });
   };
 
+  const handleCoverChange = (e) => {
+    const data = new FormData();
+    data.append("image", e.target.files[0]);
+    var url = `http://127.0.0.1:8000/api/task-image-update/${props.task.id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: data,
+    })
+      .then((response) => {
+        props.fetchTasks();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
+  const deleteCover = () => {
+    var url = `http://127.0.0.1:8000/api/task-image-delete/${props.task.id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + String(authTokens.access),
+      }
+    })
+      .then((response) => {
+        props.fetchTasks();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
   let updateTaskMembers = (userid) => {
     let url = `http://127.0.0.1:8000/api/task-update/${props.task.id}`;
     fetch(url, {
@@ -128,6 +174,7 @@ const TaskInfo = (props) => {
       body: JSON.stringify({
         ...props.task,
         members: props.task.members.filter((user) => user !== userid),
+        image: "",
       }),
     })
       .then((response) => {
@@ -153,18 +200,20 @@ const TaskInfo = (props) => {
   return (
     <div className={s.TaskInfoContainer}>
       <div className={s.TaskInfoDiv}>
-        <FontAwesomeIcon
-          icon={faX}
-          onClick={props.changeVisibility}
-          style={{
-            color: "black",
-            fontSize: "0.6rem",
-            position: "absolute",
-            right: "1rem",
-            top: "1rem",
-            cursor: "pointer",
-          }}
-        />
+        {props.task.image && (
+          <img
+            className={s.taskImage}
+            src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${props.task.image}`}
+          />
+        )}
+        <div className={s.closeTaskInfo} onClick={props.changeVisibility}>
+          <FontAwesomeIcon icon={faX} />
+        </div>
+        {props.task.image && (
+          <div className={s.deleteCover} onClick={deleteCover}>
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </div>
+        )}
         <p>{props.taskName}</p>
         <div className={s.mainDiv}>
           <div className={s.mainContent}>
@@ -331,6 +380,35 @@ const TaskInfo = (props) => {
                   multiple
                   ref={refFile}
                   onChange={handleFileChange}
+                  disabled
+                />
+              )}
+            </form>
+            <form>
+              <div className={s.addOptions} onClick={chooseCover}>
+                <FontAwesomeIcon
+                  icon={faImage}
+                  style={{
+                    color: "black",
+                    fontSize: ".75rem",
+                    marginRight: ".3rem",
+                  }}
+                />
+                <span>Cover</span>
+              </div>
+              {props.user.user_id === selectedTable.user ? (
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={refImage}
+                  onChange={handleCoverChange}
+                />
+              ) : (
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={refImage}
+                  onChange={handleCoverChange}
                   disabled
                 />
               )}

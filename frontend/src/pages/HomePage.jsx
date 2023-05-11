@@ -9,11 +9,7 @@ const HomePageFunc = () => {
   let [todoList, setTodoList] = useState([]);
   let [taskList, setTaskList] = useState([]);
   let [attachmentsList, setAttachmentsList] = useState([]);
-  let [editing, setEditing] = useState({
-    user: "",
-    title: "",
-    column: "",
-  });
+  let [editing, setEditing] = useState();
   let [editingColumn, setEditingColumn] = useState("");
   let [taskInputTag, setTaskInputTag] = useState([]);
   let [visibleTaskInfo, setVisibleTaskInfo] = useState([]);
@@ -316,12 +312,9 @@ const HomePageFunc = () => {
     });
   };
 
-  let startEdit = (value, index, task_index) => {
+  let startEdit = (value) => {
     setEditing({
-      user: jwt_decode(authTokens.access).user_id,
       title: value,
-      column: index,
-      order: task_index,
     });
   };
 
@@ -335,6 +328,7 @@ const HomePageFunc = () => {
       user: jwt_decode(authTokens.access).user_id,
       title: value,
       column: index,
+      image:'',
     });
   };
 

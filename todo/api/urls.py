@@ -15,6 +15,8 @@ urlpatterns = [
     path('task-list/', views.taskList, name='task-list'),
     path('task-create/', views.taskCreate, name='task-create'),
     path('task-update/<str:pk>', views.taskUpdate, name='task-update'),
+    path('task-image-update/<str:pk>', views.taskImageUpdate, name='task-image-update'),
+    path('task-image-delete/<str:pk>', views.taskImageDelete, name='task-image-delete'),
     path('task-delete/<str:pk>', views.taskDelete, name='task-delete'),
 
     path('attachment-upload', views.attachmentUpload, name='attachment-upload'),
