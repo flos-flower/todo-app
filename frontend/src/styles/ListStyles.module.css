@@ -72,7 +72,7 @@
 }
 
 .taskNameContainer {
-  padding:0.2rem;
+  padding:0.2rem 0.2rem 0 0.2rem;
   margin-left:0.1rem;
 }
 
@@ -279,11 +279,11 @@ button:focus {
 }
 
 .membersCount {
-  display:flex;
-  justify-content: flex-end;
-  width:100%;
   font-family: "Montserrat", sans-serif;
   font-size: .8rem;
+  margin:0;
+  padding:0;
+  height:min-content;
 }
 
 .memberIcon {
@@ -326,4 +326,34 @@ button:focus {
   -moz-border-radius: 0px;
   -webkit-border-radius: 0.2rem 0.2rem 0px 0px;
   border-radius: 0.2rem 0.2rem 0rem 0rem; 
+}
+
+.addonsDiv {
+  margin-top:.1rem;
+  padding:0.25rem 0.3rem;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  width:100%;
+}
+
+.addonsWMemDiv {
+  margin-top:.1rem;
+  padding:0.15rem 0.3rem;
+  display:flex;
+  justify-content: flex-start;
+  align-items:center;
+  width:100%;
+}
+
+.checklistDiv {
+  padding:0.1rem 0.25rem;
+  border-radius:0.2rem;
+}
+
+.checklistComplitedDiv {
+  padding:0.1rem 0.25rem;
+  border-radius:0.2rem;
+  background-color:rgb(0, 215, 0);
+  color:white;
 }

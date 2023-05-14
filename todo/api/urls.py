@@ -19,9 +19,14 @@ urlpatterns = [
     path('task-image-delete/<str:pk>', views.taskImageDelete, name='task-image-delete'),
     path('task-delete/<str:pk>', views.taskDelete, name='task-delete'),
 
-    path('attachment-upload', views.attachmentUpload, name='attachment-upload'),
     path('attachments-list/', views.attachmentsList, name='attachments-list'),
+    path('attachment-upload/', views.attachmentUpload, name='attachment-upload'),
     path('attachment-delete/<str:pk>', views.attachmentDelete, name='attachment-delete'),
+
+    path('check-list/', views.checkList, name='check-list'),
+    path('check-box-create/', views.checkBoxCreate, name='check-box-create'),
+    path('check-box-update/<str:pk>', views.checkBoxUpdate, name='check-box-update'),
+    path('check-box-delete/<str:pk>', views.checkBoxDelete, name='check-box-delete'),
 
     path('table-list/', views.tableList, name='table-list'),
     path('table-create/', views.tableCreate, name='table-create'),

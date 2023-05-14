@@ -4,10 +4,10 @@ from django.db.models import Case, When
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import TaskSerializer, UserSerializer, ColumnSerializer, ProfileSerializer, TableSerializer, AttachmentSerializer, TaskImageSerializer
+from .serializers import TaskSerializer, UserSerializer, ColumnSerializer, ProfileSerializer, TableSerializer, AttachmentSerializer, TaskImageSerializer, CheckBoxSerializer, CheckBoxCreateSerializer, CheckBoxUpdateSerializer
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Task, Column, Profile, Table, Attachment
+from .models import Task, Column, Profile, Table, Attachment, CheckBox
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -41,29 +41,6 @@ def apiOverview(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def taskList(request):
-    column_id = [int(x.strip()) for x in  request.GET.get('columns', '').split(',') if x]
-    columns = Column.objects.filter(id__in=column_id)
-    tasks = Column.objects.none()
-    for column in columns:
-        tasks |= column.task_set.all().order_by('order')
-    serializer = TaskSerializer(tasks, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def attachmentsList(request):
-    task_id = [int(x.strip()) for x in  request.GET.get('tasks', '').split(',') if x]
-    tasks = Task.objects.filter(id__in=task_id)
-    files = Task.objects.none()
-    for task in tasks:
-        files |= task.attachment_set.all()
-    serializer = AttachmentSerializer(files, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def columnList(request):
     table_id = [int(x.strip()) for x in  request.GET.get('tables', '').split(',') if x]
     tables = Table.objects.filter(id__in=table_id)
@@ -75,8 +52,8 @@ def columnList(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def taskCreate(request):
-    serializer = TaskSerializer(data=request.data)
+def columnCreate(request):
+    serializer = ColumnSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
 
@@ -84,8 +61,37 @@ def taskCreate(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def columnCreate(request):
-    serializer = ColumnSerializer(data=request.data)
+def columnUpdate(request, pk):
+    column = Column.objects.get(id=pk)
+    serializer = ColumnSerializer(instance=column, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def columnDelete(request, pk):
+    column = Column.objects.get(id=pk)
+    column.delete()
+
+    return Response('Column succesfully deleted')
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def taskList(request):
+    column_id = [int(x.strip()) for x in  request.GET.get('columns', '').split(',') if x]
+    columns = Column.objects.filter(id__in=column_id)
+    tasks = Column.objects.none()
+    for column in columns:
+        tasks |= column.task_set.all().order_by('order')
+    serializer = TaskSerializer(tasks, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def taskCreate(request):
+    serializer = TaskSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
 
@@ -106,6 +112,14 @@ def taskUpdate(request, pk):
         serializer.save()
 
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def taskDelete(request, pk):
+    task = Task.objects.get(id=pk)
+    task.delete()
+
+    return Response('Item succesfully deleted')
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -128,43 +142,6 @@ def taskImageDelete(request, pk):
         serializer.save()
 
     return Response(serializer.data)
-
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def attachmentUpload(request):
-    for file in request.data.getlist('attachments'):
-        print(file)
-        serializer = AttachmentSerializer(data={'task':request.data['task'], 'file':file})
-        if serializer.is_valid():
-            serializer.save()
-
-    return Response(serializer.data)
-
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def columnUpdate(request, pk):
-    column = Column.objects.get(id=pk)
-    serializer = ColumnSerializer(instance=column, data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-
-    return Response(serializer.data)
-
-@api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
-def taskDelete(request, pk):
-    task = Task.objects.get(id=pk)
-    task.delete()
-
-    return Response('Item succesfully deleted')
-
-@api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
-def columnDelete(request, pk):
-    column = Column.objects.get(id=pk)
-    column.delete()
-
-    return Response('Column succesfully deleted')
 
 @api_view(['GET'])
 def userList(request):
@@ -239,6 +216,28 @@ def tableDelete(request, pk):
 
     return Response('Table succesfully deleted')
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def attachmentsList(request):
+    task_id = [int(x.strip()) for x in  request.GET.get('tasks', '').split(',') if x]
+    tasks = Task.objects.filter(id__in=task_id)
+    files = Task.objects.none()
+    for task in tasks:
+        files |= task.attachment_set.all()
+    serializer = AttachmentSerializer(files, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def attachmentUpload(request):
+    for file in request.data.getlist('attachments'):
+        print(file)
+        serializer = AttachmentSerializer(data={'task':request.data['task'], 'file':file})
+        if serializer.is_valid():
+            serializer.save()
+
+    return Response(serializer.data)
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def attachmentDelete(request, pk):
@@ -246,3 +245,43 @@ def attachmentDelete(request, pk):
     attachment.delete()
 
     return Response('File succesfully deleted')
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def checkList(request):
+    task_id = [int(x.strip()) for x in  request.GET.get('tasks', '').split(',') if x]
+    tasks = Task.objects.filter(id__in=task_id)
+    checkBox = Task.objects.none()
+    for task in tasks:
+        checkBox |= task.checkbox_set.all()
+    print(checkBox)
+    serializer = CheckBoxSerializer(checkBox, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def checkBoxUpdate(request, pk):
+    checkBox = CheckBox.objects.get(id=pk)
+    serializer = CheckBoxUpdateSerializer(instance=checkBox, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def checkBoxDelete(request, pk):
+    checkBox = CheckBox.objects.get(id=pk)
+    checkBox.delete()
+
+    return Response('CheckBox succesfully deleted')
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def checkBoxCreate(request):
+    serializer = CheckBoxCreateSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)

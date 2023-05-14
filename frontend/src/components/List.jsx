@@ -8,12 +8,11 @@ import {
   faTrashAlt,
   faEdit,
   faUser,
+  faSquareCheck,
 } from "@fortawesome/free-regular-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const List = (props) => {
-  let [isHovering, setIsHovering] = useState([]);
-
   let { profile, authTokens } = useContext(Context);
 
   const handleOnDragEnd = (result) => {
@@ -108,20 +107,6 @@ const List = (props) => {
     updateOrder();
   };
 
-  let handleMouseOver = (index) => {
-    let tasks = [...isHovering];
-    let task = tasks[index];
-    tasks[index] = true;
-    setIsHovering(tasks);
-  };
-
-  let handleMouseOut = (index) => {
-    let tasks = [...isHovering];
-    let task = tasks[index];
-    tasks[index] = false;
-    setIsHovering(tasks);
-  };
-
   return (
     <div className={s.columnsDiv}>
       {props.taskList.map((taskArr, index_arr) => {
@@ -129,6 +114,8 @@ const List = (props) => {
           return (
             props.visibleTaskInfo[task.id] && (
               <TaskInfo
+                checkList={props.checkList}
+                fetchCheckboxes={props.fetchCheckboxes}
                 changeVisibility={() => props.taskClick(task.id)}
                 taskName={task.title}
                 column={props.taskList}
@@ -242,7 +229,7 @@ const List = (props) => {
                                     />
                                   )}
                                   <div className={s.taskNameContainer}>
-                                  <span>{task.title}</span>
+                                    <span>{task.title}</span>
                                   </div>
                                   <div className={s.taskButtons}>
                                     <div
@@ -285,24 +272,60 @@ const List = (props) => {
                                       />
                                     </div>
                                   </div>
-                                  {task.members.length !== 0 && (
-                                    <div
-                                      className={s.membersCount}
-                                      onMouseOver={() =>
-                                        handleMouseOver(task.id)
-                                      }
-                                      onMouseOut={() => handleMouseOut(task.id)}
-                                    >
-                                      {!isHovering[task.id] && (
-                                        <div style={{ marginRight: "0.3rem" }}>
+                                  <div
+                                    className={
+                                      task.members.length !== 0
+                                        ? s.addonsDiv
+                                        : s.addonsWMemDiv
+                                    }
+                                  >
+                                    <div>
+                                      {props.checkList.filter(
+                                        (check) => check.task === task.id
+                                      ).length !== 0 && (
+                                        <div
+                                          className={
+                                            props.checkList.filter(
+                                              (check) =>
+                                                check.task === task.id &&
+                                                check.complition == true
+                                            ).length ==
+                                            props.checkList.filter(
+                                              (check) => check.task === task.id
+                                            ).length
+                                              ? s.checklistComplitedDiv
+                                              : s.checklistDiv
+                                          }
+                                          title='Checklist items'
+                                        >
                                           <FontAwesomeIcon
-                                            icon={faUser}
-                                            className={s.memberIcon}
+                                            icon={faSquareCheck}
+                                            style={{
+                                              fontSize: "0.8rem",
+                                              marginRight: "0.2rem",
+                                            }}
                                           />
-                                          {task.members.length}
+                                          <span>
+                                            {
+                                              props.checkList.filter(
+                                                (check) =>
+                                                  check.task === task.id &&
+                                                  check.complition == true
+                                              ).length
+                                            }
+                                            /
+                                            {
+                                              props.checkList.filter(
+                                                (check) =>
+                                                  check.task === task.id
+                                              ).length
+                                            }
+                                          </span>
                                         </div>
                                       )}
-                                      {isHovering[task.id] && (
+                                    </div>
+                                    {task.members.length !== 0 && (
+                                      <div className={s.membersCount}>
                                         <div className={s.membersList}>
                                           {profile.map(
                                             (user_profile, profile_index) => {
@@ -323,9 +346,9 @@ const List = (props) => {
                                             }
                                           )}
                                         </div>
-                                      )}
-                                    </div>
-                                  )}
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
                               )}
                             </Draggable>

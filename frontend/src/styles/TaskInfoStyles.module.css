@@ -7,22 +7,37 @@
   background-color: rgba(0, 0, 0, 0.45);
   z-index: 1;
   overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.TaskInfoContainer::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.TaskInfoContainer::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.TaskInfoContainer::-webkit-scrollbar-thumb {
+  background-color: rgba(179, 179, 179);
+  border-radius: 0.4rem;
 }
 
 .TaskInfoDiv {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background-color: white;
+  position: relative;
   width: 40rem;
-  height: max-content;
-  margin: -15rem 0 3rem -20rem;
+  background-color: white;
+  height: fit-content;
   border-radius: 0.25rem;
-  padding: 0 1.7rem 1.7rem 1.7rem;
+  padding: 0 1.7rem 1.7rem 2.5rem;
+  display: block;
+  margin: 48px 0 80px;
 }
 
 .TaskInfoDiv > p {
-  margin-top:1rem;
+  margin-top: 1rem;
 }
 
 .closeTaskInfo {
@@ -32,14 +47,14 @@
   right: 0.6rem;
   top: 0.6rem;
   cursor: pointer;
-  background-color:rgba(255, 255, 255, 0.5);
-  border-radius:1rem;
-  padding:0.35rem 0.6rem;
-  transition:0.2s;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  padding: 0.35rem 0.6rem;
+  transition: 0.2s;
 }
 
 .closeTaskInfo:hover {
-  background-color:rgba(198, 198, 198, 0.5);
+  background-color: rgba(198, 198, 198, 0.5);
 }
 
 .mainDiv {
@@ -128,7 +143,7 @@
   border-radius: 0.2rem;
   resize: none;
   padding: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   transition: 0.2s;
 }
 
@@ -213,7 +228,8 @@
 .attachmentsContainer {
   max-height: 14rem;
   overflow: auto;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
 }
 
 .attachmentsContainer::-webkit-scrollbar {
@@ -298,33 +314,155 @@
 }
 
 .memberLi {
-  position:relative;
+  position: relative;
 }
 
 .taskImage {
   width: 40rem;
-  margin: 0 0 0 -1.7rem;
+  margin: 0 0 0 -2.5rem;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0.2rem 0.2rem 0px 0px;
-  border-radius: 0.2rem 0.2rem 0rem 0rem; 
-  height:20rem;
+  border-radius: 0.2rem 0.2rem 0rem 0rem;
+  height: 20rem;
 }
 
-.taskImageDiv{
+.taskImageDiv {
   width: 40rem;
 }
 
 .deleteCover {
-  background-color:rgba(255, 255, 255, 0.5);
-  border-radius:1rem;
-  padding:0.2rem 0.45rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  padding: 0.2rem 0.45rem;
   position: absolute;
-  right:0.6rem;
-  top:17.8rem;
-  cursor:pointer;
-  transition:0.2s;
+  right: 0.6rem;
+  top: 17.8rem;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .deleteCover:hover {
   background-color: rgba(255, 175, 175, 0.5);
+}
+
+.checkBoxesContainer {
+  padding-top: 0.8rem;
+}
+
+.checkboxButtonsDiv {
+  display: flex;
+  justify-content: space-between;
+  width: 4rem;
+}
+
+.checkboxValue {
+  width: 100%;
+  height: 3.5rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  box-shadow: 0 0 0 1px #dfe1e6;
+  border-radius: 0.2rem;
+  resize: none;
+  padding: 1rem;
+  margin-bottom: 0.3rem;
+  transition: 0.2s;
+}
+
+.saveValue {
+  color: white;
+  background-color: rgb(54, 217, 182);
+  width: fit-content;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.saveValue:hover {
+  filter: brightness(96%);
+}
+
+.cancelCreation {
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.2rem;
+  color: white;
+  width: fit-content;
+  margin-left: 0.3rem;
+  cursor: pointer;
+}
+
+.cancelCreation:hover {
+  background-color: rgb(229, 229, 229);
+}
+
+.addCheck {
+  background-color: rgb(240, 240, 240);
+  width: fit-content;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.addCheck:hover {
+  filter: brightness(96%);
+}
+
+.checkListMapDiv {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.checkListMapDiv > div {
+  margin: 0 0 0.3rem -1.8rem;
+  position: relative;
+  padding: 0.1rem 0.1rem 0.17rem 0.3rem;
+  border-radius: 0.2rem;
+}
+
+.checkListMapDiv > div:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.checkListMapDiv > div:hover .checkboxDelete {
+  display: block;
+}
+
+.checkListMapDiv > div > span {
+  margin-bottom: 0;
+}
+
+.checkListMapDiv > div > input {
+  display: inline-block;
+  margin-bottom: 0;
+  vertical-align: middle;
+  margin-right: 0.7rem;
+  cursor: pointer;
+}
+
+.checkboxDelete {
+  display: none;
+  position: absolute;
+  right: 0.3rem;
+  top: 0.15rem;
+  width: fit-content;
+  padding: 0 0.2rem 0.12rem 0.2rem;
+  border-radius: 0.2rem;
+}
+
+.checkboxDelete:hover {
+  background-color: rgb(255, 175, 175);
+}
+
+.editingCheckbox {
+  width: 94%;
+  height: fit-content;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.checkboxDesc {
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
 }

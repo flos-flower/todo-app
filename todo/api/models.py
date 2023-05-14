@@ -59,3 +59,8 @@ class Task(models.Model):
 class Attachment(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     file = models.FileField(upload_to='files/', blank=True, null=True)
+
+class CheckBox(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    complition = models.BooleanField(default=False)
+    description = models.TextField(blank=True, null=True)

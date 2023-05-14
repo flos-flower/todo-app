@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Task, Column, Profile, Table, Attachment
+from .models import Task, Column, Profile, Table, Attachment, CheckBox
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 
@@ -28,6 +28,20 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
+class CheckBoxSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CheckBox
+        fields = '__all__'
+
+class CheckBoxUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CheckBox
+        fields = ['description', 'complition']
+
+class CheckBoxCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CheckBox
+        fields = ['description', 'task']
 
 class TableSerializer(serializers.ModelSerializer):
     class Meta:

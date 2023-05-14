@@ -9,6 +9,7 @@ const HomePageFunc = () => {
   let [todoList, setTodoList] = useState([]);
   let [taskList, setTaskList] = useState([]);
   let [attachmentsList, setAttachmentsList] = useState([]);
+  let [checkList, setCheckList] = useState([]);
   let [editing, setEditing] = useState();
   let [editingColumn, setEditingColumn] = useState("");
   let [taskInputTag, setTaskInputTag] = useState([]);
@@ -49,6 +50,32 @@ const HomePageFunc = () => {
         else if (response.statusText === "Unauthorized") logoutUser();
       })
       .then((data) => setTodoList(data));
+  };
+
+  let fetchCheckboxes = () => {
+    let tasks = [];
+    for (let i of taskList) {
+      for (let j of i) {
+        tasks = [...tasks, j.id];
+      }
+    }
+    fetch(
+      `http://127.0.0.1:8000/api/check-list/?tasks=${encodeURIComponent(
+        tasks
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    )
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else if (response.statusText === "Unauthorized") logoutUser();
+      })
+      .then((data) => setCheckList(data));
   };
 
   let fetchTasks = () => {
@@ -180,6 +207,7 @@ const HomePageFunc = () => {
 
   useEffect(() => {
     fetchAttachments();
+    fetchCheckboxes();
   }, [taskList.length]);
 
   let handleClickOutside = () => {
@@ -427,6 +455,8 @@ const HomePageFunc = () => {
         attachmentsList={attachmentsList}
         fetchAttachments={fetchAttachments}
         setTaskList={setTaskList}
+        fetchCheckboxes={fetchCheckboxes}
+        checkList={checkList}
       />
     </div>
   );

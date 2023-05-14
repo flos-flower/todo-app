@@ -12,6 +12,7 @@ import {
   faCommentAlt,
   faImage,
   faTrashAlt,
+  faSquareCheck,
 } from "@fortawesome/free-regular-svg-icons";
 
 const TaskInfo = (props) => {
@@ -24,6 +25,10 @@ const TaskInfo = (props) => {
     props.task.description ? props.task.description : undefined
   );
   let [visibleMemberList, setVisibleMemberList] = useState(false);
+  let [visibleCheckCreation, setVisibleCheckCreation] = useState(false);
+  let [checkboxValue, setCheckboxValue] = useState("");
+  let [checkboxEditValue, setCheckboxEditValue] = useState("");
+  let [checkboxUpdateTag, setCheckboxUpdateTag] = useState([]);
 
   let { userList, selectedTable, authTokens } = useContext(Context);
 
@@ -37,6 +42,10 @@ const TaskInfo = (props) => {
 
   let changeMemberListVisibility = () => {
     setVisibleMemberList(!visibleMemberList);
+  };
+
+  let changeCheckboxInputVisibility = () => {
+    setVisibleCheckCreation(!visibleCheckCreation);
   };
 
   useEffect(() => {
@@ -112,7 +121,7 @@ const TaskInfo = (props) => {
       data.append("attachments", e.target.files[i]);
     }
     data.append("task", props.task.id);
-    var url = `http://127.0.0.1:8000/api/attachment-upload`;
+    var url = `http://127.0.0.1:8000/api/attachment-upload/`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -153,7 +162,7 @@ const TaskInfo = (props) => {
       method: "POST",
       headers: {
         Authorization: "Bearer " + String(authTokens.access),
-      }
+      },
     })
       .then((response) => {
         props.fetchTasks();
@@ -185,6 +194,27 @@ const TaskInfo = (props) => {
       });
   };
 
+  let complitionChange = (check) => {
+    let url = `http://127.0.0.1:8000/api/check-box-update/${check.id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        complition: !check.complition,
+        description: check.description,
+      }),
+    })
+      .then((response) => {
+        props.fetchCheckboxes();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
   let deleteAttachment = (id) => {
     fetch(`http://127.0.0.1:8000/api/attachment-delete/${id}`, {
       method: "DELETE",
@@ -195,6 +225,70 @@ const TaskInfo = (props) => {
     }).then((response) => {
       props.fetchAttachments();
     });
+  };
+
+  let addCheckboxText = () => {
+    let url = `http://127.0.0.1:8000/api/check-box-create/`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        description: checkboxValue,
+        task: props.task.id,
+      }),
+    })
+      .then((response) => {
+        props.fetchCheckboxes();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
+  let deleteCheckbox = (id) => {
+    fetch(`http://127.0.0.1:8000/api/check-box-delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    }).then((response) => {
+      props.fetchCheckboxes();
+    });
+  };
+
+  let changeUpdateTag = (index) => {
+    let checkboxes = [...checkboxUpdateTag];
+    for (let i = 0; i < checkboxUpdateTag.length; i++) {
+      if (i !== index) checkboxes[i] = false;
+    }
+    let checkbox = checkboxes[index];
+    checkboxes[index] = !checkbox;
+    setCheckboxUpdateTag(checkboxes);
+  };
+
+  let updateCheckboxText = (updatedCheck) => {
+    let url = `http://127.0.0.1:8000/api/check-box-update/${updatedCheck.id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        description: checkboxEditValue,
+        complition: updatedCheck.complition,
+      }),
+    })
+      .then((response) => {
+        props.fetchCheckboxes();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
   };
 
   return (
@@ -223,7 +317,8 @@ const TaskInfo = (props) => {
                   icon={faCommentAlt}
                   style={{
                     fontSize: "0.9rem",
-                    marginRight: "0.25rem",
+                    marginRight: "0.6rem",
+                    marginLeft: "-1.5rem",
                   }}
                 />
                 <span>Description</span>
@@ -312,7 +407,8 @@ const TaskInfo = (props) => {
                   style={{
                     color: "black",
                     fontSize: "0.9rem",
-                    marginRight: ".3rem",
+                    marginRight: "0.6rem",
+                    marginLeft: "-1.5rem",
                   }}
                 />
                 <span>Attachments</span>
@@ -352,6 +448,173 @@ const TaskInfo = (props) => {
                 </div>
               </div>
             )}
+            <div className={s.checkListDiv}>
+              <FontAwesomeIcon
+                icon={faSquareCheck}
+                style={{
+                  color: "black",
+                  fontSize: "1rem",
+                  marginRight: "0.6rem",
+                  marginLeft: "-1.5rem",
+                }}
+              />
+              <span>Checklist</span>
+              <div className={s.checkBoxesContainer}>
+                <div className={s.checkBoxesList}>
+                  {props.checkList && (
+                    <div
+                      className={s.checkListMapDiv}
+                      style={{
+                        marginBottom:
+                          props.checkList.filter(
+                            (check) => check.task === props.task.id
+                          ).length !== 0
+                            ? "1rem"
+                            : "0",
+                      }}
+                    >
+                      {props.checkList.map((check, check_index) => {
+                        return (
+                          check.task === props.task.id && (
+                            <div key={check_index}>
+                              <input
+                                type="checkbox"
+                                defaultChecked={check.complition}
+                                onChange={() => complitionChange(check)}
+                              />
+                              {checkboxUpdateTag[check_index] ? (
+                                <div className={s.editingCheckbox}>
+                                  <textarea
+                                    name="checkboxEditValue"
+                                    value={checkboxEditValue}
+                                    placeholder="Add text"
+                                    className={s.checkboxValue}
+                                    type="text"
+                                    autoFocus
+                                    onChange={(e) =>
+                                      setCheckboxEditValue(e.target.value)
+                                    }
+                                  />
+                                  <div className={s.checkboxButtonsDiv}>
+                                    <div
+                                      className={s.saveValue}
+                                      onClick={() => {
+                                        changeUpdateTag(check_index);
+                                        updateCheckboxText(check);
+                                      }}
+                                    >
+                                      <span>Save</span>
+                                    </div>
+                                    <div
+                                      className={s.cancelCreation}
+                                      onClick={() => {
+                                        changeUpdateTag(check_index);
+                                      }}
+                                    >
+                                      <FontAwesomeIcon
+                                        icon={faX}
+                                        style={{
+                                          color: "black",
+                                          fontSize: "0.75rem",
+                                          margin: "0",
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className={s.checkboxDesc}>
+                                  <span
+                                    style={{
+                                      textDecoration: check.complition
+                                        ? "line-through"
+                                        : "none",
+                                    }}
+                                    onClick={() => {
+                                      changeUpdateTag(check_index);
+                                      setCheckboxEditValue(check.description);
+                                    }}
+                                  >
+                                    {check.description}
+                                  </span>
+                                  <div
+                                    onClick={
+                                      props.user.user_id === selectedTable.user
+                                        ? () => {
+                                            deleteCheckbox(check.id);
+                                          }
+                                        : undefined
+                                    }
+                                    className={s.checkboxDelete}
+                                  >
+                                    <FontAwesomeIcon
+                                      icon={faTrashAlt}
+                                      style={{
+                                        fontSize: ".8rem",
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )
+                        );
+                      })}
+                    </div>
+                  )}
+                  {visibleCheckCreation ? (
+                    <div className={s.checkboxCreation}>
+                      <textarea
+                        name="checkboxValue"
+                        value={checkboxValue}
+                        placeholder="Add text"
+                        className={s.checkboxValue}
+                        type="text"
+                        autoFocus
+                        onChange={(e) => setCheckboxValue(e.target.value)}
+                      />
+                      <div className={s.checkboxButtonsDiv}>
+                        <div
+                          className={s.saveValue}
+                          onClick={() => {
+                            changeCheckboxInputVisibility();
+                            checkboxValue !== "" && addCheckboxText();
+                            setCheckboxValue("");
+                          }}
+                        >
+                          <span>Save</span>
+                        </div>
+                        <div
+                          className={s.cancelCreation}
+                          onClick={() => {
+                            changeCheckboxInputVisibility();
+                            setCheckboxValue("");
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            icon={faX}
+                            style={{
+                              color: "black",
+                              fontSize: "0.75rem",
+                              margin: "0",
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div
+                        className={s.addCheck}
+                        onClick={changeCheckboxInputVisibility}
+                      >
+                        <span>Add an item</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
           <div className={s.options}>
             <p>Add-ons</p>
