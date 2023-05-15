@@ -1,6 +1,10 @@
 import Context from "../context/Context";
 import { useRef, useContext, useState, useEffect } from "react";
 import s from "../styles/TaskInfoStyles.module.css";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DateTimePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faX,
@@ -13,6 +17,7 @@ import {
   faImage,
   faTrashAlt,
   faSquareCheck,
+  faClock,
 } from "@fortawesome/free-regular-svg-icons";
 
 const TaskInfo = (props) => {
@@ -29,6 +34,8 @@ const TaskInfo = (props) => {
   let [checkboxValue, setCheckboxValue] = useState("");
   let [checkboxEditValue, setCheckboxEditValue] = useState("");
   let [checkboxUpdateTag, setCheckboxUpdateTag] = useState([]);
+  let [visibleDatePicker, setVisibleDatePicker] = useState(false);
+  let [selectedDateTime, setSelectedDateTime] = useState(dayjs());
 
   let { userList, selectedTable, authTokens } = useContext(Context);
 
@@ -46,6 +53,10 @@ const TaskInfo = (props) => {
 
   let changeCheckboxInputVisibility = () => {
     setVisibleCheckCreation(!visibleCheckCreation);
+  };
+
+  let changeDatePickerVisibility = () => {
+    setVisibleDatePicker(!visibleDatePicker);
   };
 
   useEffect(() => {
@@ -291,11 +302,91 @@ const TaskInfo = (props) => {
       });
   };
 
+  let addDateTime = () => {
+    let url = `http://127.0.0.1:8000/api/date-create/`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        date: selectedDateTime,
+        task: props.task.id,
+      }),
+    })
+      .then((response) => {
+        props.fetchDates();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
+  let updateDateComplition = (dateTime) => {
+    let url = `http://127.0.0.1:8000/api/date-update/${dateTime.id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        date: "",
+        complition: !dateTime.complition,
+      }),
+    })
+      .then((response) => {
+        props.fetchDates();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
+  let updateDate = (dateTime) => {
+    let url = `http://127.0.0.1:8000/api/date-update/${dateTime.id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        date: selectedDateTime,
+        complition: dateTime.complition,
+      }),
+    })
+      .then((response) => {
+        props.fetchDates();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
+  const deleteDate = (id) => {
+    var url = `http://127.0.0.1:8000/api/date-delete/${id}`;
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    })
+      .then((response) => {
+        props.fetchDates();
+      })
+      .catch(function (error) {
+        console.log("ERROR", error);
+      });
+  };
+
   return (
     <div className={s.TaskInfoContainer}>
       <div className={s.TaskInfoDiv}>
         {props.task.image && (
           <img
+            alt="Task"
             className={s.taskImage}
             src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${props.task.image}`}
           />
@@ -310,7 +401,49 @@ const TaskInfo = (props) => {
         )}
         <p>{props.taskName}</p>
         <div className={s.mainDiv}>
-          <div className={s.mainContent}>
+          <div
+            className={s.mainContent}
+            style={{ maxWidth: visibleDatePicker ? "60%" : "80%" }}
+          >
+            {props.datesList.filter((date) => date.task === props.task.id) &&
+              props.datesList
+                .filter((date) => date.task === props.task.id)
+                .map((date, date_index) => {
+                  return (
+                    <div key={date_index}>
+                      <p className={s.dueDate}>Due date:</p>
+                      <input
+                        type="checkbox"
+                        onChange={() => updateDateComplition(date)}
+                        defaultChecked={date.complition}
+                      />
+                      <div className={s.addedDateTime}>
+                        {dayjs(date.date).format("MMM D [at] h:m A")}
+                        <div
+                          className={
+                            date.complition
+                              ? s.completedInTime
+                              : dayjs(date.date) < dayjs() ? s.dateOverdue : s.date
+                          }
+                        >
+                          <span>
+                            {date.complition
+                              ? "complete"
+                              : dayjs(date.date) < dayjs() && "overdue"}
+                          </span>
+                        </div>
+                        <div className={s.deleteDate} onClick={()=>deleteDate(date.id)}>
+                          <FontAwesomeIcon
+                            icon={faTrashAlt}
+                            style={{
+                              fontSize: ".7rem"
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
             <div className={s.descriptionDiv}>
               <div className={s.descDiv}>
                 <FontAwesomeIcon
@@ -674,6 +807,68 @@ const TaskInfo = (props) => {
                   onChange={handleCoverChange}
                   disabled
                 />
+              )}
+            </form>
+            <form>
+              <div className={s.addOptions}>
+                <div onClick={changeDatePickerVisibility}>
+                  <FontAwesomeIcon
+                    icon={faClock}
+                    style={{
+                      color: "black",
+                      fontSize: ".75rem",
+                      marginRight: ".3rem",
+                    }}
+                  />
+                  <span>Dates</span>
+                </div>
+              </div>
+              {visibleDatePicker && (
+                <div className={s.dateTimePicker}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateTimePicker
+                      value={selectedDateTime}
+                      onChange={(newValue) => {
+                        setSelectedDateTime(newValue);
+                      }}
+                    />
+                  </LocalizationProvider>
+                  <div className={s.datetimeButtonsDiv}>
+                    <div
+                      className={s.saveValue}
+                      onClick={() => {
+                        changeDatePickerVisibility();
+                        props.datesList.filter(
+                          (date) => date.task === props.task.id
+                        ).length === 0
+                          ? addDateTime()
+                          : updateDate(
+                              props.datesList.filter(
+                                (date) => date.task === props.task.id
+                              )[0]
+                            );
+                      }}
+                    >
+                      <span>Save</span>
+                    </div>
+                    <div
+                      className={s.cancelCreation}
+                      onClick={() => {
+                        changeDatePickerVisibility();
+                        setSelectedDateTime(dayjs());
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        icon={faX}
+                        style={{
+                          color: "black",
+                          fontSize: "0.75rem",
+                          margin: "0",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
               )}
             </form>
             <div

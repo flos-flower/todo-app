@@ -28,6 +28,11 @@ urlpatterns = [
     path('check-box-update/<str:pk>', views.checkBoxUpdate, name='check-box-update'),
     path('check-box-delete/<str:pk>', views.checkBoxDelete, name='check-box-delete'),
 
+    path('dates-list/', views.datesList, name='dates-list'),
+    path('date-create/', views.dateCreate, name='date-create'),
+    path('date-update/<str:pk>', views.dateUpdate, name='date-update'),
+    path('date-delete/<str:pk>', views.dateDelete, name='date-delete'),
+
     path('table-list/', views.tableList, name='table-list'),
     path('table-create/', views.tableCreate, name='table-create'),
     path('table-update/<str:pk>', views.tableUpdate, name='table-update'),

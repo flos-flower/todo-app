@@ -4,8 +4,7 @@ import Context from "../context/Context";
 import { useState } from "react";
 
 const ProfileInfo = () => {
-  let { user, profile, handleImageChange, handleProfileChange } =
-    useContext(Context);
+  let { profile, handleImageChange, handleProfileChange } = useContext(Context);
   let [name, setName] = useState(() => {
     if (profile[0].name === null) return "";
     else return `${profile[0].name}`;

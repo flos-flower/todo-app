@@ -10,6 +10,7 @@ const HomePageFunc = () => {
   let [taskList, setTaskList] = useState([]);
   let [attachmentsList, setAttachmentsList] = useState([]);
   let [checkList, setCheckList] = useState([]);
+  let [datesList, setDatesList] = useState([]);
   let [editing, setEditing] = useState();
   let [editingColumn, setEditingColumn] = useState("");
   let [taskInputTag, setTaskInputTag] = useState([]);
@@ -119,6 +120,32 @@ const HomePageFunc = () => {
       });
   };
 
+  let fetchDates = () => {
+    let tasks = [];
+    for (let i of taskList) {
+      for (let j of i) {
+        tasks = [...tasks, j.id];
+      }
+    }
+    fetch(
+      `http://127.0.0.1:8000/api/dates-list/?tasks=${encodeURIComponent(
+        tasks
+      )}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    )
+      .then((response) => {
+        if (response.status === 200) return response.json();
+        else if (response.statusText === "Unauthorized") logoutUser();
+      })
+      .then((data) => setDatesList(data));
+  };
+
   let changeTaskTag = (index) => {
     let tasks = [...taskInputTag];
     let task = tasks[index];
@@ -208,6 +235,7 @@ const HomePageFunc = () => {
   useEffect(() => {
     fetchAttachments();
     fetchCheckboxes();
+    fetchDates();
   }, [taskList.length]);
 
   let handleClickOutside = () => {
@@ -457,6 +485,8 @@ const HomePageFunc = () => {
         setTaskList={setTaskList}
         fetchCheckboxes={fetchCheckboxes}
         checkList={checkList}
+        fetchDates={fetchDates}
+        datesList={datesList}
       />
     </div>
   );

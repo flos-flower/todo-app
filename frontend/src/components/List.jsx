@@ -1,14 +1,15 @@
 import s from "../styles/ListStyles.module.css";
+import dayjs from "dayjs";
 import Context from "../context/Context";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import InputBar from "./InputBar";
 import TaskInfo from "./TaskInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrashAlt,
   faEdit,
-  faUser,
   faSquareCheck,
+  faClock,
 } from "@fortawesome/free-regular-svg-icons";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
@@ -125,6 +126,8 @@ const List = (props) => {
                 attachmentsList={props.attachmentsList}
                 fetchAttachments={props.fetchAttachments}
                 user={props.user}
+                fetchDates={props.fetchDates}
+                datesList={props.datesList}
               />
             )
           );
@@ -193,6 +196,7 @@ const List = (props) => {
                             <form key={task.id} className={s.updateForm}>
                               {task.image && (
                                 <img
+                                  alt="Task"
                                   className={s.taskImage}
                                   src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${task.image}`}
                                 />
@@ -224,6 +228,7 @@ const List = (props) => {
                                 >
                                   {task.image && (
                                     <img
+                                      alt="Task"
                                       className={s.taskImage}
                                       src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${task.image}`}
                                     />
@@ -279,7 +284,62 @@ const List = (props) => {
                                         : s.addonsWMemDiv
                                     }
                                   >
-                                    <div>
+                                    <div
+                                      className={
+                                        props.datesList.filter(
+                                          (date) => date.task === task.id
+                                        ).length !== 0 ? s.datesNcheck : undefined
+                                      }
+                                      title='Date'
+                                    >
+                                      {props.datesList.filter(
+                                        (date) => date.task === task.id
+                                      ).length !== 0 && (
+                                        <div
+                                          className={
+                                            props.datesList.filter(
+                                              (date) => date.task === task.id
+                                            )[0].complition
+                                              ? s.dateComplete
+                                              : dayjs(
+                                                  props.datesList.filter(
+                                                    (date) =>
+                                                      date.task === task.id
+                                                  )[0].date
+                                                ) < dayjs()
+                                              ? s.dateOverdue
+                                              : s.date
+                                          }
+                                        >
+                                          <FontAwesomeIcon
+                                            icon={faClock}
+                                            style={{
+                                              color:
+                                                props.datesList.filter(
+                                                  (date) =>
+                                                    date.task === task.id
+                                                )[0].complition ||
+                                                dayjs(
+                                                  props.datesList.filter(
+                                                    (date) =>
+                                                      date.task === task.id
+                                                  )[0].date
+                                                ) < dayjs()
+                                                  ? "white"
+                                                  : "#4d4d4d",
+                                              fontSize: ".75rem",
+                                              marginRight: ".3rem",
+                                            }}
+                                          />
+                                          <span className={s.dateSpan}>
+                                            {dayjs(
+                                              props.datesList.filter(
+                                                (date) => date.task === task.id
+                                              )[0].date
+                                            ).format("MMM D")}
+                                          </span>
+                                        </div>
+                                      )}
                                       {props.checkList.filter(
                                         (check) => check.task === task.id
                                       ).length !== 0 && (
@@ -288,15 +348,15 @@ const List = (props) => {
                                             props.checkList.filter(
                                               (check) =>
                                                 check.task === task.id &&
-                                                check.complition == true
-                                            ).length ==
+                                                check.complition === true
+                                            ).length ===
                                             props.checkList.filter(
                                               (check) => check.task === task.id
                                             ).length
                                               ? s.checklistComplitedDiv
                                               : s.checklistDiv
                                           }
-                                          title='Checklist items'
+                                          title="Checklist items"
                                         >
                                           <FontAwesomeIcon
                                             icon={faSquareCheck}
@@ -310,7 +370,7 @@ const List = (props) => {
                                               props.checkList.filter(
                                                 (check) =>
                                                   check.task === task.id &&
-                                                  check.complition == true
+                                                  check.complition === true
                                               ).length
                                             }
                                             /
@@ -336,6 +396,7 @@ const List = (props) => {
                                                   <img
                                                     className={s.memberProfile}
                                                     key={profile_index}
+                                                    alt="User"
                                                     src={`http://127.0.0.1:8000/Programming/DJ and ReactJS/todo-app/todo/media${user_profile.picture}`}
                                                     title={
                                                       user_profile.username

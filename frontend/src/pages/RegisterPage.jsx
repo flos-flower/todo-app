@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Context from "../context/Context";
 import s from "../styles/RegisterStyles.module.css";
 import { useForm } from "react-hook-form";

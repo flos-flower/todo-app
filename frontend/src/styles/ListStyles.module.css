@@ -357,3 +357,33 @@ button:focus {
   background-color:rgb(0, 215, 0);
   color:white;
 }
+
+.datesNcheck {
+  display:flex;
+  justify-content: space-between;
+  width:fit-content;
+}
+
+.date {
+  font-size: 11px;
+  padding: 0.2rem;
+  margin-right:0.1rem;
+}
+
+.dateComplete {
+  font-size: 11px;
+  border-radius:0.2rem;
+  padding:0.2rem;
+  background-color:rgb(0, 215, 0);
+  color:white;
+  margin-right:0.1rem;
+}
+
+.dateOverdue {
+  font-size: 11px;
+  border-radius:0.2rem;
+  padding:0.2rem;
+  background-color:rgb(254, 185, 55);
+  color:white;
+  margin-right:0.1rem;
+}

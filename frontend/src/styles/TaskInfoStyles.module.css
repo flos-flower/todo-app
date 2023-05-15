@@ -109,7 +109,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  max-width: 80%;
+  width:min-content;
 }
 
 .descriptionDiv {
@@ -227,7 +227,8 @@
 
 .attachmentsContainer {
   max-height: 14rem;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   margin-top: 1.2rem;
   margin-bottom: 1.2rem;
 }
@@ -352,7 +353,7 @@
 .checkboxButtonsDiv {
   display: flex;
   justify-content: space-between;
-  width: 4rem;
+  width: 4.4rem;
 }
 
 .checkboxValue {
@@ -387,7 +388,6 @@
   border-radius: 0.2rem;
   color: white;
   width: fit-content;
-  margin-left: 0.3rem;
   cursor: pointer;
 }
 
@@ -465,4 +465,71 @@
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
+}
+
+.dateTimePicker {
+  margin-top:0.5rem;
+  width: 14rem;
+}
+
+.datetimeButtonsDiv {
+  margin-top: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  width: 4.4rem;
+}
+
+.dueDate {
+  margin-bottom: 0.3rem;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.addedDateTime {
+  padding:0.35rem;
+  background-color:rgb(240, 240, 240);
+  border-radius:0.2rem;
+  width: fit-content;
+  margin: 0 0 1.5rem 0.4rem;
+  display: inline-block;
+}
+
+.date {
+  display: inline-block;
+}
+
+.completedInTime {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color:white;
+  background-color:rgb(0, 215, 0);
+  padding:0 0.2rem;
+  border-radius:0.2rem;
+  margin-left:0.4rem;
+}
+
+.dateOverdue {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color:white;
+  background-color:rgb(254, 185, 55);
+  padding:0 0.2rem;
+  border-radius:0.2rem;
+  margin-left:0.4rem;
+}
+
+.deleteDate {
+  padding:0rem 0.25rem;
+  margin-left:0.3rem;
+  display:inline-block;
+  border-radius:0.2rem;
+  cursor:pointer;
+  position:relative;
+  top:0.05rem;
+}
+
+.deleteDate:hover {
+  background-color: rgb(255, 175, 175);
 }
