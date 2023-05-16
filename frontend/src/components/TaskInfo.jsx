@@ -419,7 +419,7 @@ const TaskInfo = (props) => {
                         style={{cursor:'pointer'}}
                       />
                       <div className={s.addedDateTime}>
-                        {dayjs(date.date).format("MMM D [at] h:m A")}
+                        {dayjs(date.date).format("MMM D [at] hh:mm A")}
                         <div
                           className={
                             date.complition
