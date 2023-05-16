@@ -133,7 +133,7 @@ ul::-webkit-scrollbar-thumb {
   cursor: pointer;
   border-radius: 0.2rem;
   background-color: rgba(0, 0, 0, 0.05);
-  padding: 0.25rem;
+  padding: 0.25rem 0.7rem;
   transition: 0.3s;
 }
 
@@ -141,33 +141,21 @@ ul::-webkit-scrollbar-thumb {
   background-color: rgba(1, 1, 1, 0.1);
 }
 
-.membersIcon:after {
-  position: relative;
-  top: -3px;
-  content: "";
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-right: 0.01rem solid black;
-  border-top: 0.01rem solid black;
-  transform: rotate(135deg);
-  margin-right: 0.3rem;
-  margin-left: 0.5rem;
-}
-
 .membersIcon {
   font-size: 1rem;
 }
 
 .membersList {
-  max-height: 9rem;
-  width: 6.5rem;
+  max-height: 13rem;
+  width: 7.3rem;
   background-color: white;
   border-radius: 0.2rem;
-  padding: 0.3rem;
+  padding: 0.6rem 0.3rem 0.3rem 0.3rem;
   position: absolute;
   top: 6rem;
-  right: 5.7rem;
+  right: 5.6rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .membersList > li {
@@ -225,4 +213,54 @@ ul::-webkit-scrollbar-thumb {
 .memberIcon {
   margin-left: 0.3rem;
   font-size: 0.8rem;
+}
+
+.filtersWrapper {
+  position: relative;
+}
+
+.filtersSettings {
+  cursor: pointer;
+  border-radius: 0.2rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.25rem 0.8rem;
+  transition: 0.3s;
+}
+
+.filtersSettings:hover {
+  background-color: rgba(1, 1, 1, 0.1);
+}
+
+.filtersList {
+  padding:0.6rem 0.3rem 0.3rem 0.3rem;
+  background-color:white;
+  position:absolute;
+  top:2.5rem;
+  right:0;
+  border-radius:0.2rem;
+  min-width: max-content;
+  z-index:5;
+  display:flex;
+  flex-direction: column;
+}
+
+.filtersList > div {
+  padding:0.25rem;
+  display: flex;
+  align-items:center;
+  justify-content: flex-start;
+}
+
+.filtersList > div > input {
+  margin-right: 0.2rem;
+}
+
+.filterMapIcons {
+  font-size:0.7rem;
+  border-radius:1rem;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  padding:0.3rem;
+  margin-right: 0.2rem;
 }

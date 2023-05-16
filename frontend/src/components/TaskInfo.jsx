@@ -416,6 +416,7 @@ const TaskInfo = (props) => {
                         type="checkbox"
                         onChange={() => updateDateComplition(date)}
                         defaultChecked={date.complition}
+                        style={{cursor:'pointer'}}
                       />
                       <div className={s.addedDateTime}>
                         {dayjs(date.date).format("MMM D [at] h:m A")}

@@ -35,8 +35,8 @@
 
 .tasksDiv {
   margin-right: 0.5rem;
-  max-width: 14rem;
-  min-width: 14rem;
+  max-width: 16rem;
+  min-width: 16rem;
   border-radius: 0.2rem;
   padding: 0.5rem;
   background-color: rgb(240, 240, 240);
@@ -367,7 +367,7 @@ button:focus {
 .date {
   font-size: 11px;
   padding: 0.2rem;
-  margin-right:0.1rem;
+  margin-right:0.2rem;
 }
 
 .dateComplete {
@@ -376,7 +376,7 @@ button:focus {
   padding:0.2rem;
   background-color:rgb(0, 215, 0);
   color:white;
-  margin-right:0.1rem;
+  margin-right:0.2rem;
 }
 
 .dateOverdue {
@@ -385,5 +385,5 @@ button:focus {
   padding:0.2rem;
   background-color:rgb(254, 185, 55);
   color:white;
-  margin-right:0.1rem;
+  margin-right:0.2rem;
 }

@@ -384,7 +384,7 @@ const HomePageFunc = () => {
       user: jwt_decode(authTokens.access).user_id,
       title: value,
       column: index,
-      image:'',
+      image: "",
     });
   };
 
@@ -444,7 +444,11 @@ const HomePageFunc = () => {
   if (tableList.length === 0) return <Table createTable={createTable} />;
   return (
     <div style={{ height: "calc(100% - 3.1rem)" }}>
-      <TableSettings />
+      <TableSettings
+        taskList={taskList}
+        setTaskList={setTaskList}
+        datesList={datesList}
+      />
       <List
         todoList={todoList}
         columnUpdateTag={columnUpdateTag}
