@@ -418,11 +418,6 @@ let TableSettings = (props) => {
             </div>
           </div>
         )}
-        <FontAwesomeIcon
-          icon={faGear}
-          className={s.settingGear}
-          onClick={() => visibleUserInvitation === true && changeVisibility()}
-        />
       </div>
     </div>
   );
