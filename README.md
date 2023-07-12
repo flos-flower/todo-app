@@ -1,3 +1,3 @@
 # TODO APP
 
-App made for learning
+App made for learning purposes
