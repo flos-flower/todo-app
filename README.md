@@ -1,1 +1,1 @@
-# TODO APP made using React and Rjango REST
+# TODO APP made using React and Django REST
