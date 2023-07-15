@@ -1,3 +1,1 @@
-# TODO APP
-
-App made for learning purposes
+# TODO APP made using React and Rjango REST
